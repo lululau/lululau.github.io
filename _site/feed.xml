@@ -1,69 +1,566 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Your awesome title</title>
-    <description>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
-</description>
-    <link>http://localhost:4000/</link>
-    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 09 Feb 2017 13:05:25 +0800</pubDate>
-    <lastBuildDate>Thu, 09 Feb 2017 13:05:25 +0800</lastBuildDate>
+    <title>Lulu's Blog</title>
+    <description></description>
+    <link>http://localhost:4000//</link>
+    <atom:link href="http://localhost:4000//feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Thu, 09 Feb 2017 14:27:34 +0800</pubDate>
+    <lastBuildDate>Thu, 09 Feb 2017 14:27:34 +0800</lastBuildDate>
     <generator>Jekyll v3.3.1</generator>
     
       <item>
-        <title>Welcome to Jekyll!</title>
-        <description>&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
+        <title>带 TOC 侧边栏的 MacDown.app</title>
+        <description>&lt;p&gt;给 MacDown.app 加了一个可以显示 TOC 的侧边栏。&lt;/p&gt;
 
-&lt;p&gt;To add new posts, simply add a file in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory that follows the convention &lt;code class=&quot;highlighter-rouge&quot;&gt;YYYY-MM-DD-name-of-post.ext&lt;/code&gt; and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
+&lt;p&gt;用 F1 键切换 TOC 侧边栏的显示和隐藏。&lt;/p&gt;
 
-&lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
+&lt;p&gt;在 TOC 侧边栏中点击一个标题，可以使右侧的 Markdown 编辑器滚动到该标题处。&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Tom'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints 'Hi, Tom' to STDOUT.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/2015-04-05-macdown-with-toc-siderbar/1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Check out the &lt;a href=&quot;http://jekyllrb.com/docs/home&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://talk.jekyllrb.com/&quot;&gt;Jekyll Talk&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://pan.baidu.com/s/1dD6ejZz&quot;&gt;Download&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;由于 OS X 10.10 以下版本不能使用透明效果(&lt;code class=&quot;highlighter-rouge&quot;&gt;NSVisualEffectView&lt;/code&gt;)，这是供 10.8 或 10.9 使用的下载链接：&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://pan.baidu.com/s/1o9qmM&quot;&gt;Download for 10.8 and 10.9&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/lululau/macdown/tree/toc-siderbar&quot;&gt;Source on Github&lt;/a&gt;&lt;/p&gt;
 
 </description>
-        <pubDate>Thu, 09 Feb 2017 10:27:51 +0800</pubDate>
-        <link>http://localhost:4000/jekyll/update/2017/02/09/welcome-to-jekyll.html</link>
-        <guid isPermaLink="true">http://localhost:4000/jekyll/update/2017/02/09/welcome-to-jekyll.html</guid>
+        <pubDate>Mon, 06 Apr 2015 06:16:48 +0800</pubDate>
+        <link>http://localhost:4000//mac-app/markdown/2015/04/05/macdown-with-toc-siderbar.html</link>
+        <guid isPermaLink="true">http://localhost:4000//mac-app/markdown/2015/04/05/macdown-with-toc-siderbar.html</guid>
         
         
-        <category>jekyll</category>
+        <category>Mac-App</category>
         
-        <category>update</category>
+        <category>Markdown</category>
         
       </item>
     
       <item>
-        <title>Welcome to Jekyll!</title>
-        <description>&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory - edit this post and re-build (or run with the &lt;code class=&quot;highlighter-rouge&quot;&gt;-w&lt;/code&gt; switch) to see your changes!
-To add new posts, simply add a file in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory that follows the convention: YYYY-MM-DD-name-of-post.ext.&lt;/p&gt;
+        <title>使用 ⌘+数字键切换 Safari 标签页</title>
+        <description>&lt;p&gt;首先需要一个能够将快捷键绑定到一个 AppleScript 脚本的工具，这里以 &lt;a href=&quot;http://www.bettertouchtool.net&quot;&gt;Better Touch Tool&lt;/a&gt; 为例：&lt;/p&gt;
 
-&lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
+&lt;h3 id=&quot;1-打开-script-editorapp新建一个文稿在新建的文稿中输入&quot;&gt;1. 打开 Script Editor.app，新建一个文稿，在新建的文稿中输入：&lt;/h3&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Tom'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints 'Hi, Tom' to STDOUT.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;pre&gt;&lt;code class=&quot;language-AppleScript&quot;&gt;tell front window of application &quot;Safari&quot; to set current tab to tab 1
+&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Check out the &lt;a href=&quot;http://jekyllrb.com&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/mojombo/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;将新建的文稿存储到某个固定的位置，如 &lt;code class=&quot;highlighter-rouge&quot;&gt;/Users/your_username/Documents/SafariTabSwitchers/1.scpt&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;以此类推新建 1 到 9 个脚本，分别对应 9 个快捷键。&lt;/p&gt;
+
+&lt;p&gt;另外也可以新建一个 0.scpt 脚本，将 ⌘ + 0 绑定为切换到最右边的标签页：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-AppleScript&quot;&gt;tell front window of application &quot;Safari&quot; to set current tab to the last tab
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;2-打开-better-touch-tool-的设置面板&quot;&gt;2. 打开 Better Touch Tool 的设置面板：&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2015-01-11-use-the-key-figures-switch-safari-tab/1.png&quot; alt=&quot;2015-01-11_13-51-49.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;如上图所示：&lt;/p&gt;
+
+&lt;p&gt;(1). 点击 Gestures 按钮&lt;br /&gt;
+(2). 然后点击 Keyboard 标签页&lt;br /&gt;
+(3). 再点击 &lt;code class=&quot;highlighter-rouge&quot;&gt;+&lt;/code&gt; 号按钮，添加 Safari&lt;br /&gt;
+(4). 添加了 Safari 之后，点击面板右侧的 Add New Shortcut 按钮&lt;br /&gt;
+(5). 在 Keyboard Shortcut 处，按 ⌘ + 数字键&lt;br /&gt;
+(6). 在 Trigger Predefined Action 处选择“Open Aoolication / File / AppleScript”，然后选择在第一步中创建的脚本即可。&lt;/p&gt;
 
 </description>
-        <pubDate>Sun, 10 Nov 2013 18:18:00 +0800</pubDate>
-        <link>http://localhost:4000/thriller/comedy/horror/2013/11/10/welcome-to-jekyll.html</link>
-        <guid isPermaLink="true">http://localhost:4000/thriller/comedy/horror/2013/11/10/welcome-to-jekyll.html</guid>
+        <pubDate>Sun, 11 Jan 2015 20:26:00 +0800</pubDate>
+        <link>http://localhost:4000//mac-os-x/mac-app/2015/01/11/use-the-key-figures-switch-safari-tab.html</link>
+        <guid isPermaLink="true">http://localhost:4000//mac-os-x/mac-app/2015/01/11/use-the-key-figures-switch-safari-tab.html</guid>
         
         
-        <category>Thriller</category>
+        <category>Mac-OS-X</category>
         
-        <category>Comedy</category>
+        <category>Mac-App</category>
         
-        <category>Horror</category>
+      </item>
+    
+      <item>
+        <title>zsh 你不知道那些事儿-003-NULLCMD</title>
+        <description>&lt;p&gt;几乎每一本 Linux / Shell 入门的书中都会讲到如何新建一个空文件，那就是 &lt;code class=&quot;highlighter-rouge&quot;&gt;touch&lt;/code&gt; 命令：&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;touch file_name
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;实际上在 bash 中有更高效的方法（其实就是少敲 4 个字符，😄）：&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;&amp;gt; &lt;/span&gt;file_name
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;但是，如果在 zsh 中尝试执行以上命令，会发现 zsh 陷入到一个进程中不会退出，直到按 &lt;code class=&quot;highlighter-rouge&quot;&gt;Ctrl-d&lt;/code&gt;为止。这是因为在 zsh 中执行一个只有IO重定向而没有命令名字的 command line 时，zsh 会使用变量 &lt;code class=&quot;highlighter-rouge&quot;&gt;NULLCMD&lt;/code&gt; 的值作为这个 command line 的命令名字，而 &lt;code class=&quot;highlighter-rouge&quot;&gt;NULLCMD&lt;/code&gt; 的默认值为：&lt;code class=&quot;highlighter-rouge&quot;&gt;cat&lt;/code&gt;，就是说当在 zsh 中执行 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt; file_name&lt;/code&gt; 时，实际上执行的是 &lt;code class=&quot;highlighter-rouge&quot;&gt;cat &amp;gt; file_name&lt;/code&gt;，如果要获得和 bash 中一样的体验，可以将 &lt;code class=&quot;highlighter-rouge&quot;&gt;NULLCMD&lt;/code&gt; 的值修改为 &lt;code class=&quot;highlighter-rouge&quot;&gt;:&lt;/code&gt;：&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;NULLCMD&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;:
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;可以将以上代码加入到 zsh 配置文件中。&lt;/p&gt;
+
+&lt;p&gt;类似的，当在 zsh 中执行 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt; file_name&lt;/code&gt; 这条命令的时候，zsh 会使用变量 &lt;code class=&quot;highlighter-rouge&quot;&gt;READNULLCMD&lt;/code&gt; 的值作为这行 command line 的命令名字， &lt;code class=&quot;highlighter-rouge&quot;&gt;READNULLCMD&lt;/code&gt; 的默认值为：&lt;code class=&quot;highlighter-rouge&quot;&gt;more&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;PS:&lt;/p&gt;
+
+&lt;p&gt;(1). &lt;code class=&quot;highlighter-rouge&quot;&gt;touch&lt;/code&gt; 命令&lt;/p&gt;
+
+&lt;p&gt;实际上 &lt;code class=&quot;highlighter-rouge&quot;&gt;touch&lt;/code&gt;命令的主要功能并不是用来创建一个新的空文件。它的手册（&lt;code class=&quot;highlighter-rouge&quot;&gt;man 1 touch&lt;/code&gt;）中的说明是：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;change file access and modification times&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;(2). &lt;code class=&quot;highlighter-rouge&quot;&gt;:&lt;/code&gt; 命令&lt;/p&gt;
+
+&lt;p&gt;是的，&lt;code class=&quot;highlighter-rouge&quot;&gt;:&lt;/code&gt; 是一个命令的名字，bash 和 zsh 都内建了这个命令，它的功能非常简单，就是：什么都不做，退出状态码为 0。&lt;/p&gt;
+</description>
+        <pubDate>Wed, 07 Jan 2015 07:30:00 +0800</pubDate>
+        <link>http://localhost:4000//shell/2015/01/06/zsh-you-dont-know-those-things-001-nullcmd.html</link>
+        <guid isPermaLink="true">http://localhost:4000//shell/2015/01/06/zsh-you-dont-know-those-things-001-nullcmd.html</guid>
+        
+        
+        <category>Shell</category>
+        
+      </item>
+    
+      <item>
+        <title>zsh 你不知道那些事儿-002-INTERACTIVE_COMMENTS</title>
+        <description>&lt;p&gt;在使用 bash 或 zsh 编写脚本的时候，可以使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;#&lt;/code&gt; 注释掉一行代码，在交互式的 shell command line 中我也习惯使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;#&lt;/code&gt; 来注释掉一条暂时不需要执行，但是接下来很可能会再次用到的命令（这样做的目的是当再次需要使用这条命令的时候，在命令历史中不用向上翻阅太多行记录）。在交互式的 zsh 中，默认是不能用 &lt;code class=&quot;highlighter-rouge&quot;&gt;#&lt;/code&gt; 来注释一行命令的。解决方法是：打开 &lt;code class=&quot;highlighter-rouge&quot;&gt;INTERACTIVE_COMMENTS&lt;/code&gt; 选项：&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt; -o interactivecomments
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;或&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;setopt interactivecomments
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;可以将以上代码加入到 zsh 配置文件中。&lt;/p&gt;
+</description>
+        <pubDate>Wed, 07 Jan 2015 07:20:00 +0800</pubDate>
+        <link>http://localhost:4000//shell/2015/01/06/zsh-you-dont-know-those-things-002-interactive-comments.html</link>
+        <guid isPermaLink="true">http://localhost:4000//shell/2015/01/06/zsh-you-dont-know-those-things-002-interactive-comments.html</guid>
+        
+        
+        <category>Shell</category>
+        
+      </item>
+    
+      <item>
+        <title>zsh 你不知道那些事儿-001-HIST_VERIFY</title>
+        <description>&lt;p&gt;bash 和 zsh 都有一套命令历史机制，历史替换(History Expansion)是其中的一部分, 例如：&lt;/p&gt;
+
+&lt;p&gt;执行上一条命令：&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;!!
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;执行上上一条命令：&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;!-2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;将上一条命令中的 foo 替换成 bar，然后再执行：&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;^foo^bar
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;在 bash 中，当你在 command line 中键入 &lt;code class=&quot;highlighter-rouge&quot;&gt;!!&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;!-2&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;^foo^bar&lt;/code&gt; 这些命令然后回车的时候，对应的命令便会立即执行，zsh 的默认行为也是如此。但是 zsh 中可以通过设置 &lt;code class=&quot;highlighter-rouge&quot;&gt;HIST_VERIFY&lt;/code&gt; 选项，让 zsh 只将历史替换展开，并不立即执行，用户确认没有问题后自行按回车键执行。&lt;/p&gt;
+
+&lt;p&gt;设置 &lt;code class=&quot;highlighter-rouge&quot;&gt;HIST_VERIFY&lt;/code&gt; 选项的命令为：&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt; -o histverify
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;或&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;setopt histverify
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;如果使用 oh-my-zsh，那么这个选项已经打开（&lt;code class=&quot;highlighter-rouge&quot;&gt;${OH_MY_ZSH_ROOT}/lib/history.zsh&lt;/code&gt;）&lt;/p&gt;
+</description>
+        <pubDate>Wed, 07 Jan 2015 06:55:00 +0800</pubDate>
+        <link>http://localhost:4000//shell/2015/01/06/zsh-you-dont-know-those-things-001-hist-verify.html</link>
+        <guid isPermaLink="true">http://localhost:4000//shell/2015/01/06/zsh-you-dont-know-those-things-001-hist-verify.html</guid>
+        
+        
+        <category>Shell</category>
+        
+      </item>
+    
+      <item>
+        <title>Front Most Alfred Workflow</title>
+        <description>&lt;p&gt;Github: https://github.com/lululau/front-most-alfred-workflow&lt;/p&gt;
+
+&lt;p&gt;Reveal the file open by the front most window in Alfred&lt;/p&gt;
+
+&lt;p&gt;Press &lt;strong&gt;⌘ + y&lt;/strong&gt; or type &lt;strong&gt;fm&lt;/strong&gt; keyword in Alfred.app to reveal the file open by the front most window in Alfred.app.&lt;/p&gt;
+
+&lt;p&gt;You can modify the hotkey and keyword in “Workflow” panel of Alfred Preferences window.&lt;/p&gt;
+
+&lt;p&gt;Press &lt;strong&gt;Enter&lt;/strong&gt; in Alfred file list to open the file with the default application.&lt;/p&gt;
+
+&lt;p&gt;Press &lt;strong&gt;⌘ + Enter&lt;/strong&gt; in Alfre file list to reveal the file in a new Terminal window/tab.&lt;/p&gt;
+
+&lt;p&gt;If there’re no file associated with the front most window or it could not obtain the file of the front mose window, then the file list in Alfred.app will be empty.&lt;/p&gt;
+
+&lt;h3 id=&quot;requirements&quot;&gt;Requirements:&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Alfred.app with PowerPack activated.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;install-steps&quot;&gt;Install steps:&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Download the &lt;code class=&quot;highlighter-rouge&quot;&gt;Front Most.alfredworkflow&lt;/code&gt; file.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Double-click it to install.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;screenshots&quot;&gt;Screenshots:&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2014-04-15-front-most-alfred-workflow/1.gif&quot; alt=&quot;front_most.gif&quot; /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Wed, 16 Apr 2014 00:04:00 +0800</pubDate>
+        <link>http://localhost:4000//alfred-workflow/mac-app/2014/04/15/front-most-alfred-workflow.html</link>
+        <guid isPermaLink="true">http://localhost:4000//alfred-workflow/mac-app/2014/04/15/front-most-alfred-workflow.html</guid>
+        
+        
+        <category>Alfred-Workflow</category>
+        
+        <category>Mac-App</category>
+        
+      </item>
+    
+      <item>
+        <title>使用 mitmproxy 监控 HTTP 请求</title>
+        <description>&lt;p&gt;Web 开发者经常需要通过查看页面被打开之后所发送的请求来调试自己开发的程序，现代浏览器，包括 Firefox, Chrome, Safari 都自带了开发工具，可以帮助开发者监控 HTTP 请求。但是有时候这些工具仍不能满足我们的需求，例如在做某些古老的浏览器(IE)上的兼容性调试时，就需要一个专门用于监控 HTTP 请求的工具才行。最近发现了一个强大的 HTTP 请求监控工具 ———— &lt;code class=&quot;highlighter-rouge&quot;&gt;mitmproxy&lt;/code&gt;    &lt;a href=&quot;http://mitmproxy.org/index.html&quot;&gt;Home Page&lt;/a&gt;。&lt;/p&gt;
+
+&lt;h4 id=&quot;1-介绍&quot;&gt;1. 介绍&lt;/h4&gt;
+
+&lt;p&gt;mitmproxy 是用 Python 和 C 开发的一个中间人代理软件（man-in-the-middle proxy），它可以用来拦截、修改、重放和保存 HTTP/HTTPS 请求。&lt;/p&gt;
+
+&lt;p&gt;它提供了两个命令行工具：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;mitmproxy&lt;/code&gt; 具备交互界面&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;mitmdump&lt;/code&gt; 不具备交互界面，类似 tcpdump&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;本文只介绍 &lt;code class=&quot;highlighter-rouge&quot;&gt;mitmproxy&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;mitmproxy 支持两种工作模式：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;HTTP 代理模式，也就是 mitmproxy 作为一个 HTTP 代理运行，类似于 HTTPSpy。&lt;/li&gt;
+  &lt;li&gt;透明模式，mitmproxy 通过 iptables/pf 作为一个 TCP 层代理运行，好处是不需要修改 HTTP 客户端的配置。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;本文只介绍 HTTP 代理模式。&lt;/p&gt;
+
+&lt;h4 id=&quot;2-安装&quot;&gt;2. 安装&lt;/h4&gt;
+
+&lt;p&gt;使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;pip&lt;/code&gt; 进行安装：&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pip install mitmproxy
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;考虑到包括我朝在内的四大文(读作：zhuān)明(读作：zhì)国家所特有的网络环境，pip可能会出现网络连接超时等错误，可以加上 &lt;code class=&quot;highlighter-rouge&quot;&gt;--proxy&lt;/code&gt; 选项:&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pip install mitmproxy --proxy&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;127.0.0.1:8087
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;我在 OS X Mavericks 上安装还会遇到一个编译错误，可以通过添加 &lt;code class=&quot;highlighter-rouge&quot;&gt;ARCHFALGS&lt;/code&gt; 环境来忽略此错误：&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;ARCHFLAGS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;-Wno-error&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;unused-command-line-argument-hard-error-in-future pip install mitmproxy --proxy&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;127.0.0.1:8087
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;3-http-客户端配置&quot;&gt;3. HTTP 客户端配置&lt;/h4&gt;
+
+&lt;p&gt;mitmproxy 安装完成之后，默认以 HTTP 代理模式工作，就需要 HTTP 客户端将代理配置修改为 mitmproxy 的地址。&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 启动 mitmproxy:&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 使用 -p 选项指定 HTTP 代理所监听的端口号，默认为 8080&lt;/span&gt;
+mitmproxy -p 8080
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;以 Firefox + AutoProxy 插件为例，客户端的配置如下：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2014-04-01-use-mitmproxy-to-monitor-http-requests/1.png&quot; alt=&quot;Snip20140402_13.png&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;4-请求列表&quot;&gt;4. 请求列表&lt;/h4&gt;
+
+&lt;p&gt;在 Firefox 中打开一个网页，如：http://ruby-china.org/topics&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2014-04-01-use-mitmproxy-to-monitor-http-requests/2.png&quot; alt=&quot;Snip20140402_14.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;可以在 mitmproxy 中看到一个 HTTP 请求的列表：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2014-04-01-use-mitmproxy-to-monitor-http-requests/3.png&quot; alt=&quot;Snip20140402_15.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;在 mitmproxy 中可以按 &lt;code class=&quot;highlighter-rouge&quot;&gt;?&lt;/code&gt; 进入到帮助信息界面，如需返回到请求列表界面则按 &lt;code class=&quot;highlighter-rouge&quot;&gt;q&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;在请求列表界面，黄色的箭头 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;&amp;gt;&lt;/code&gt; 指示当前选择的请求，可以使用 vi 的快捷键 &lt;code class=&quot;highlighter-rouge&quot;&gt;k&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;j&lt;/code&gt; 来移动箭头，&lt;code class=&quot;highlighter-rouge&quot;&gt;PgUp&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;PgDown&lt;/code&gt; 为上下翻页，此外空格键也可用来向下翻页。&lt;/p&gt;
+
+&lt;p&gt;如要清空列表，则按大写的 &lt;code class=&quot;highlighter-rouge&quot;&gt;C&lt;/code&gt;。&lt;/p&gt;
+
+&lt;h4 id=&quot;5-过滤请求列表&quot;&gt;5. 过滤请求列表&lt;/h4&gt;
+
+&lt;p&gt;如果请求列表页面中的请求数量太多，则可以使用 mitmproxy 提供的过滤功能。&lt;/p&gt;
+
+&lt;p&gt;在请求列表界面按 &lt;code class=&quot;highlighter-rouge&quot;&gt;l&lt;/code&gt;，此时列表界面的左下方会提示 &lt;code class=&quot;highlighter-rouge&quot;&gt;Limit: &lt;/code&gt;，需要在此输出过滤表达式，过滤表达式的语法列在帮助信息界面，可以按 &lt;code class=&quot;highlighter-rouge&quot;&gt;?&lt;/code&gt; 进行查看。&lt;/p&gt;
+
+&lt;p&gt;例如，只显示所有的 JS 文件的请求，即请求的 URL 匹配 &lt;code class=&quot;highlighter-rouge&quot;&gt;\.js&lt;/code&gt; 的请求，则此处应该输入：&lt;code class=&quot;highlighter-rouge&quot;&gt;~u \.js&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;如需清除过滤，则同样按 &lt;code class=&quot;highlighter-rouge&quot;&gt;l&lt;/code&gt;，然后删除过滤表达式即可。&lt;/p&gt;
+
+&lt;h4 id=&quot;6-查看请求的具体信息&quot;&gt;6. 查看请求的具体信息&lt;/h4&gt;
+
+&lt;p&gt;若要查看某个请求的具体信息，则在请求列表界面选中此请求后，按回车即可进入到查看请求的详细信息的界面：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2014-04-01-use-mitmproxy-to-monitor-http-requests/4.png&quot; alt=&quot;Snip20140402_16.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;详细信息界面包括了 &lt;code class=&quot;highlighter-rouge&quot;&gt;Request&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;Response&lt;/code&gt; 两个 Tab，可以按 &lt;code class=&quot;highlighter-rouge&quot;&gt;tab&lt;/code&gt; 键切换，分别查看 Request 和 Response 的详细信息。&lt;/p&gt;
+
+&lt;p&gt;界面的左上方还显示了此次请求的发送时间。&lt;/p&gt;
+
+&lt;p&gt;mitmproxy 会使用合适的方式显示Request 和 Response 的 body 部分，例如对于压缩过的 JS ，mitmproxy 会解压缩后显示。如需要切换显示方式，可以在此界面按 &lt;code class=&quot;highlighter-rouge&quot;&gt;m&lt;/code&gt; 来选择不同的显示方式。例如，对于包含了中文的 HTML 页面，如需要显示中文，可以使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;urlencoded&lt;/code&gt; 模式。&lt;/p&gt;
+
+&lt;p&gt;在详细信息界面可以按 &lt;code class=&quot;highlighter-rouge&quot;&gt;/&lt;/code&gt; 对 body 部分进行搜索。&lt;/p&gt;
+
+&lt;h4 id=&quot;7-拦截请求&quot;&gt;7. 拦截请求&lt;/h4&gt;
+
+&lt;p&gt;mitmproxy 支持对请求进行拦截，拦截后还可以修改 Request 或 Response 的内容。&lt;/p&gt;
+
+&lt;p&gt;在请求列表界面按 &lt;code class=&quot;highlighter-rouge&quot;&gt;i&lt;/code&gt;，在左下角会显示 &lt;code class=&quot;highlighter-rouge&quot;&gt;Intercept filter: &lt;/code&gt;，要求输入过滤表达式，用于指示拦截哪些请求，此处的过滤表达式的语法同请求列表过滤表达式相同。&lt;/p&gt;
+
+&lt;p&gt;例如，如要拦截所有的 JS 文件的请求，则在此处输入 &lt;code class=&quot;highlighter-rouge&quot;&gt;~u \.js&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;再次访问 http://ruby-china.org/topics 页面，在 mitmproxy 的请求列表界面中可以看到对 JS 的请求都显示为橙色，表示这些请求被拦截了。&lt;/p&gt;
+
+&lt;p&gt;请求被拦截后，可以进入到该请求的详细信息界面，然后按 &lt;code class=&quot;highlighter-rouge&quot;&gt;e&lt;/code&gt;，对请求进入编辑，编辑完成后按 &lt;code class=&quot;highlighter-rouge&quot;&gt;ESC&lt;/code&gt; 退出编辑界面。按 &lt;code class=&quot;highlighter-rouge&quot;&gt;a&lt;/code&gt; 放行该请求（也可以按大写的 &lt;code class=&quot;highlighter-rouge&quot;&gt;A&lt;/code&gt;来放行所有被拦截的请求），请求被放行后，Server 收到的将是被编辑过的 Request。&lt;/p&gt;
+
+&lt;p&gt;当 Server 的 Response 返回到 mitmproxy 时，将再次被拦截，此时在详细信息界面按 &lt;code class=&quot;highlighter-rouge&quot;&gt;e&lt;/code&gt; 可以对 Response 进行编辑，编辑完成后，同样按 &lt;code class=&quot;highlighter-rouge&quot;&gt;ESC&lt;/code&gt; 退出编辑，同样按 &lt;code class=&quot;highlighter-rouge&quot;&gt;a&lt;/code&gt; 或 &lt;code class=&quot;highlighter-rouge&quot;&gt;A&lt;/code&gt; 放行 Response，客户端收到的 Response 将是被编辑过的 Response。&lt;/p&gt;
+
+&lt;p&gt;关于 mitmproxy 的更多用法，请参照其官网的文档：http://mitmproxy.org/doc/index.html&lt;/p&gt;
+</description>
+        <pubDate>Wed, 02 Apr 2014 06:10:00 +0800</pubDate>
+        <link>http://localhost:4000//shell/test/2014/04/01/use-mitmproxy-to-monitor-http-requests.html</link>
+        <guid isPermaLink="true">http://localhost:4000//shell/test/2014/04/01/use-mitmproxy-to-monitor-http-requests.html</guid>
+        
+        
+        <category>Shell</category>
+        
+        <category>Test</category>
+        
+      </item>
+    
+      <item>
+        <title>在 OS X 中设置时区环境变量</title>
+        <description>&lt;p&gt;在 Linux 和 OS X 中，为进程设置不同的时区都可以通过修改 &lt;code class=&quot;highlighter-rouge&quot;&gt;TZ&lt;/code&gt; 这个环境变量来实现，在 OS X 上使用这样的方法来为进程设置不同的时区：&lt;/p&gt;
+
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;TZ&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Asia&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Shanghai&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;ruby&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'puts Time.now'&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# =&amp;gt; 显示上海时间&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;TZ&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Asia&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Tokyo&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;ruby&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'puts Time.now'&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# =&amp;gt; 显示东京时间&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;TZ&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;America&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Los_Angeles&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ruby&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'puts Time.now'&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# =&amp;gt; 显示洛杉矶时间&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;那么这些时区的取值从哪里获取呢？&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo systemsetup -listtimezones
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;另外也可以通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;systemsetup&lt;/code&gt; 命令来获取当前的时区设置：&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo systemsetup -gettimezone
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;设置时区：&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo systemsetup -settimezone Europe/Berlin  &lt;span class=&quot;c&quot;&gt;# 将当前时区设置为柏林时间&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Mon, 31 Mar 2014 07:58:00 +0800</pubDate>
+        <link>http://localhost:4000//shell/mac-os-x/2014/03/30/setting-the-time-zone-environment-variables-in-os-x.html</link>
+        <guid isPermaLink="true">http://localhost:4000//shell/mac-os-x/2014/03/30/setting-the-time-zone-environment-variables-in-os-x.html</guid>
+        
+        
+        <category>Shell</category>
+        
+        <category>Mac-OS-X</category>
+        
+      </item>
+    
+      <item>
+        <title>正则表达式中的 MULTILINE 和 DOTALL 标识</title>
+        <description>&lt;h4 id=&quot;1-multiline-标识&quot;&gt;1. &lt;code class=&quot;highlighter-rouge&quot;&gt;MULTILINE&lt;/code&gt; 标识&lt;/h4&gt;
+
+&lt;p&gt;在 Perl 5 正则中，用于表示字符串开头和字符串结尾的两个表示边界的元字符 &lt;code class=&quot;highlighter-rouge&quot;&gt;^&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;amp;&lt;/code&gt;, 默认分别只匹配整个字符串的开头和结尾。举例来说，对于字符字符串 &lt;code class=&quot;highlighter-rouge&quot;&gt;hello\nwordl\n&lt;/code&gt; 来说，虽然整个字符串实际上包含了两行文本，但是使用正则 &lt;code class=&quot;highlighter-rouge&quot;&gt;/^./g&lt;/code&gt; 只会匹配到字符 &lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt;，而不会匹配到第二行开头的字符： &lt;code class=&quot;highlighter-rouge&quot;&gt;w&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;在 Perl 5 正则中，若要使 &lt;code class=&quot;highlighter-rouge&quot;&gt;^&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;$&lt;/code&gt; 匹配字符串中的每一行的开头和结尾，那么需要在正则表达式中加入 &lt;code class=&quot;highlighter-rouge&quot;&gt;m&lt;/code&gt; 选项。比较下面两个示例的不同：&lt;/p&gt;
+
+&lt;div class=&quot;language-perl highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# 示例1.pl&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;my&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;hello\nworld\n&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=~&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;#^.#_#g;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$x&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;# =&amp;gt; &quot;_ello\nworld\n&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-perl highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# 示例2.pl&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;my&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;hello\nworld\n&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=~&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;#^.#_#mg;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$x&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;# =&amp;gt; &quot;_ello\n_orld\n&quot;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;在 Python 中，使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;re.M&lt;/code&gt; 或 &lt;code class=&quot;highlighter-rouge&quot;&gt;re.MULTILINE&lt;/code&gt; 来获得示例2所演示的特性。比较下面两个示例的不同：&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 示例3.py&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;re&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;hello&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;world&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;r&quot;^.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;_&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;# =&amp;gt; &quot;_ello\nworld\n&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 示例4.py&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;re&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;hello&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;world&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;r&quot;^.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;_&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;M&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;# =&amp;gt; &quot;_ello\n_orld\n&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Ruby 的正则表达式引擎默认即支持 MULTILINE 模式，因此不需要像 Perl 和 Python 中那样指定一个标记：&lt;/p&gt;
+
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# 示例5.rb&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;hello&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;world&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;gsub&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;/^./&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'_'&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# =&amp;gt; &quot;_ello\n_orld\n&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;2--dotall-标记&quot;&gt;2.  &lt;code class=&quot;highlighter-rouge&quot;&gt;DOTALL&lt;/code&gt; 标记&lt;/h4&gt;
+
+&lt;p&gt;在 Perl 5 正则中，元字符 &lt;code class=&quot;highlighter-rouge&quot;&gt;.&lt;/code&gt; 虽然被认为可以匹配任何字符，但实际上默认情况下 &lt;code class=&quot;highlighter-rouge&quot;&gt;.&lt;/code&gt; 并不匹配换行符，例如：&lt;/p&gt;
+
+&lt;div class=&quot;language-perl highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# 示例6.pl&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;my&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;hello\nworld\n&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=~&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;#.*#_#;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$x&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;# =&amp;gt; &quot;_\nworld\n&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;如果想使 &lt;code class=&quot;highlighter-rouge&quot;&gt;.&lt;/code&gt; 也匹配换行符，需要在正则表达式的后面加上 &lt;code class=&quot;highlighter-rouge&quot;&gt;s&lt;/code&gt; 选项：&lt;/p&gt;
+
+&lt;div class=&quot;language-perl highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# 示例7.pl&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;my&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;hello\nworld\n&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=~&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;#.*#_#s;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$x&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;# =&amp;gt; &quot;_&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;在 Python 中，使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;re.S&lt;/code&gt; 或 &lt;code class=&quot;highlighter-rouge&quot;&gt;re.DOTALL&lt;/code&gt; 选项。比较下面两个例子的区别&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 示例8.py&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;re&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;hello&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;world&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;r&quot;.*&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;_&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# =&amp;gt; &quot;_\nworld\n&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 示例9.py&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;re&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;hello&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;world&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;r&quot;.*&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;_&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;# =&amp;gt; &quot;_&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;需要注意的是在 Ruby 中，需要使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;m&lt;/code&gt; 标记来达成同样的效果。比较下面两个例子的区别：&lt;/p&gt;
+
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# 示例10.rb&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;hello&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;world&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;sub&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;/.*/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;_&quot;&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;# =&amp;gt; &quot;_\nworld\n&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# 示例11.rb&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;hello&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;world&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;sub&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;/.*/m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;_&quot;&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;# =&amp;gt; &quot;_&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Mon, 10 Mar 2014 23:34:00 +0800</pubDate>
+        <link>http://localhost:4000//regexp/ruby/perl/python/2014/03/10/regular-expression-multiline-dotall-logo.html</link>
+        <guid isPermaLink="true">http://localhost:4000//regexp/ruby/perl/python/2014/03/10/regular-expression-multiline-dotall-logo.html</guid>
+        
+        
+        <category>Regexp</category>
+        
+        <category>Ruby</category>
+        
+        <category>Perl</category>
+        
+        <category>Python</category>
+        
+      </item>
+    
+      <item>
+        <title>ack 中不能使用最小可能匹配长度为0的正则表达式</title>
+        <description>&lt;p&gt;&lt;a href=&quot;http://beyondgrep.com&quot;&gt;ack&lt;/a&gt; 是一个使用 Perl 编写的类似于 grep 的文本过滤工具，可以使用 Perl 5 正则表达式。&lt;/p&gt;
+
+&lt;p&gt;在使用 ack 的过程中，发现一个值得注意的问题，即：使用最小可能匹配长度为0的正则表达式，可能会使 ack 陷入死循环。&lt;/p&gt;
+
+&lt;p&gt;例如：&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;hello world | ack &lt;span class=&quot;s1&quot;&gt;'.*'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;将使 ack 陷入死循环。&lt;/p&gt;
+
+&lt;p&gt;注意匹配长度为0的匹配和不匹配的区别：&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;hello world | ack &lt;span class=&quot;s1&quot;&gt;'x'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;上面这个例子中，&lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt; 不匹配 &lt;code class=&quot;highlighter-rouge&quot;&gt;hello world&lt;/code&gt;，因此 ack 没有任何输出并退出。
+而在下面的例子中，&lt;code class=&quot;highlighter-rouge&quot;&gt;x*&lt;/code&gt; 可以匹配空字符串，匹配长度为0，因此&lt;code class=&quot;highlighter-rouge&quot;&gt;x*&lt;/code&gt; 会使 ack 进入死循环:&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;hello world | ack &lt;span class=&quot;s1&quot;&gt;'x*'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Tue, 04 Mar 2014 22:07:00 +0800</pubDate>
+        <link>http://localhost:4000//shell/2014/03/04/ack-matches-the-smallest-possible-length-of-0-cannot-be-used-in-regular-expressions.html</link>
+        <guid isPermaLink="true">http://localhost:4000//shell/2014/03/04/ack-matches-the-smallest-possible-length-of-0-cannot-be-used-in-regular-expressions.html</guid>
+        
+        
+        <category>Shell</category>
         
       </item>
     

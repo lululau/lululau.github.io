@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Lulu's Blog</title>
+    <meta name="description" content="" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
+
+</head>
+<body class="home-template">
+
+    <header class="main-header " style="background-image: url(/assets/images/cover.png) ">
+    <nav class="main-nav overlay clearfix">
+            
+        <a class="subscribe-button icon-feed" href="/feed.xml">Subscribe</a>
+    </nav>
+    <div class="vertical">
+        <div class="main-header-content inner">
+            <h1 class="page-title">Lulu's Blog</h1>
+            <h2 class="page-description">
+                
+                
+            </h2>
+        </div>
+    </div>
+    <a class="scroll-down icon-arrow-left" href="#content" data-offset="-45"><span class="hidden">Scroll Down</span></a>
+</header>
+
+
+<main id="content" class="content" role="main">
+
+
+    <div class="extra-pagination inner">
+        <nav class="pagination" role="pagination">
+    
+        
+            <a class="newer-posts" href="/" title="Previous Page">&laquo; Newer Posts</a>
+        
+    
+    <span class="page-number"> Page 2 of 2 </span>
+     
+</nav>
+    </div>
+
+    
+
+    <article class="post">
+        <header class="post-header">
+            <h2 class="post-title"><a href="/ruby/rails/test/2013/11/29/application-in-rails-project-rspec-factorygirl-capybara.html">在 Rails 项目中应用 Rspec/FactoryGirl/Capybara 的配置设置</a></h2>
+        </header>
+        <section class="post-excerpt">
+            <h4 id="1-向-gemfile-中添加需要的-gems">1. 向 Gemfile 中添加需要的 gems:</h4>
+
+<p>```ruby
+group :development, :test do
+  gem “rspec-rails”
+  gem “factory_girl_rails”
+end</p>
+
+ <a class="read-more" href="/ruby/rails/test/2013/11/29/application-in-rails-project-rspec-factorygirl-capybara.html">&raquo;</a>
+        </section>
+        <footer class="post-meta">
+            
+                <img class="author-thumb" src="/assets/images/profile.png" alt="Author's profile picture" nopin="nopin" />
+                Liu Xiang
+            
+             
+                on Ruby, Rails, and Test 
+            
+            <time class="post-date" datetime="2013-11-29">
+                30 Nov 2013
+            </time> 
+        </footer>
+    </article>
+
+    
+
+    <article class="post">
+        <header class="post-header">
+            <h2 class="post-title"><a href="/ruby/rails/2013/11/26/activerecord-needs-a-optimistic-locking-field-is-set-to-the-default-value-of-0.html">ActiveRecord 的乐观锁字段需要将默认值设置为 0</a></h2>
+        </header>
+        <section class="post-excerpt">
+            <p>在使用乐观锁时，如果乐观锁字段（默认为 <code class="highlighter-rouge">lock_version</code>）的默认值为 <code class="highlighter-rouge">NULL</code>，那么这条记录被加载到 Rails 中后，将被初始化为 <code class="highlighter-rouge">0</code>。当下一次调用 <code class="highlighter-rouge">save</code> 方法更新这条记录时，Rails 会使用这样的 SQL 语句来查询所更新记录是否已经被更新过：</p>
+
+ <a class="read-more" href="/ruby/rails/2013/11/26/activerecord-needs-a-optimistic-locking-field-is-set-to-the-default-value-of-0.html">&raquo;</a>
+        </section>
+        <footer class="post-meta">
+            
+                <img class="author-thumb" src="/assets/images/profile.png" alt="Author's profile picture" nopin="nopin" />
+                Liu Xiang
+            
+             
+                on Ruby and Rails 
+            
+            <time class="post-date" datetime="2013-11-26">
+                26 Nov 2013
+            </time> 
+        </footer>
+    </article>
+
+    
+
+    <article class="post">
+        <header class="post-header">
+            <h2 class="post-title"><a href="/ruby/rails/2013/11/25/has-many-dependent-option-and-delete-destroy-clear-methods.html">has_many 的 :dependent 选项和 delete/destroy/clear 方法</a></h2>
+        </header>
+        <section class="post-excerpt">
+            <p><code class="highlighter-rouge">has_many</code> 的 <code class="highlighter-rouge">:dependent</code> 选项有两个方面的作用：</p>
+
+ <a class="read-more" href="/ruby/rails/2013/11/25/has-many-dependent-option-and-delete-destroy-clear-methods.html">&raquo;</a>
+        </section>
+        <footer class="post-meta">
+            
+                <img class="author-thumb" src="/assets/images/profile.png" alt="Author's profile picture" nopin="nopin" />
+                Liu Xiang
+            
+             
+                on Ruby and Rails 
+            
+            <time class="post-date" datetime="2013-11-25">
+                26 Nov 2013
+            </time> 
+        </footer>
+    </article>
+
+    
+
+    <article class="post">
+        <header class="post-header">
+            <h2 class="post-title"><a href="/ruby/rails/2013/11/25/activerecord-many-to-many-self-join.html">ActiveRecord Many-To-Many Self Join</a></h2>
+        </header>
+        <section class="post-excerpt">
+            <p>系统中有一个 <code class="highlighter-rouge">User</code> 模型，要求用户之间需要存在一个朋友关系，即：每个人有可以拥有多个朋友:</p>
+
+ <a class="read-more" href="/ruby/rails/2013/11/25/activerecord-many-to-many-self-join.html">&raquo;</a>
+        </section>
+        <footer class="post-meta">
+            
+                <img class="author-thumb" src="/assets/images/profile.png" alt="Author's profile picture" nopin="nopin" />
+                Liu Xiang
+            
+             
+                on Ruby and Rails 
+            
+            <time class="post-date" datetime="2013-11-25">
+                25 Nov 2013
+            </time> 
+        </footer>
+    </article>
+
+    
+
+    <article class="post">
+        <header class="post-header">
+            <h2 class="post-title"><a href="/shell/2013/11/22/when-the-system-fails-how-from-one-of-dozens-of-hundreds-of-gb-gb-filter-care-about-errors-in-the-log-file-information.html">从一个几十GB上百GB的日志文件中过滤所关心的错误信息</a></h2>
+        </header>
+        <section class="post-excerpt">
+            <p>先根据故障发生的时间定位关键的日志在整个日志文件中的大致位置，然后用 <code class="highlighter-rouge">dd</code> 输出这部分的日志再 <code class="highlighter-rouge">grep</code> 即可:</p>
+
+ <a class="read-more" href="/shell/2013/11/22/when-the-system-fails-how-from-one-of-dozens-of-hundreds-of-gb-gb-filter-care-about-errors-in-the-log-file-information.html">&raquo;</a>
+        </section>
+        <footer class="post-meta">
+            
+                <img class="author-thumb" src="/assets/images/profile.png" alt="Author's profile picture" nopin="nopin" />
+                Liu Xiang
+            
+             
+                on Shell 
+            
+            <time class="post-date" datetime="2013-11-22">
+                22 Nov 2013
+            </time> 
+        </footer>
+    </article>
+
+    
+
+    <article class="post">
+        <header class="post-header">
+            <h2 class="post-title"><a href="/ruby/2013/11/20/the-difference-between-rubys-time-and-datetime-classes.html">Ruby 的 Time 类和 DateTime 类的区别</a></h2>
+        </header>
+        <section class="post-excerpt">
+            <p><code class="highlighter-rouge">Time</code> 是 Ruby 对 <code class="highlighter-rouge">POSIX</code> 的原始数据类型 <code class="highlighter-rouge">time_t</code> 的封装，换句话说，每一个 <code class="highlighter-rouge">Time</code> 对象都是表示距离 UNIX 纪元（即1970-01-01 00:00:00 UTC）的秒数。它可以用一个正的或者负的整数来表示，并且是有界限的：</p>
+
+ <a class="read-more" href="/ruby/2013/11/20/the-difference-between-rubys-time-and-datetime-classes.html">&raquo;</a>
+        </section>
+        <footer class="post-meta">
+            
+                <img class="author-thumb" src="/assets/images/profile.png" alt="Author's profile picture" nopin="nopin" />
+                Liu Xiang
+            
+             
+                on Ruby 
+            
+            <time class="post-date" datetime="2013-11-20">
+                21 Nov 2013
+            </time> 
+        </footer>
+    </article>
+
+    
+
+    <article class="post">
+        <header class="post-header">
+            <h2 class="post-title"><a href="/ruby/2013/10/03/the-ruby-metaprogramming-in-the-dry.html">《Ruby 元编程》中的那些干货</a></h2>
+        </header>
+        <section class="post-excerpt">
+            <h2 id="1-对象模型">1. 对象模型</h2>
+
+ <a class="read-more" href="/ruby/2013/10/03/the-ruby-metaprogramming-in-the-dry.html">&raquo;</a>
+        </section>
+        <footer class="post-meta">
+            
+                <img class="author-thumb" src="/assets/images/profile.png" alt="Author's profile picture" nopin="nopin" />
+                Liu Xiang
+            
+             
+                on Ruby 
+            
+            <time class="post-date" datetime="2013-10-03">
+                04 Oct 2013
+            </time> 
+        </footer>
+    </article>
+
+    
+
+    <article class="post">
+        <header class="post-header">
+            <h2 class="post-title"><a href="/ruby/rails/2013/09/28/repost-ruby-community-should-go-to-rails.html">[转载] Ruby社区应该去Rails化了</a></h2>
+        </header>
+        <section class="post-excerpt">
+            <p><a href="http://robbinfan.com/blog/40/ruby-off-rails" title="Ruby社区应该去Rails化了">Ruby社区应该去Rails化了</a></p>
+
+ <a class="read-more" href="/ruby/rails/2013/09/28/repost-ruby-community-should-go-to-rails.html">&raquo;</a>
+        </section>
+        <footer class="post-meta">
+            
+                <img class="author-thumb" src="/assets/images/profile.png" alt="Author's profile picture" nopin="nopin" />
+                Liu Xiang
+            
+             
+                on Ruby and Rails 
+            
+            <time class="post-date" datetime="2013-09-28">
+                29 Sep 2013
+            </time> 
+        </footer>
+    </article>
+
+    
+
+    <article class="post">
+        <header class="post-header">
+            <h2 class="post-title"><a href="/ruby/2013/09/28/use-the-github-gem-install-bundler-installed-location.html">使用 Bundler 安装的 Github gem 的安装位置</a></h2>
+        </header>
+        <section class="post-excerpt">
+            <div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nb">echo</span> <span class="k">$(</span>gem environ | sed -n <span class="s1">'/GEM PATHS/{n;s#.*- ##;p;}'</span><span class="k">)</span>/bundler/gems
+</code></pre>
+</div>
+ <a class="read-more" href="/ruby/2013/09/28/use-the-github-gem-install-bundler-installed-location.html">&raquo;</a>
+        </section>
+        <footer class="post-meta">
+            
+                <img class="author-thumb" src="/assets/images/profile.png" alt="Author's profile picture" nopin="nopin" />
+                Liu Xiang
+            
+             
+                on Ruby 
+            
+            <time class="post-date" datetime="2013-09-28">
+                29 Sep 2013
+            </time> 
+        </footer>
+    </article>
+
+    
+
+    <article class="post">
+        <header class="post-header">
+            <h2 class="post-title"><a href="/ruby/2013/09/27/ruby-magic-symbol-to-proc-method.html">Ruby 魔法之 Symbol#to_proc() 方法</a></h2>
+        </header>
+        <section class="post-excerpt">
+            <p><em>摘自 “Ruby 元编程” 附录A.5</em></p>
+
+ <a class="read-more" href="/ruby/2013/09/27/ruby-magic-symbol-to-proc-method.html">&raquo;</a>
+        </section>
+        <footer class="post-meta">
+            
+                <img class="author-thumb" src="/assets/images/profile.png" alt="Author's profile picture" nopin="nopin" />
+                Liu Xiang
+            
+             
+                on Ruby 
+            
+            <time class="post-date" datetime="2013-09-27">
+                28 Sep 2013
+            </time> 
+        </footer>
+    </article>
+
+    
+
+    <article class="post">
+        <header class="post-header">
+            <h2 class="post-title"><a href="/mac/mac-os-x/2012/01/04/solve-the-mac-fonts-on-the-external-monitor-fuzzy-problem.html">解决Mac外接显示器字体模糊的问题</a></h2>
+        </header>
+        <section class="post-excerpt">
+            <p>Mac外接显示器时，除非接的是Apple自家的显示器“ACD”，不然一般会遇到字体模糊发虚的问题。在终端中执行命令:</p>
+
+ <a class="read-more" href="/mac/mac-os-x/2012/01/04/solve-the-mac-fonts-on-the-external-monitor-fuzzy-problem.html">&raquo;</a>
+        </section>
+        <footer class="post-meta">
+            
+                <img class="author-thumb" src="/assets/images/profile.png" alt="Author's profile picture" nopin="nopin" />
+                Liu Xiang
+            
+             
+                on Mac and Mac-OS-X 
+            
+            <time class="post-date" datetime="2012-01-04">
+                05 Jan 2012
+            </time> 
+        </footer>
+    </article>
+
+    
+
+    <article class="post">
+        <header class="post-header">
+            <h2 class="post-title"><a href="/mac/mac-os-x/2012/01/03/data-migration-for-new-mac.html">新 Mac 的数据迁移</a></h2>
+        </header>
+        <section class="post-excerpt">
+            <p>之前的470(2008年末15吋机型，第一代Unibody Macbook Pro)，不知道什么时候磕坏了，以太网口变形，屏幕错位。新Mac的数据迁移。周六拿去西单Apple Store维修，修完之后屏幕仍然有点向后错位，所以干脆买了17吋的311回来。本来以为从时间机器的备份盘里可以直接把数据迁移到新Mac上，经过实践才知道这样是不行的，貌似TM备份盘和机器是一对一的。要迁移数据到新的Mac上只能从另一台正在运行Mac上进行拷贝。数据迁移的步骤是：</p>
+
+ <a class="read-more" href="/mac/mac-os-x/2012/01/03/data-migration-for-new-mac.html">&raquo;</a>
+        </section>
+        <footer class="post-meta">
+            
+                <img class="author-thumb" src="/assets/images/profile.png" alt="Author's profile picture" nopin="nopin" />
+                Liu Xiang
+            
+             
+                on Mac and Mac-OS-X 
+            
+            <time class="post-date" datetime="2012-01-03">
+                04 Jan 2012
+            </time> 
+        </footer>
+    </article>
+
+    
+
+    <nav class="pagination" role="pagination">
+    
+        
+            <a class="newer-posts" href="/" title="Previous Page">&laquo; Newer Posts</a>
+        
+    
+    <span class="page-number"> Page 2 of 2 </span>
+     
+</nav>
+
+</main>
+
+    <footer class="site-footer clearfix">
+      <section class="copyright">
+        <a href="/">Lulu's Blog</a> &copy;
+              2017 &bull; All rights reserved.
+      </section>
+      <section class="poweredby">Made with Jekyll using
+        <a href="http://github.com/rosario/kasper">Kasper theme</a>
+      </section>
+    </footer>
+
+    <script type="text/javascript" src="/assets/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', '']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+</body>
+</html>

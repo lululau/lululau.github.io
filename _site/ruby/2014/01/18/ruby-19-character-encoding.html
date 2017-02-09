@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Lulu's Blog</title>
+    <meta name="description" content="" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
+
+</head>
+<body class="home-template">
+
+    <header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        <a class="back-button icon-arrow-left" href="/">Home</a>
+        <a class="subscribe-button icon-feed" href="/feed.xml">Subscribe</a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">Ruby 1.9+ 的字符编码</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2014-01-18">18 Jan 2014</time>
+                
+                    on Ruby
+                
+            </section>
+        </header>
+
+<!--         <header class="post-header">
+            <a id="blog-logo" href="http://localhost:4000">
+                
+                    <img src="true" alt="Lulu's Blog" />
+                
+            </a>
+        </header> -->
+
+        <!-- <span class="post-meta">
+            <time datetime="2014-01-18">18 Jan 2014</time>
+            
+                on Ruby
+            
+        </span> -->
+
+        <!-- <h1 class="post-title">Ruby 1.9+ 的字符编码</h1> -->
+
+        <section class="post-content">
+            <p>从 1.9 开始，Ruby 增加了对字符编码的支持。这篇文章基本上是看了 Ruby 2.0 镐头书第 17 章 <code class="highlighter-rouge">Character Encoding</code> 做的笔记，并补充了一些自己通过实验得到的结论。</p>
+
+<h2 id="ruby-代码文件的编码">Ruby 代码文件的编码</h2>
+
+<p>(1). Ruby 源文件的默认编码：<br />
+    你需要告诉 Ruby 你的 Ruby 代码文件使用的是什么编码，因为 Ruby 中的字符串字面量、Symbol 字面量以及正则表达式字面量的字符编码在多数时候取决于定义他们的源文件的字符编码。</p>
+
+<ul>
+  <li>Ruby 1.9 默认 Ruby 源文件的编码为 <code class="highlighter-rouge">US-ASCII</code></li>
+</ul>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="c1">#!/usr/bin/env ruby</span>
+<span class="c1"># default_source_encoding.rb</span>
+<span class="n">puts__ENCODING__</span>  <span class="c1"># 通过__ENCODING__来查询当前文件的字符编码</span>
+</code></pre>
+</div>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>rvm use 1.9 
+ruby default_source_encoding.rb
+<span class="c"># 输出：</span>
+US-ASCII
+</code></pre>
+</div>
+<ul>
+  <li>Ruby 2.0 默认 Ruby 源文件的编码为 <code class="highlighter-rouge">UTF-8</code></li>
+</ul>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>rvm use 2.0
+ruby default_source_encoding.rb
+<span class="c"># 输出：</span>
+UTF-8
+</code></pre>
+</div>
+
+<p>(2). 指定 Ruby 源文件的字符编码</p>
+
+<p>在 Ruby 1.9 中，如果代码文件中包含了非 ASCII 字符，或者在 Ruby 2.0 中代码文件中包含了非 UTF-8 字符，那么就需要在代码文件中声明该代码文件的字符编码：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="c1">#!/usr/bin/env ruby</span>
+<span class="c1">#  non_ascii.rb</span>
+<span class="nb">puts</span> <span class="s1">'中文'</span>
+</code></pre>
+</div>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>rvm use 1.9
+ruby non_ascii.rb
+<span class="c"># 输出：</span>
+non_ascii.rb:2: invalid multibyte char <span class="o">(</span>US-ASCII<span class="o">)</span>
+non_ascii.rb:2: invalid multibyte char <span class="o">(</span>US-ASCII<span class="o">)</span>
+</code></pre>
+</div>
+
+<p>Ruby 使用一个看似神奇实则很简单的标记规则来指定代码文件的字符编码：如果一个文件的第一行（如果第一行是 UNIX shebang <code class="highlighter-rouge">#!</code>，那么就是第二行）是注释行，Ruby 会使用 <code class="highlighter-rouge">coding:\s*(\S+)</code> 这个正则表达式来对这个注释行进行匹配，如果匹配成功那么该文件的字符编码就被设置为 <code class="highlighter-rouge">$1</code>的值。所以，可以这样将一个 Ruby 代码文件的字符编码设置为 UTF-8：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="c1"># coding: utf-8</span>
+</code></pre>
+</div>
+
+<p>因为 Ruby 只是检索字符串中是否包含 <code class="highlighter-rouge">coding:</code> 这个子字符串，所以实际上也可以这样写：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="c1"># encoding: utf-8</span>
+</code></pre>
+</div>
+
+<p>Emacs 用户可能会更喜欢这样写：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="c1"># -*- encoding: utf-8 -*-</span>
+</code></pre>
+</div>
+
+<p>另外，如果 Ruby 代码文件包含了 UTF-8 BOM，也就是说代码文件的头三个字节是 <code class="highlighter-rouge">\xEF\xBB\xBF</code>，那么 Ruby 认为这个代码文件的字符编码是 UTF-8，而不管上述的标记行：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="c1">#!/usr/bin/env ruby</span>
+<span class="c1"># coding: GBK</span>
+<span class="c1"># gbk.rb</span>
+<span class="n">puts__ENCODING__</span>
+</code></pre>
+</div>
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>rvm use 2.0
+ruby gbk.rb
+<span class="c"># 输出:</span>
+GBK
+ruby -e <span class="s1">'print [0xEF, 0xBB, 0xBF].pack("c*")'</span> &gt; bom.rb
+cat gbk.rb &gt;&gt; bom.rb
+ruby bom.rb
+<span class="c"># 输出：</span>
+UTF-8
+</code></pre>
+</div>
+
+<p>(3).  查询代码文件的编码：</p>
+
+<p>特殊常量 <code class="highlighter-rouge">__ENCODING__</code> 存储了文件的字符编码</p>
+
+<h2 id="字符串还有symbol和regexp字面量的字符编码">字符串（还有Symbol和Regexp）字面量的字符编码</h2>
+
+<p>在 Ruby 1.9+ 中，每一个字符串对象、Symbol 对象和正则表达式对象都有自己的字符编码。</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="c1">#!/usr/bin/env ruby</span>
+<span class="c1"># coding: utf-8</span>
+<span class="c1"># show_encoding.rb</span>
+<span class="n">str</span> <span class="o">=</span> <span class="s2">"中文"</span>
+<span class="n">sym</span> <span class="o">=</span> <span class="ss">:name</span>
+<span class="n">regex</span> <span class="o">=</span> <span class="no">Regexp</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">str</span><span class="p">.</span><span class="nf">encode</span><span class="p">(</span><span class="s2">"GBK"</span><span class="p">))</span>
+
+<span class="nb">puts</span> <span class="n">str</span><span class="p">.</span><span class="nf">encoding</span>
+<span class="nb">puts</span> <span class="n">sym</span><span class="p">.</span><span class="nf">encoding</span>
+<span class="nb">puts</span> <span class="n">regex</span><span class="p">.</span><span class="nf">encoding</span>
+</code></pre>
+</div>
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>rvm use 2.0
+ruby show_encoding.rb
+<span class="c"># 输出：</span>
+UTF-8
+US-ASCII
+GBK
+</code></pre>
+</div>
+
+<p>字符串对象、Symbol 对象和正则表达式对象的字面量的编码是这样确定的：</p>
+
+<p>(1). 字符串字面量总是以定义它的源代码文件的字符编码来编码的。</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="c1">#!/usr/bin/env ruby</span>
+<span class="c1"># coding: utf-8</span>
+<span class="c1"># utf8.rb</span>
+<span class="nb">puts</span> <span class="s2">"abc"</span><span class="p">.</span><span class="nf">encoding</span>
+<span class="nb">puts</span> <span class="s2">"中文"</span><span class="p">.</span><span class="nf">encoding</span>
+</code></pre>
+</div>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="c1">#!/usr/bin/env ruby</span>
+<span class="c1"># coding: GBK</span>
+<span class="c1"># gbk.rb</span>
+<span class="nb">puts</span> <span class="s2">"abc"</span><span class="p">.</span><span class="nf">encoding</span>
+<span class="nb">puts</span> <span class="s2">"中文"</span><span class="p">.</span><span class="nf">encoding</span>
+</code></pre>
+</div>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>rvm use 2.0
+ruby utf8.rb
+ruby gbk.rb
+<span class="c"># 输出:</span>
+UTF-8
+UTF-8
+GBK
+GBK
+</code></pre>
+</div>
+
+<p>(2). Symbol 和正则表达式有点特别（我猜测可能出于性能方面的考量）：如果它们只包含 ASCII 字符（即所有字节的最高位都为0），那么它们就以 US-ASCII 编码；否则它们就以定义它们的源代码文件的字符编码来编码。</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="c1">#!/usr/bin/env ruby</span>
+<span class="c1"># coding: UTF-8</span>
+<span class="c1"># sym_regex_encoding.rb</span>
+<span class="n">a</span> <span class="o">=</span> <span class="ss">:name</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">:</span><span class="err">名字</span>
+<span class="n">x</span> <span class="o">=</span> <span class="sr">/hello/</span>
+<span class="n">y</span> <span class="o">=</span> <span class="sr">/你好/</span>
+<span class="nb">puts</span> <span class="n">a</span><span class="p">.</span><span class="nf">encoding</span>
+<span class="nb">puts</span> <span class="n">b</span><span class="p">.</span><span class="nf">encoding</span>
+<span class="nb">puts</span> <span class="n">x</span><span class="p">.</span><span class="nf">encoding</span>
+<span class="nb">puts</span> <span class="n">y</span><span class="p">.</span><span class="nf">encoding</span>
+</code></pre>
+</div>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>rvm use 2.0
+ruby sym_regex_encoding.rb
+<span class="c"># 输出:</span>
+US-ASCII
+UTF-8
+US-ASCII
+UTF-8
+</code></pre>
+</div>
+
+<p>(3). 一个例外：</p>
+
+<p>在字符串和正则表达式中，可以使用 <code class="highlighter-rouge">\uxxxx</code> 或 <code class="highlighter-rouge">\u{x... x... x...}</code> 来创建任意的 UNICODE 字符，如果一个字符串字面量或者正则表达式字面量中包含了 <code class="highlighter-rouge">\uxxxx</code> 或 <code class="highlighter-rouge">\u{x... x... x...}</code> 标记，且此标记所表示的字符不是 ASCII 字符，那么它的编码将设置为 UTF-8，而不管定义它的源代码文件的字符编码是什么。</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="c1">#!/usr/bin/env ruby</span>
+<span class="c1"># coding: GBK</span>
+<span class="c1"># unicode_notation.rb</span>
+<span class="n">a</span> <span class="o">=</span> <span class="s2">"a"</span>
+<span class="n">b</span> <span class="o">=</span> <span class="s2">"中"</span>
+<span class="n">x</span> <span class="o">=</span> <span class="s2">"</span><span class="se">\u</span><span class="s2">0061"</span>
+<span class="n">y</span> <span class="o">=</span> <span class="s2">"</span><span class="se">\u</span><span class="s2">2d4e"</span>
+<span class="nb">puts</span> <span class="n">a</span><span class="p">.</span><span class="nf">encoding</span>
+<span class="nb">puts</span> <span class="n">b</span><span class="p">.</span><span class="nf">encoding</span>
+<span class="nb">puts</span> <span class="n">x</span><span class="p">.</span><span class="nf">encoding</span>
+<span class="nb">puts</span> <span class="n">y</span><span class="p">.</span><span class="nf">encoding</span>
+</code></pre>
+</div>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>rvm use 2.0
+ruby unicode_notation.rb
+<span class="c"># 输出:</span>
+GBK
+GBK
+GBK
+UTF-8
+</code></pre>
+</div>
+
+<h2 id="虚拟编码-ascii-8bit">虚拟编码 ASCII-8BIT</h2>
+
+<p>Ruby 支持一个叫做 <code class="highlighter-rouge">ASCII-8BIT</code> 的虚拟字符编码。这个虚拟编码更多地是用来处理二进制数据，或者在不确定 Ruby 代码文件编码时也可以将其指定为 <code class="highlighter-rouge">ASCII-8BIT</code>。</p>
+
+<h2 id="编码转换">编码转换</h2>
+
+<p>(1). 可以将字符串从一个编码转换为另外一个编码</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="c1">#!/usr/bin/env ruby</span>
+<span class="c1"># coding: UTF-8</span>
+<span class="c1"># transcoding.rb</span>
+<span class="n">a</span> <span class="o">=</span> <span class="s2">"中"</span>
+<span class="nb">puts</span> <span class="n">a</span><span class="p">.</span><span class="nf">encoding</span>
+<span class="nb">p</span> <span class="n">a</span><span class="p">.</span><span class="nf">bytes</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">e</span><span class="o">|</span> <span class="n">e</span><span class="p">.</span><span class="nf">to_s</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="p">}</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="nf">encode</span><span class="p">(</span><span class="s2">"GBK"</span><span class="p">)</span>
+<span class="nb">puts</span> <span class="n">b</span><span class="p">.</span><span class="nf">encoding</span>
+<span class="nb">p</span> <span class="n">b</span><span class="p">.</span><span class="nf">bytes</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">e</span><span class="o">|</span> <span class="n">e</span><span class="p">.</span><span class="nf">to_s</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="p">}</span>
+</code></pre>
+</div>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>rvm use 2.0
+ruby transcoding.rb
+<span class="c"># 输出:</span>
+UTF-8
+<span class="o">[</span><span class="s2">"e4"</span>, <span class="s2">"b8"</span>, <span class="s2">"ad"</span><span class="o">]</span>
+GBK
+<span class="o">[</span><span class="s2">"d6"</span>, <span class="s2">"d0"</span><span class="o">]</span>
+<span class="nv">LANG</span><span class="o">=</span>zh_CN.UTF-8 <span class="nb">echo</span> -n 中 | od -An -tx1
+<span class="c"># 输出：</span>
+e4  b8  ad
+<span class="nv">LANG</span><span class="o">=</span>zh_CN.UTF-8 <span class="nb">echo</span> -n 中 | iconv -t GBK | od -An -tx1
+<span class="c"># 输出：</span>
+d6  d0
+</code></pre>
+</div>
+
+<p>(2). 改变一个对象的编码</p>
+
+<p><code class="highlighter-rouge">encode</code> 方法实际上是返回一个新的对象，而要改变一个对象的编码，则使用 <code class="highlighter-rouge">force_encoding</code> 方法：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="c1">#!/usr/bin/env ruby</span>
+<span class="c1"># coding: ASCII-8BIT</span>
+<span class="c1"># force_encoding.rb</span>
+<span class="n">a</span> <span class="o">=</span> <span class="s2">"中"</span>
+<span class="nb">puts</span> <span class="n">a</span><span class="p">.</span><span class="nf">encoding</span>
+<span class="nb">p</span> <span class="n">a</span><span class="p">.</span><span class="nf">bytes</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">e</span><span class="o">|</span> <span class="n">e</span><span class="p">.</span><span class="nf">to_s</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="p">}</span>
+<span class="n">a</span><span class="p">.</span><span class="nf">force_encoding</span><span class="p">(</span><span class="s2">"UTF-8"</span><span class="p">)</span>
+<span class="nb">puts</span> <span class="n">a</span><span class="p">.</span><span class="nf">encoding</span>
+<span class="nb">p</span> <span class="n">a</span><span class="p">.</span><span class="nf">bytes</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">e</span><span class="o">|</span> <span class="n">e</span><span class="p">.</span><span class="nf">to_s</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="p">}</span>
+<span class="n">a</span><span class="p">.</span><span class="nf">force_encoding</span><span class="p">(</span><span class="s2">"GBK"</span><span class="p">)</span>
+<span class="nb">puts</span> <span class="n">a</span><span class="p">.</span><span class="nf">encoding</span>
+<span class="nb">p</span> <span class="n">a</span><span class="p">.</span><span class="nf">bytes</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">e</span><span class="o">|</span> <span class="n">e</span><span class="p">.</span><span class="nf">to_s</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="p">}</span>
+</code></pre>
+</div>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>rvm use 2.0
+ruby force_encoding.rb
+<span class="c"># 输出:</span>
+ASCII-8BIT
+<span class="o">[</span><span class="s2">"e4"</span>, <span class="s2">"b8"</span>, <span class="s2">"ad"</span><span class="o">]</span>
+UTF-8
+<span class="o">[</span><span class="s2">"e4"</span>, <span class="s2">"b8"</span>, <span class="s2">"ad"</span><span class="o">]</span>
+GBK
+<span class="o">[</span><span class="s2">"e4"</span>, <span class="s2">"b8"</span>, <span class="s2">"ad"</span><span class="o">]</span>
+</code></pre>
+</div>
+
+<p><strong>可以看到 <code class="highlighter-rouge">force_encoding</code>只是改变了对象的字符编码，并没有改变存储字符的实际字节。</strong></p>
+
+<h2 id="io-的字符编码">IO 的字符编码</h2>
+
+<p>如果将一个某种特定字符编码的字符串输出到外部 IO 对象时，Ruby 将会使用什么编码输出这个字符串呢？答案取决于这个 IO 对象的编码是什么。<br />
+每个IO对象都有两个和字符编码相关的属性：外部编码 <code class="highlighter-rouge">external_encoding</code> 和 内部编码 <code class="highlighter-rouge">internal_encoding</code>。</p>
+
+<p>(1). 输出过程中的编码转换</p>
+
+<p>与输出数据到一个 IO 对象这个过程相关的是 <code class="highlighter-rouge">external_encoding</code>， 输出过程中的字符编码转换规则为：若此 IO 对象的 <code class="highlighter-rouge">external_encoding</code> 为 <code class="highlighter-rouge">nil</code> ，则被输出的对象将不会被转换字符编码而直接输出其内存中的实际字节；否则，被输出的对象将使用 <code class="highlighter-rouge">external_encoding</code> 进行编码，编码过程中所使用的源编码为被输出对象的 <code class="highlighter-rouge">encoding</code> 属性。</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="c1">#!/usr/bin/env ruby</span>
+<span class="c1"># coding: UTF-8</span>
+<span class="c1"># output_transcoding.rb</span>
+<span class="n">s_utf8</span> <span class="o">=</span> <span class="s2">"中"</span>
+<span class="nb">p</span> <span class="n">s_utf8</span><span class="p">.</span><span class="nf">bytes</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">e</span><span class="o">|</span> <span class="n">e</span><span class="p">.</span><span class="nf">to_s</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="p">}</span>   <span class="c1"># =&gt; ["e4", "b8", "ad"]</span>
+<span class="n">s_gbk</span> <span class="o">=</span> <span class="n">s_utf8</span><span class="p">.</span><span class="nf">encode</span><span class="p">(</span><span class="s2">"GBK"</span><span class="p">)</span>
+<span class="nb">p</span> <span class="n">s_gbk</span><span class="p">.</span><span class="nf">bytes</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">e</span><span class="o">|</span> <span class="n">e</span><span class="p">.</span><span class="nf">to_s</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="p">}</span>    <span class="c1"># =&gt; ["d6", "d0"]</span>
+<span class="nb">p</span> <span class="n">s_gbk</span><span class="p">.</span><span class="nf">encoding</span>    <span class="c1"># =&gt;  #&lt;Encoding:GBK&gt;</span>
+<span class="nb">p</span> <span class="no">STDOUT</span><span class="p">.</span><span class="nf">external_encoding</span>    <span class="c1"># =&gt; nil</span>
+<span class="nb">p</span> <span class="no">STDOUT</span><span class="p">.</span><span class="nf">internal_encoding</span>    <span class="c1"># =&gt; nil</span>
+<span class="nb">puts</span> <span class="n">s_gbk</span>      <span class="c1"># =&gt; 0xd6  0xd0 ， 说明 s_gbk 的字节没有经过编码转换而直接输出</span>
+<span class="no">STDOUT</span><span class="p">.</span><span class="nf">set_encoding</span><span class="p">(</span><span class="s2">"UTF-8:Windows-31J"</span><span class="p">)</span>
+<span class="nb">p</span> <span class="no">STDOUT</span><span class="p">.</span><span class="nf">external_encoding</span>     <span class="c1"># =&gt; #&lt;Encoding:UTF-8&gt;</span>
+<span class="nb">p</span> <span class="no">STDOUT</span><span class="p">.</span><span class="nf">internal_encoding</span>     <span class="c1"># =&gt; #&lt;Encoding:Windows-31J&gt;</span>
+<span class="nb">puts</span> <span class="n">s_gbk</span>      <span class="c1"># =&gt; 0xe4  0xb8  0xad ，被正常转换为 UTF-8，说明数据输出过程中的编码转换和 internal_encoding &lt;Windows-31J&gt; 无关</span>
+</code></pre>
+</div>
+
+<p>(2). 输入过程中的编码转换<br />
+   当从一个 IO 对象读取数据时，读取的数据的编码和此 IO 对象的 <code class="highlighter-rouge">external_encoding</code> 和 <code class="highlighter-rouge">internal_encoding</code> 两个属性都有关系，具体的规则为：若 <code class="highlighter-rouge">internal_encoding</code>  为 nil，那么外部数据将被不经任何转换地读进内存，在内存中存储此块数据的对象的 <code class="highlighter-rouge">encoding</code> 属性被设置为此 IO 对象的 <code class="highlighter-rouge">external_encoding</code>；否则，外部数据被读进内存时将被转换为 <code class="highlighter-rouge">internal_encoding</code> 所标识的字符编码，且存储此块数据的对象的 <code class="highlighter-rouge">encoding</code> 属性被设置为 <code class="highlighter-rouge">internal_encoding</code>，编码转换所使用的源编码为 <code class="highlighter-rouge">external_encoding</code>。</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nb">echo</span> -n <span class="nv">$'</span><span class="se">\x</span>e4<span class="se">\x</span>b8<span class="se">\x</span>ad<span class="s1">' &gt; tmp  # 向 tmp 文件中输出“中”字经 UTF-8 编码的字节序列
+cat tmp
+#输出：
+中
+</span></code></pre>
+</div>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="c1">#!/usr/bin/env ruby</span>
+<span class="c1"># input_transcoding.rb</span>
+<span class="no">File</span><span class="p">.</span><span class="nf">open</span> <span class="s2">"tmp"</span><span class="p">,</span> <span class="s2">"r:UTF-8"</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+    <span class="nb">p</span> <span class="n">f</span><span class="p">.</span><span class="nf">external_encoding</span>   <span class="c1"># =&gt; #&lt;Encoding:UTF-8&gt;</span>
+    <span class="nb">p</span> <span class="n">f</span><span class="p">.</span><span class="nf">internal_encoding</span>   <span class="c1"># =&gt; nil</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="nf">gets</span>
+    <span class="nb">p</span> <span class="n">l</span><span class="p">.</span><span class="nf">encoding</span>   <span class="c1"># =&gt; #&lt;Encoding:UTF-8&gt;</span>
+    <span class="nb">p</span> <span class="n">l</span><span class="p">.</span><span class="nf">bytes</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">e</span><span class="o">|</span> <span class="n">e</span><span class="p">.</span><span class="nf">to_s</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="p">}</span>  <span class="c1"># =&gt; ["e4", "b8", "ad"]</span>
+<span class="k">end</span>
+<span class="no">File</span><span class="p">.</span><span class="nf">open</span> <span class="s2">"tmp"</span><span class="p">,</span> <span class="s2">"r:UTF-8:GBK"</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+    <span class="nb">p</span> <span class="n">f</span><span class="p">.</span><span class="nf">external_encoding</span>  <span class="c1"># =&gt; #&lt;Encoding:UTF-8&gt;</span>
+    <span class="nb">p</span> <span class="n">f</span><span class="p">.</span><span class="nf">internal_encoding</span>  <span class="c1"># =&gt; #&lt;Encoding:GBK&gt;</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="nf">gets</span>
+    <span class="nb">p</span> <span class="n">l</span><span class="p">.</span><span class="nf">encoding</span>  <span class="c1"># =&gt; #&lt;Encoding:GBK&gt;</span>
+    <span class="nb">p</span> <span class="n">l</span><span class="p">.</span><span class="nf">bytes</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">e</span><span class="o">|</span> <span class="n">e</span><span class="p">.</span><span class="nf">to_s</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="p">}</span>  <span class="c1"># =&gt; ["d6", "d0"]</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>(3). 设置 IO 对象的字符编码<br />
+   在使用 <code class="highlighter-rouge">IO.new()</code>创建一个 IO 对象时，可以指定这个对象的 <code class="highlighter-rouge">external_encoding</code> 和 <code class="highlighter-rouge">internal_encoding</code>：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="c1">#!/usr/bin/env ruby</span>
+<span class="c1"># open_file.rb</span>
+<span class="n">hello</span> <span class="o">=</span> <span class="no">File</span><span class="p">.</span><span class="nf">new</span> <span class="s2">"hello"</span><span class="p">,</span> <span class="s2">"w:gbk"</span>
+<span class="n">world</span> <span class="o">=</span> <span class="no">File</span><span class="p">.</span><span class="nf">new</span> <span class="s2">"world"</span><span class="p">,</span> <span class="s2">"w:ISO8859-1:sjis"</span>
+<span class="nb">p</span> <span class="n">hello</span><span class="p">.</span><span class="nf">external_encoding</span>
+<span class="nb">p</span> <span class="n">hello</span><span class="p">.</span><span class="nf">internal_encoding</span>
+<span class="nb">p</span> <span class="n">world</span><span class="p">.</span><span class="nf">external_encoding</span>
+<span class="nb">p</span> <span class="n">world</span><span class="p">.</span><span class="nf">internal_encoding</span>
+</code></pre>
+</div>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>rvm use 2.0
+ruby open_file.rb
+<span class="c"># 输出</span>
+<span class="c">#&lt;Encoding:GBK&gt;</span>
+nil
+<span class="c">#&lt;Encoding:ISO-8859-1&gt;</span>
+<span class="c">#&lt;Encoding:Windows-31J&gt;</span>
+</code></pre>
+</div>
+
+<p>若要修改一个 IO 对象的 <code class="highlighter-rouge">external_encoding</code> 和 <code class="highlighter-rouge">internal_encoding</code>，使用 <code class="highlighter-rouge">IO#set_encoding()</code> 方法：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="c1">#!/usr/bin/env ruby</span>
+<span class="c1"># set_enc.rb</span>
+<span class="nb">p</span> <span class="no">STDOUT</span><span class="p">.</span><span class="nf">external_encoding</span>
+<span class="nb">p</span> <span class="no">STDOUT</span><span class="p">.</span><span class="nf">internal_encoding</span>
+<span class="nb">p</span> <span class="no">STDERR</span><span class="p">.</span><span class="nf">external_encoding</span>
+<span class="nb">p</span> <span class="no">STDERR</span><span class="p">.</span><span class="nf">internal_encoding</span>
+<span class="no">STDOUT</span><span class="p">.</span><span class="nf">set_encoding</span><span class="p">(</span><span class="s1">'gbk'</span><span class="p">)</span>
+<span class="no">STDERR</span><span class="p">.</span><span class="nf">set_encoding</span><span class="p">(</span><span class="s1">'sjis:utf-8'</span><span class="p">)</span>
+<span class="nb">p</span> <span class="no">STDOUT</span><span class="p">.</span><span class="nf">external_encoding</span>
+<span class="nb">p</span> <span class="no">STDOUT</span><span class="p">.</span><span class="nf">internal_encoding</span>
+<span class="nb">p</span> <span class="no">STDERR</span><span class="p">.</span><span class="nf">external_encoding</span>
+<span class="nb">p</span> <span class="no">STDERR</span><span class="p">.</span><span class="nf">internal_encoding</span>
+</code></pre>
+</div>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>rvm use 2.0
+ruby set_enc.rb
+<span class="c"># 输出</span>
+nil
+nil
+nil
+nil
+<span class="c">#&lt;Encoding:GBK&gt;</span>
+nil
+<span class="c">#&lt;Encoding:Windows-31J&gt;</span>
+<span class="c">#&lt;Encoding:UTF-8&gt;</span>
+</code></pre>
+</div>
+
+<h3 id="io-默认编码">IO 默认编码</h3>
+
+<p>Ruby 1.9+ 还有一个 IO 默认外部编码 <code class="highlighter-rouge">Encoding.default_external</code> 和 IO 默认内部编码 <code class="highlighter-rouge">Encoding.default_internal</code>的概念，不过通过我在 ruby-2.0.0-p247 上的实践，发现这个概念真是一团糟。总的来说， 当你创建一个 IO 对象时，如果没有在 mode 参数里指定内部编码和外部编码，那么这个 IO 对象的内部编码和外部编码会分别设置为这两个默认编码，但是这需要满足以下规则：</p>
+
+<p>(1). 如果 <code class="highlighter-rouge">Encoding.default_internal</code> 为 nil，那么用户创建的 IO 对象的内部编码和外部编码，与这两个默认编码没有关系，也就是说在这种情况下，即便是创建 IO 对象时没有指定内部编码和外部编码，Ruby 也不会用这两个默认编码的值去设置这个 IO 对象的内部和外部编码。</p>
+
+<p><strong>例外： 如果 IO 对象是以 readonly (如<code class="highlighter-rouge">File.new filename, "r"</code>)模式打开的，且没有指定内部编码和外部编码，那么不管<code class="highlighter-rouge">default_internal</code>是否为 nil，那么该对象的外部编码都将被设置为 <code class="highlighter-rouge">default_external</code> 的值。</strong></p>
+
+<p>(2). 如果 <code class="highlighter-rouge">Encoding.default_internal</code> 和 <code class="highlighter-rouge">Encoding.default_external</code> 的值相同（顺便提一下，<code class="highlighter-rouge">default_external</code> 的值永远不会是 nil），那么如果创建 IO 对象时没有指定内部编码和外部编码，那么这个 IO 对象的外部编码将被设置为 <code class="highlighter-rouge">default_external</code> 的值，而 IO 对象的内部编码不会被设置。</p>
+
+<p>(3). 如果 <code class="highlighter-rouge">default_internal</code> 值不为 nil，且与 <code class="highlighter-rouge">default_external</code> 不相等，创建 IO 对象时没有指定内部编码和外部编码，那么这个 IO 对象的外部编码将被设置为 <code class="highlighter-rouge">default_external</code> 的值，内部编码被设置为 <code class="highlighter-rouge">default_internal</code>。</p>
+
+<p>另外，当从一个 IO 对象读取数据时，如果该 IO 对象的 <code class="highlighter-rouge">external_encoding</code> 和 <code class="highlighter-rouge">internal_encoding</code> 都为 nil，那么外部数据将被不经任何转换地读进内存，在内存中存储此块数据的对象的 <code class="highlighter-rouge">encoding</code> 属性被设置为<code class="highlighter-rouge">Encoding.default_external</code>；</p>
+
+<h4 id="设置默认编码">设置默认编码</h4>
+
+<p>(1). 可以通过 <code class="highlighter-rouge">Encoding.default_external=()</code> 和 <code class="highlighter-rouge">Encoding.default_internal=()</code> 来设置默认外部编码和默认内部编码。<br />
+(2). 也可以通过 ruby 解释器的 <code class="highlighter-rouge">-E</code> 选项来指定默认外部编码和默认内部编码。<br />
+(3). 另外，Ruby 也会从 <code class="highlighter-rouge">LANG</code> 环境变量推断默认的外部编码<br />
+(4). 如果没有设置 <code class="highlighter-rouge">LANG</code> 环境变量，也没有指定 <code class="highlighter-rouge">-E</code> 选项，那么默认的外部编码就被设置为 <code class="highlighter-rouge">US-ASCII</code></p>
+
+<h4 id="标准-io-对象的默认编码">标准 IO 对象的默认编码</h4>
+
+<p><code class="highlighter-rouge">STDIN</code>、<code class="highlighter-rouge">STDOUT</code>和<code class="highlighter-rouge">STDERR</code>这三个标准 IO 对象的外部编码和内部编码的默认值受 <code class="highlighter-rouge">Encoding.default_external</code> 和 <code class="highlighter-rouge">Encoding.default_internal</code> 控制，其规则和前文所述的 <code class="highlighter-rouge">default_external</code>、<code class="highlighter-rouge">default_internal</code> 对新建为指定编码的IO对象的控制规则一致。</p>
+
+<p>一个典型的例子：系统的 LANG 环境变量为 <code class="highlighter-rouge">zh_CN.UTF-8</code>，且没有指定 ruby 解释器的 <code class="highlighter-rouge">-E</code> 选项，那么这 3 个标准 IO 对象的内部编码和外部编码分别为：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="c1">#!/usr/bin/env ruby</span>
+<span class="c1"># stdio_encoding.rb</span>
+
+<span class="nb">puts</span> <span class="no">Encoding</span><span class="p">.</span><span class="nf">default_external</span>  <span class="c1"># =&gt; UTF-8</span>
+<span class="nb">puts</span> <span class="no">Encoding</span><span class="p">.</span><span class="nf">default_internal</span>  <span class="c1"># =&gt; nil</span>
+
+<span class="nb">puts</span> <span class="no">STDIN</span><span class="p">.</span><span class="nf">external_encoding</span>  <span class="c1"># =&gt; UTF-8</span>
+<span class="nb">puts</span> <span class="no">STDIN</span><span class="p">.</span><span class="nf">internal_encoding</span>  <span class="c1"># =&gt; nil</span>
+
+<span class="nb">puts</span> <span class="no">STDOUT</span><span class="p">.</span><span class="nf">external_encoding</span>  <span class="c1"># =&gt; nil</span>
+<span class="nb">puts</span> <span class="no">STDOUT</span><span class="p">.</span><span class="nf">internal_encoding</span>  <span class="c1"># =&gt; nil</span>
+
+<span class="nb">puts</span> <span class="no">STDERR</span><span class="p">.</span><span class="nf">external_encoding</span>  <span class="c1"># =&gt; nil</span>
+<span class="nb">puts</span> <span class="no">STDERR</span><span class="p">.</span><span class="nf">internal_encoding</span>  <span class="c1"># =&gt; nil</span>
+</code></pre>
+</div>
+
+        </section>
+
+        
+
+        <footer class="post-footer">
+            <!-- If we want to display author's name and bio -->
+            
+                <figure class="author-image">
+                    <a class="img" href="/" style="background-image: url(/assets/images/profile.png)">
+                    <span class="hidden">Liu Xiang's Picture</span></a>
+                </figure>
+                <section class="author">
+                    <!-- Author Name -->
+                    <h4> Liu Xiang </h4>
+                    <!-- Author Bio -->
+                </section>
+            
+
+            <!-- Share links section -->
+            <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?text=Ruby 1.9+ 的字符编码&amp;url=/ruby/2014/01/18/ruby-19-character-encoding.html"
+        onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=/ruby/2014/01/18/ruby-19-character-encoding.html"
+        onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=/ruby/2014/01/18/ruby-19-character-encoding.html"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+
+            <!-- Disqus comments -->
+                <!-- <section class="disqus">
+     <div id="disqus_thread"></div>
+     <script type="text/javascript">
+
+     var disqus_shortname = ''; 
+     var disqus_developer = 0; // developer mode is on
+     (function() {
+     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+     dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+     })();
+     </script>
+     <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+     </section> -->
+
+<section class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+   /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+   var disqus_shortname = "liuxiangblog"; // required: replace example with your forum shortname
+
+   // The following are highly recommended additional parameters. Remove the slashes in front to use.
+   // var disqus_identifier = 'unique_dynamic_id_1234';
+   // var disqus_url = 'http://example.com/permalink-to-page.html';
+
+   /* * * DON'T EDIT BELOW THIS LINE * * */
+   (function() {
+     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+     dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+   })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+        </footer>
+
+    </article>
+
+</main>
+
+    <footer class="site-footer clearfix">
+      <section class="copyright">
+        <a href="/">Lulu's Blog</a> &copy;
+              2017 &bull; All rights reserved.
+      </section>
+      <section class="poweredby">Made with Jekyll using
+        <a href="http://github.com/rosario/kasper">Kasper theme</a>
+      </section>
+    </footer>
+
+    <script type="text/javascript" src="/assets/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', '']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+</body>
+</html>

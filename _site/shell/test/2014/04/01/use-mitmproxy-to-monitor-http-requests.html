@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Lulu's Blog</title>
+    <meta name="description" content="" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
+
+</head>
+<body class="home-template">
+
+    <header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        <a class="back-button icon-arrow-left" href="/">Home</a>
+        <a class="subscribe-button icon-feed" href="/feed.xml">Subscribe</a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">使用 mitmproxy 监控 HTTP 请求</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2014-04-01">02 Apr 2014</time>
+                
+                    on Shell and Test
+                
+            </section>
+        </header>
+
+<!--         <header class="post-header">
+            <a id="blog-logo" href="http://localhost:4000">
+                
+                    <img src="true" alt="Lulu's Blog" />
+                
+            </a>
+        </header> -->
+
+        <!-- <span class="post-meta">
+            <time datetime="2014-04-01">02 Apr 2014</time>
+            
+                on Shell and Test
+            
+        </span> -->
+
+        <!-- <h1 class="post-title">使用 mitmproxy 监控 HTTP 请求</h1> -->
+
+        <section class="post-content">
+            <p>Web 开发者经常需要通过查看页面被打开之后所发送的请求来调试自己开发的程序，现代浏览器，包括 Firefox, Chrome, Safari 都自带了开发工具，可以帮助开发者监控 HTTP 请求。但是有时候这些工具仍不能满足我们的需求，例如在做某些古老的浏览器(IE)上的兼容性调试时，就需要一个专门用于监控 HTTP 请求的工具才行。最近发现了一个强大的 HTTP 请求监控工具 ———— <code class="highlighter-rouge">mitmproxy</code>    <a href="http://mitmproxy.org/index.html">Home Page</a>。</p>
+
+<h4 id="1-介绍">1. 介绍</h4>
+
+<p>mitmproxy 是用 Python 和 C 开发的一个中间人代理软件（man-in-the-middle proxy），它可以用来拦截、修改、重放和保存 HTTP/HTTPS 请求。</p>
+
+<p>它提供了两个命令行工具：</p>
+
+<ul>
+  <li><code class="highlighter-rouge">mitmproxy</code> 具备交互界面</li>
+  <li><code class="highlighter-rouge">mitmdump</code> 不具备交互界面，类似 tcpdump</li>
+</ul>
+
+<p>本文只介绍 <code class="highlighter-rouge">mitmproxy</code>。</p>
+
+<p>mitmproxy 支持两种工作模式：</p>
+
+<ul>
+  <li>HTTP 代理模式，也就是 mitmproxy 作为一个 HTTP 代理运行，类似于 HTTPSpy。</li>
+  <li>透明模式，mitmproxy 通过 iptables/pf 作为一个 TCP 层代理运行，好处是不需要修改 HTTP 客户端的配置。</li>
+</ul>
+
+<p>本文只介绍 HTTP 代理模式。</p>
+
+<h4 id="2-安装">2. 安装</h4>
+
+<p>使用 <code class="highlighter-rouge">pip</code> 进行安装：</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>pip install mitmproxy
+</code></pre>
+</div>
+
+<p>考虑到包括我朝在内的四大文(读作：zhuān)明(读作：zhì)国家所特有的网络环境，pip可能会出现网络连接超时等错误，可以加上 <code class="highlighter-rouge">--proxy</code> 选项:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>pip install mitmproxy --proxy<span class="o">=</span>127.0.0.1:8087
+</code></pre>
+</div>
+
+<p>我在 OS X Mavericks 上安装还会遇到一个编译错误，可以通过添加 <code class="highlighter-rouge">ARCHFALGS</code> 环境来忽略此错误：</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nv">ARCHFLAGS</span><span class="o">=</span>-Wno-error<span class="o">=</span>unused-command-line-argument-hard-error-in-future pip install mitmproxy --proxy<span class="o">=</span>127.0.0.1:8087
+</code></pre>
+</div>
+
+<h4 id="3-http-客户端配置">3. HTTP 客户端配置</h4>
+
+<p>mitmproxy 安装完成之后，默认以 HTTP 代理模式工作，就需要 HTTP 客户端将代理配置修改为 mitmproxy 的地址。</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="c"># 启动 mitmproxy:</span>
+<span class="c"># 使用 -p 选项指定 HTTP 代理所监听的端口号，默认为 8080</span>
+mitmproxy -p 8080
+</code></pre>
+</div>
+
+<p>以 Firefox + AutoProxy 插件为例，客户端的配置如下：</p>
+
+<p><img src="/assets/images/2014-04-01-use-mitmproxy-to-monitor-http-requests/1.png" alt="Snip20140402_13.png" /></p>
+
+<h4 id="4-请求列表">4. 请求列表</h4>
+
+<p>在 Firefox 中打开一个网页，如：http://ruby-china.org/topics</p>
+
+<p><img src="/assets/images/2014-04-01-use-mitmproxy-to-monitor-http-requests/2.png" alt="Snip20140402_14.png" /></p>
+
+<p>可以在 mitmproxy 中看到一个 HTTP 请求的列表：</p>
+
+<p><img src="/assets/images/2014-04-01-use-mitmproxy-to-monitor-http-requests/3.png" alt="Snip20140402_15.png" /></p>
+
+<p>在 mitmproxy 中可以按 <code class="highlighter-rouge">?</code> 进入到帮助信息界面，如需返回到请求列表界面则按 <code class="highlighter-rouge">q</code>。</p>
+
+<p>在请求列表界面，黄色的箭头 <code class="highlighter-rouge">&gt;&gt;</code> 指示当前选择的请求，可以使用 vi 的快捷键 <code class="highlighter-rouge">k</code>, <code class="highlighter-rouge">j</code> 来移动箭头，<code class="highlighter-rouge">PgUp</code>、<code class="highlighter-rouge">PgDown</code> 为上下翻页，此外空格键也可用来向下翻页。</p>
+
+<p>如要清空列表，则按大写的 <code class="highlighter-rouge">C</code>。</p>
+
+<h4 id="5-过滤请求列表">5. 过滤请求列表</h4>
+
+<p>如果请求列表页面中的请求数量太多，则可以使用 mitmproxy 提供的过滤功能。</p>
+
+<p>在请求列表界面按 <code class="highlighter-rouge">l</code>，此时列表界面的左下方会提示 <code class="highlighter-rouge">Limit: </code>，需要在此输出过滤表达式，过滤表达式的语法列在帮助信息界面，可以按 <code class="highlighter-rouge">?</code> 进行查看。</p>
+
+<p>例如，只显示所有的 JS 文件的请求，即请求的 URL 匹配 <code class="highlighter-rouge">\.js</code> 的请求，则此处应该输入：<code class="highlighter-rouge">~u \.js</code></p>
+
+<p>如需清除过滤，则同样按 <code class="highlighter-rouge">l</code>，然后删除过滤表达式即可。</p>
+
+<h4 id="6-查看请求的具体信息">6. 查看请求的具体信息</h4>
+
+<p>若要查看某个请求的具体信息，则在请求列表界面选中此请求后，按回车即可进入到查看请求的详细信息的界面：</p>
+
+<p><img src="/assets/images/2014-04-01-use-mitmproxy-to-monitor-http-requests/4.png" alt="Snip20140402_16.png" /></p>
+
+<p>详细信息界面包括了 <code class="highlighter-rouge">Request</code> 和 <code class="highlighter-rouge">Response</code> 两个 Tab，可以按 <code class="highlighter-rouge">tab</code> 键切换，分别查看 Request 和 Response 的详细信息。</p>
+
+<p>界面的左上方还显示了此次请求的发送时间。</p>
+
+<p>mitmproxy 会使用合适的方式显示Request 和 Response 的 body 部分，例如对于压缩过的 JS ，mitmproxy 会解压缩后显示。如需要切换显示方式，可以在此界面按 <code class="highlighter-rouge">m</code> 来选择不同的显示方式。例如，对于包含了中文的 HTML 页面，如需要显示中文，可以使用 <code class="highlighter-rouge">urlencoded</code> 模式。</p>
+
+<p>在详细信息界面可以按 <code class="highlighter-rouge">/</code> 对 body 部分进行搜索。</p>
+
+<h4 id="7-拦截请求">7. 拦截请求</h4>
+
+<p>mitmproxy 支持对请求进行拦截，拦截后还可以修改 Request 或 Response 的内容。</p>
+
+<p>在请求列表界面按 <code class="highlighter-rouge">i</code>，在左下角会显示 <code class="highlighter-rouge">Intercept filter: </code>，要求输入过滤表达式，用于指示拦截哪些请求，此处的过滤表达式的语法同请求列表过滤表达式相同。</p>
+
+<p>例如，如要拦截所有的 JS 文件的请求，则在此处输入 <code class="highlighter-rouge">~u \.js</code>。</p>
+
+<p>再次访问 http://ruby-china.org/topics 页面，在 mitmproxy 的请求列表界面中可以看到对 JS 的请求都显示为橙色，表示这些请求被拦截了。</p>
+
+<p>请求被拦截后，可以进入到该请求的详细信息界面，然后按 <code class="highlighter-rouge">e</code>，对请求进入编辑，编辑完成后按 <code class="highlighter-rouge">ESC</code> 退出编辑界面。按 <code class="highlighter-rouge">a</code> 放行该请求（也可以按大写的 <code class="highlighter-rouge">A</code>来放行所有被拦截的请求），请求被放行后，Server 收到的将是被编辑过的 Request。</p>
+
+<p>当 Server 的 Response 返回到 mitmproxy 时，将再次被拦截，此时在详细信息界面按 <code class="highlighter-rouge">e</code> 可以对 Response 进行编辑，编辑完成后，同样按 <code class="highlighter-rouge">ESC</code> 退出编辑，同样按 <code class="highlighter-rouge">a</code> 或 <code class="highlighter-rouge">A</code> 放行 Response，客户端收到的 Response 将是被编辑过的 Response。</p>
+
+<p>关于 mitmproxy 的更多用法，请参照其官网的文档：http://mitmproxy.org/doc/index.html</p>
+
+        </section>
+
+        
+
+        <footer class="post-footer">
+            <!-- If we want to display author's name and bio -->
+            
+                <figure class="author-image">
+                    <a class="img" href="/" style="background-image: url(/assets/images/profile.png)">
+                    <span class="hidden">Liu Xiang's Picture</span></a>
+                </figure>
+                <section class="author">
+                    <!-- Author Name -->
+                    <h4> Liu Xiang </h4>
+                    <!-- Author Bio -->
+                </section>
+            
+
+            <!-- Share links section -->
+            <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?text=使用 mitmproxy 监控 HTTP 请求&amp;url=/shell/test/2014/04/01/use-mitmproxy-to-monitor-http-requests.html"
+        onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=/shell/test/2014/04/01/use-mitmproxy-to-monitor-http-requests.html"
+        onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=/shell/test/2014/04/01/use-mitmproxy-to-monitor-http-requests.html"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+
+            <!-- Disqus comments -->
+                <!-- <section class="disqus">
+     <div id="disqus_thread"></div>
+     <script type="text/javascript">
+
+     var disqus_shortname = ''; 
+     var disqus_developer = 0; // developer mode is on
+     (function() {
+     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+     dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+     })();
+     </script>
+     <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+     </section> -->
+
+<section class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+   /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+   var disqus_shortname = "liuxiangblog"; // required: replace example with your forum shortname
+
+   // The following are highly recommended additional parameters. Remove the slashes in front to use.
+   // var disqus_identifier = 'unique_dynamic_id_1234';
+   // var disqus_url = 'http://example.com/permalink-to-page.html';
+
+   /* * * DON'T EDIT BELOW THIS LINE * * */
+   (function() {
+     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+     dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+   })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+        </footer>
+
+    </article>
+
+</main>
+
+    <footer class="site-footer clearfix">
+      <section class="copyright">
+        <a href="/">Lulu's Blog</a> &copy;
+              2017 &bull; All rights reserved.
+      </section>
+      <section class="poweredby">Made with Jekyll using
+        <a href="http://github.com/rosario/kasper">Kasper theme</a>
+      </section>
+    </footer>
+
+    <script type="text/javascript" src="/assets/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', '']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+</body>
+</html>

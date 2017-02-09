@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Lulu's Blog</title>
+    <meta name="description" content="" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
+
+</head>
+<body class="home-template">
+
+    <header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        <a class="back-button icon-arrow-left" href="/">Home</a>
+        <a class="subscribe-button icon-feed" href="/feed.xml">Subscribe</a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">《Ruby 元编程》中的那些干货</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2013-10-03">04 Oct 2013</time>
+                
+                    on Ruby
+                
+            </section>
+        </header>
+
+<!--         <header class="post-header">
+            <a id="blog-logo" href="http://localhost:4000">
+                
+                    <img src="true" alt="Lulu's Blog" />
+                
+            </a>
+        </header> -->
+
+        <!-- <span class="post-meta">
+            <time datetime="2013-10-03">04 Oct 2013</time>
+            
+                on Ruby
+            
+        </span> -->
+
+        <!-- <h1 class="post-title">《Ruby 元编程》中的那些干货</h1> -->
+
+        <section class="post-content">
+            <h2 id="1-对象模型">1. 对象模型</h2>
+
+<h3 id="11-打开类">1.1 打开类</h3>
+
+<p>从某种意义上说，Ruby 的 <code class="highlighter-rouge">class</code> 关键字更像是一个作用域操作符而不是类声明语句。它的确可以创建一个还不存在的类，不过也可以把这看成一种副作用。对于 <code class="highlighter-rouge">class</code> 关键字，其核心任务是把你带到类的上下文中，让你可以在其中定义方法。</p>
+
+<p><strong>示例1:</strong></p>
+
+<p>你的代码中需要定义一个函数去掉字符串中的标点符号和特殊字符，只保留字母、数字和空格。</p>
+
+<p>在像 Java 这样的编程语言中，你必须这样定义这个方法：</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">StringUtil</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">to_alphanumeric</span><span class="o">(</span><span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="na">replaceAll</span><span class="o">(</span><span class="s">"[^\\w\\s]"</span><span class="o">,</span> <span class="s">""</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<p>而在 Ruby 中你可以将这个 to_alphanumeric 方法直接定义为 String 类的实例方法：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">String</span>
+    <span class="k">def</span> <span class="nf">to_alphanumeric</span>
+        <span class="nb">self</span><span class="p">.</span><span class="nf">gsub</span> <span class="sr">/[^\w\s]/</span><span class="p">,</span> <span class="s1">''</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p><strong>示例2:</strong></p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">D</span>
+    <span class="k">def</span> <span class="nf">x</span><span class="p">;</span> <span class="s1">'x'</span><span class="p">;</span> <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">D</span>
+    <span class="k">def</span> <span class="nf">y</span><span class="p">;</span> <span class="s1">'y'</span><span class="p">;</span> <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">obj</span> <span class="o">=</span> <span class="no">D</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">obj</span><span class="p">.</span><span class="nf">x</span>        <span class="c1"># =&gt; 'x'</span>
+<span class="n">obj</span><span class="p">.</span><span class="nf">y</span>        <span class="c1"># =&gt; 'y'</span>
+</code></pre>
+</div>
+
+<p><em>使用“打开类”技术时，需要注意的问题：在打开一个类向其中添加一个新的方法时，需要注意这个类中是否已经存在一个同名的方法，以免不小心覆盖了类中原有的同名方法。</em></p>
+
+<h3 id="12-几个-reflection-方法">1.2 几个 Reflection 方法</h3>
+
+<h4 id="121-objectinstance_variables">1.2.1 <code class="highlighter-rouge">Object#instance_variables()</code></h4>
+
+<p>Returns an array of instance variable names for the receiver. Note that simply defining an accessor does not create the corresponding instance variable.</p>
+
+<h4 id="122-objectmethodsalltrue">1.2.2 <code class="highlighter-rouge">Object#methods(all=true)</code></h4>
+<p>Returns a list of the names of public and protected methods of obj. This will include all the methods accessible in obj’s ancestors. If the all parameter is set to false, only those methods in the receiver will be listed.</p>
+
+<h4 id="123-moduleinstance_methodsinclude_supertrue">1.2.3 <code class="highlighter-rouge">Module#instance_methods(include_super=true)</code></h4>
+
+<p>Returns an array containing the names of the public and protected instance methods in the receiver. For a module, these are the public and protected methods; for a class, they are the instance (not singleton) methods. With no argument, or with an argument that is false, the instance methods in mod are returned, otherwise the methods in mod and mod’s superclasses are returned.</p>
+
+<h4 id="124-moduleancesotrs">1.2.4 <code class="highlighter-rouge">Module#ancesotrs()</code></h4>
+
+<p>Returns a list of modules included in mod (including mod itself).</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyClass</span>
+    <span class="k">def</span> <span class="nf">my_methods</span><span class="p">;</span> <span class="s1">'my_method()'</span><span class="p">;</span> <span class="k">end</span>    
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">MySubclass</span> <span class="o">&lt;</span> <span class="no">MyClass</span>
+<span class="k">end</span>
+
+<span class="no">MySubclass</span><span class="p">.</span><span class="nf">ancestors</span><span class="p">()</span>        <span class="c1"># =&gt; [MySubclass, MyClass, Object, Kernel, BasicObject]</span>
+</code></pre>
+</div>
+
+<h3 id="13-常量的作用域和路径">1.3 常量的作用域和路径</h3>
+
+<p>常量的作用域不同于变量，它有自己独特的规则。例如：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">module</span> <span class="nn">MyModule</span>
+    <span class="no">MyConstant</span> <span class="o">=</span> <span class="s1">'Outer Constant'</span>
+    <span class="k">class</span> <span class="nc">MyClass</span>
+        <span class="nc">MyConstant</span> <span class="o">=</span> <span class="s1">'Inner Constant'</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>这段代码中的所有常量像文件系统一样组织成树形结构：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>MyModule
+├── MyClass
+│   └── MyConstant
+└── MyConstant
+
+</code></pre>
+</div>
+
+<h3 id="14-几个和常量有关的方法">1.4 几个和常量有关的方法</h3>
+
+<h4 id="141-moduleconstantsinherittrue">1.4.1 <code class="highlighter-rouge">Module#constants(inherit=true)</code></h4>
+
+<p>Returns an array of the names of the constants accessible in mod. This includes the names of constants in any included modules (example at start of section), unless the inherit parameter is set to false.</p>
+
+<h4 id="142-moduleconstants-和-moduleconstantsinherit">1.4.2 <code class="highlighter-rouge">Module.constants()</code> 和 <code class="highlighter-rouge">Module.constants(inherit)</code></h4>
+
+<p>In the first form, returns an array of the names of all constants accessible from the point of call. This list includes the names of all modules and classes defined in the global scope.</p>
+
+<p>The second form calls the instance method constants.</p>
+
+<h4 id="143-modulenesting">1.4.3 <code class="highlighter-rouge">Module.nesting()</code></h4>
+<p>获取当前常量的路径。例如：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">moudle</span> <span class="no">M</span>
+    <span class="k">class</span> <span class="nc">C</span>
+        <span class="k">module</span> <span class="nn">M2</span>
+            <span class="no">Module</span><span class="p">.</span><span class="nf">nesting</span>        <span class="c1"># =&gt; [M::C::M2, M::C, M]</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
+<span class="k">end</span>        
+</code></pre>
+</div>
+
+<h3 id="15-修剪常量树">1.5 修剪常量树</h3>
+
+<p>若想在网上找到一个 <code class="highlighter-rouge">motd.rb</code> 文件用来在控制台上显示“当天的消息”，且想把这段代码集成到最新的程序中去，那么使用<code class="highlighter-rouge">load</code>执行该文件来显示消息：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="nb">load</span><span class="p">(</span><span class="s1">'motd.rb'</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>不过，使用 <code class="highlighter-rouge">load()</code> 方法有一个副作用。<code class="highlighter-rouge">motd.rb</code> 文件很可能定义了变量和类。尽管变量在加载完成后会落在当前作用域之外，但常量不会。这样，<code class="highlighter-rouge">motd.rb</code>可能会通过它的常量（尤其是类名）污染当前程序的命名空间。</p>
+
+<p>可以通过使用第二个可选参数来控制其常量仅在自身范围内有效：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="nb">load</span><span class="p">(</span><span class="s1">'motd.rb'</span><span class="p">,</span> <span class="kp">true</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>通过这种方式加载的文件，Ruby 会创建一个匿名模块，使用它作为命名空间来容纳 <code class="highlighter-rouge">motd.rb</code> 中定义的所有常量，加载完成后，该模块会被销毁。</p>
+
+<p><code class="highlighter-rouge">require()</code>方法与<code class="highlighter-rouge">load()</code>方法颇为相似，但是它的目的不同。通过<code class="highlighter-rouge">load()</code>方法可以执行代码，而<code class="highlighter-rouge">require()</code>则是用来导入类库。这就是<code class="highlighter-rouge">require()</code>方法没有第二个可选参数的原因。在这些类库中的类名通常是你导入这些库时所希望得到的，因此没有理由在加载后销毁它们。</p>
+
+<h3 id="16-关于-kernel-模块">1.6 关于 Kernel 模块</h3>
+
+<p>如果需要定义一个工具函数，这个函数的作用很广泛，以至于它使用起来更像语言内核的一部分，那么这个方法最好定义 Kernel 模块的方法。</p>
+
+<h3 id="17-private-究竟意味着什么">1.7 <code class="highlighter-rouge">private</code> 究竟意味着什么</h3>
+
+<p>私有方法服从一个简单的规则：不能明确指定一个接受者来调用一个私有方法。换言之，每次调用一个私有方法时，只能调用于隐含的接受者 —— <code class="highlighter-rouge">self</code> 上。下面看一个极端例子：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span>
+    <span class="k">def</span> <span class="nf">public_method</span>
+        <span class="nb">self</span><span class="p">.</span><span class="nf">private_method</span>
+    <span class="k">end</span>
+    
+    <span class="kp">private</span>
+    
+        <span class="k">def</span> <span class="nf">private_method</span><span class="p">;</span> <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="no">C</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">public_method</span>
+
+ <span class="c1"># =&gt; NoMethodError: private method `private_method' called […]</span>
+</code></pre>
+</div>
+
+<p>在这段代码中，如果去掉 <code class="highlighter-rouge">self</code> 关键字，它就可以正常运行。</p>
+
+<p>这个人为制造的例子演示了私有方法是由两条规则一起控制的：第一条：如果调用方法的接受者不是你自己，则必须明确指明一个接受者；第二条，私有方法只能被隐含接受者调用。把这两条规则糅合在一起，你会发现只能在自身中调用一个私有方法。你可以把这个糅合后的规则成为“似有规则”。</p>
+
+<h3 id="18-混乱的模块">1.8 混乱的模块</h3>
+
+<p>有如下代码：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">module</span> <span class="nn">Printable</span>
+    <span class="k">def</span> <span class="nf">print</span><span class="p">;</span> <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">module</span> <span class="nn">Document</span>
+    <span class="k">def</span> <span class="nf">print</span><span class="p">;</span> <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Book</span>
+    <span class="kp">include</span> <span class="no">Document</span>
+    <span class="kp">include</span> <span class="no">Printable</span>
+<span class="k">end</span>
+
+<span class="n">book</span> <span class="o">=</span> <span class="no">Book</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">b</span><span class="p">.</span><span class="nf">print</span>
+</code></pre>
+</div>
+
+<p>问：<code class="highlighter-rouge">b.print</code> 调用的是 <code class="highlighter-rouge">Printable</code> 还是 <code class="highlighter-rouge">Document</code> 中定义的 <code class="highlighter-rouge">print</code> 方法？</p>
+
+<p>答：<code class="highlighter-rouge">Book.ancestors</code> 的输出：<code class="highlighter-rouge">[Book, Printable, Document, Object, .. ..]</code>，因此调用的是 <code class="highlighter-rouge">Printable</code> 中定义的 <code class="highlighter-rouge">print</code> 方法。</p>
+
+<h3 id="19-完整的类和对象模型图">1.9 完整的类和对象模型图</h3>
+
+<p>下列代码：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyClass</span>
+    <span class="k">def</span> <span class="nf">method_a</span><span class="p">;</span> <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">obj1</span> <span class="o">=</span> <span class="no">MyClass</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">obj2</span> <span class="o">=</span> <span class="no">MyClass</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">obj3</span> <span class="o">=</span> <span class="no">MyClass</span><span class="p">.</span><span class="nf">new</span>
+
+<span class="k">class</span> <span class="o">&lt;&lt;</span> <span class="n">obj3</span>
+    <span class="k">def</span> <span class="nf">method_b</span><span class="p">;</span> <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>对应的模型图如：</p>
+
+<p><img src="/assets/images/2013-10-03-the-ruby-metaprogramming-in-the-dry/1.png" alt="ObjectModel.png" /></p>
+
+<h2 id="2-方法">2. 方法</h2>
+
+<h3 id="21-动态方法">2.1 动态方法</h3>
+
+<h4 id="211-动态方法所依赖的基础">2.1.1 动态方法所依赖的基础</h4>
+
+<ul>
+  <li>
+    <p>动态派发：<code class="highlighter-rouge">Object#send(symbol_or_string [, args…])</code></p>
+
+    <p>Invokes the method identified by symbol, passing it any arguments specified. You can use <code class="highlighter-rouge">__send__</code> if the name send clashes with an existing method in obj. When the method is identified by a string, the string is converted to a symbol.</p>
+  </li>
+  <li>
+    <p>动态定义：<code class="highlighter-rouge">Module#define_method(symbol, method)</code> 或 <code class="highlighter-rouge">Module#define_method(symbol){ block }</code></p>
+
+    <p>Defines an instance method in the receiver. The method parameter can be a Proc, a Method or an UnboundMethod object. If a block is specified, it is used as the method body. This block is evaluated using instance_eval. <code class="highlighter-rouge">define_method</code> is a <strong>private</strong> method.</p>
+  </li>
+</ul>
+
+<h4 id="212-示例">2.1.2 示例</h4>
+
+<p>有这样一个程序：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code> <span class="c1"># data_source.rb:</span>
+<span class="k">class</span> <span class="nc">DS</span>
+  <span class="k">def</span> <span class="nf">initialzie</span> <span class="c1"># connect to data source…</span>
+  <span class="k">def</span> <span class="nf">get_mouse_info</span><span class="p">(</span><span class="n">workstation_id</span><span class="p">)</span>  <span class="c1"># …</span>
+  <span class="k">def</span> <span class="nf">get_mouse_price</span><span class="p">(</span><span class="n">workstation_id</span><span class="p">)</span>  <span class="c1"># …</span>
+  <span class="k">def</span> <span class="nf">get_keyboard_info</span><span class="p">(</span><span class="n">workstation_id</span><span class="p">)</span>  <span class="c1"># …</span>
+  <span class="k">def</span> <span class="nf">get_keyboard_price</span><span class="p">(</span><span class="n">workstation_id</span><span class="p">)</span>  <span class="c1"># …</span>
+  <span class="k">def</span> <span class="nf">get_cpu_info</span><span class="p">(</span><span class="n">workstatiob_id</span><span class="p">)</span>  <span class="c1">#…</span>
+  <span class="k">def</span> <span class="nf">get_cpu_price</span><span class="p">(</span><span class="n">workstation_id</span><span class="p">)</span>  <span class="c1">#…</span>
+  <span class="k">def</span> <span class="nf">get_display_info</span><span class="p">(</span><span class="n">workstation_id</span><span class="p">)</span>  <span class="c1"># …</span>
+  <span class="k">def</span> <span class="nf">get_display_price</span><span class="p">(</span><span class="n">workstation_id</span><span class="p">)</span>  <span class="c1">#...</span>
+<span class="k">end</span>
+
+ <span class="c1"># computer.rb</span>
+<span class="k">class</span> <span class="nc">Computer</span>
+  <span class="k">def</span> <span class="nf">initialzie</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">data_source</span><span class="p">)</span>
+    <span class="vi">@id</span> <span class="o">=</span> <span class="nb">id</span>
+    <span class="vi">@data_source</span> <span class="o">=</span> <span class="n">data_source</span>
+  <span class="k">end</span>
+  
+  <span class="k">def</span> <span class="nf">mouse</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="vi">@data_souce</span><span class="p">.</span><span class="nf">get_mouse_info</span><span class="p">(</span><span class="vi">@id</span><span class="p">)</span>
+    <span class="n">price</span> <span class="o">=</span> <span class="vi">@data_source</span><span class="p">.</span><span class="nf">get_mouse_price</span><span class="p">(</span><span class="vi">@id</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="s2">"Mouse: </span><span class="si">#{</span><span class="n">info</span><span class="si">}</span><span class="s2"> ($</span><span class="si">#{</span><span class="n">price</span><span class="si">}</span><span class="s2">)"</span>
+    <span class="k">return</span> <span class="s2">"* </span><span class="si">#{</span><span class="n">result</span><span class="si">}</span><span class="s2">"</span> <span class="k">if</span> <span class="n">price</span> <span class="o">&gt;</span> <span class="mi">100</span>
+    <span class="n">result</span>
+  <span class="k">end</span>
+  
+  <span class="k">def</span> <span class="nf">cpu</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="vi">@data_souce</span><span class="p">.</span><span class="nf">get_cpu_info</span><span class="p">(</span><span class="vi">@id</span><span class="p">)</span>
+    <span class="n">price</span> <span class="o">=</span> <span class="vi">@data_source</span><span class="p">.</span><span class="nf">get_cpu_price</span><span class="p">(</span><span class="vi">@id</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="s2">"Mouse: </span><span class="si">#{</span><span class="n">info</span><span class="si">}</span><span class="s2"> ($</span><span class="si">#{</span><span class="n">price</span><span class="si">}</span><span class="s2">)"</span>
+    <span class="k">return</span> <span class="s2">"* </span><span class="si">#{</span><span class="n">result</span><span class="si">}</span><span class="s2">"</span> <span class="k">if</span> <span class="n">price</span> <span class="o">&gt;</span> <span class="mi">100</span>
+    <span class="n">result</span>  
+  <span class="k">end</span>
+  <span class="err">…</span> <span class="err">…</span> 
+<span class="k">end</span>  
+</code></pre>
+</div>
+
+<h5 id="2121-使用动态派发重构-computerrb">2.1.2.1 使用动态派发重构 <code class="highlighter-rouge">computer.rb</code></h5>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Computer</span>
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">data_source</span><span class="p">)</span>
+    <span class="vi">@id</span> <span class="o">=</span> <span class="nb">id</span>
+    <span class="vi">@data_source</span> <span class="o">=</span> <span class="n">data_source</span>
+  <span class="k">end</span>
+  
+  <span class="k">def</span> <span class="nf">mouse</span>
+    <span class="n">component</span> <span class="ss">:mouse</span>
+  <span class="k">end</span>
+  
+  <span class="k">def</span> <span class="nf">cpu</span>
+    <span class="n">component</span> <span class="ss">:cpu</span>
+  <span class="k">end</span>
+  <span class="err">…</span> <span class="err">…</span>
+  
+  <span class="k">def</span> <span class="nf">component</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="vi">@data_source</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="s2">"get_</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">_info"</span><span class="p">,</span> <span class="vi">@id</span><span class="p">)</span>
+    <span class="n">price</span> <span class="o">=</span> <span class="vi">@data_source</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="s2">"get_</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">_price"</span><span class="p">,</span> <span class="vi">@id</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="s2">"</span><span class="si">#{</span><span class="nb">name</span><span class="p">.</span><span class="nf">to_s</span><span class="p">.</span><span class="nf">capitalize</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">info</span><span class="si">}</span><span class="s2"> ($</span><span class="si">#{</span><span class="n">price</span><span class="si">}</span><span class="s2">)"</span>
+    <span class="k">return</span> <span class="s2">"* </span><span class="si">#{</span><span class="n">result</span><span class="si">}</span><span class="s2">"</span> <span class="k">if</span> <span class="n">price</span> <span class="o">&gt;</span> <span class="mi">100</span>
+    <span class="n">result</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<h5 id="2122-使用动态定义重构-computerrb">2.1.2.2 使用动态定义重构 <code class="highlighter-rouge">computer.rb</code></h5>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Computer</span>
+  <span class="k">def</span> <span class="nf">initialzie</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">data_source</span><span class="p">)</span>
+    <span class="vi">@id</span> <span class="o">=</span> <span class="nb">id</span>
+    <span class="vi">@data_source</span> <span class="o">=</span> <span class="n">data_source</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">component</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+    <span class="n">define_method</span> <span class="nb">name</span> <span class="k">do</span> 
+      <span class="n">info</span> <span class="o">=</span> <span class="vi">@data_source</span><span class="p">.</span><span class="nf">send</span> <span class="s2">"get_</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">_info"</span><span class="p">,</span> <span class="vi">@id</span>
+      <span class="n">price</span> <span class="o">=</span> <span class="vi">@data_source</span><span class="p">.</span><span class="nf">send</span> <span class="s2">"get_</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">_price"</span><span class="p">,</span> <span class="vi">@id</span>
+      <span class="n">result</span> <span class="o">=</span> <span class="s2">"</span><span class="si">#{</span><span class="nb">name</span><span class="p">.</span><span class="nf">to_s</span><span class="p">.</span><span class="nf">capitalize</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">info</span><span class="si">}</span><span class="s2"> ($</span><span class="si">#{</span><span class="n">price</span><span class="si">}</span><span class="s2">)"</span>
+      <span class="k">return</span> <span class="s2">"* </span><span class="si">#{</span><span class="n">result</span><span class="si">}</span><span class="s2">"</span> <span class="k">if</span> <span class="n">price</span> <span class="o">&gt;</span> <span class="mi">100</span>
+      <span class="n">result</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+  
+  <span class="n">component</span> <span class="ss">:mouse</span>
+  <span class="n">component</span> <span class="ss">:cpu</span>
+  <span class="err">…</span> <span class="err">…</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<h5 id="2123-使用内省重构-computerrb">2.1.2.3 使用内省重构 <code class="highlighter-rouge">computer.rb</code></h5>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Computer</span>
+  <span class="k">def</span> <span class="nf">initialzie</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">data_source</span><span class="p">)</span>
+    <span class="vi">@id</span> <span class="o">=</span> <span class="nb">id</span>
+    <span class="vi">@data_source</span> <span class="o">=</span> <span class="n">data_source</span>
+    <span class="vi">@data_source</span><span class="p">.</span><span class="nf">methods</span><span class="p">.</span><span class="nf">grep</span><span class="p">(</span><span class="sr">/^get_(\w+)_info/</span><span class="p">)</span> <span class="p">{</span><span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">component</span> <span class="vg">$1</span><span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">component</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+    <span class="n">define_method</span> <span class="nb">name</span> <span class="k">do</span> 
+      <span class="n">info</span> <span class="o">=</span> <span class="vi">@data_source</span><span class="p">.</span><span class="nf">send</span> <span class="s2">"get_</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">_info"</span><span class="p">,</span> <span class="vi">@id</span>
+      <span class="n">price</span> <span class="o">=</span> <span class="vi">@data_source</span><span class="p">.</span><span class="nf">send</span> <span class="s2">"get_</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">_price"</span><span class="p">,</span> <span class="vi">@id</span>
+      <span class="n">result</span> <span class="o">=</span> <span class="s2">"</span><span class="si">#{</span><span class="nb">name</span><span class="p">.</span><span class="nf">to_s</span><span class="p">.</span><span class="nf">capitalize</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">info</span><span class="si">}</span><span class="s2"> ($</span><span class="si">#{</span><span class="n">price</span><span class="si">}</span><span class="s2">)"</span>
+      <span class="k">return</span> <span class="s2">"* </span><span class="si">#{</span><span class="n">result</span><span class="si">}</span><span class="s2">"</span> <span class="k">if</span> <span class="n">price</span> <span class="o">&gt;</span> <span class="mi">100</span>
+      <span class="n">result</span>
+    <span class="k">end</span>
+  <span class="k">end</span> 
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<h3 id="22-method_missing-幽灵方法ghost-method">2.2 <code class="highlighter-rouge">method_missing</code> 幽灵方法(Ghost Method)</h3>
+
+<h4 id="221-method_missingsymbol--args--方法">2.2.1 <code class="highlighter-rouge">method_missing(symbol [, *args] )</code> 方法</h4>
+
+<p>Invoked by Ruby when obj is sent a message it cannot handle. symbol is the symbol for the method called, and args are any arguments that were passed to it. By default, the interpreter raises an error when this method is called. However, it is possible to override the method to provide more dynamic behavior. If it is decided that a particular method should not be handled, then super should be called, so that ancestors can pick up the missing method.</p>
+
+<h4 id="222-使用-method_missing-重构-computerrb">2.2.2 使用 <code class="highlighter-rouge">method_missing</code> 重构 <code class="highlighter-rouge">computer.rb</code></h4>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Computer</span>
+  <span class="k">def</span> <span class="nf">initialzie</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">data_source</span><span class="p">)</span>
+    <span class="vi">@id</span> <span class="o">=</span> <span class="nb">id</span>
+    <span class="vi">@data_source</span> <span class="o">=</span> <span class="n">data_source</span>
+  <span class="k">end</span>
+  <span class="k">def</span> <span class="nf">method_missing</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">super</span> <span class="k">unless</span> <span class="vi">@data_source</span><span class="p">.</span><span class="nf">respond_to?</span> <span class="s2">"get_</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">_info"</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="vi">@data_source</span><span class="p">.</span><span class="nf">send</span> <span class="s2">"get_</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">_info"</span><span class="p">,</span> <span class="vi">@id</span>
+    <span class="n">price</span> <span class="o">=</span> <span class="vi">@data_source</span><span class="p">.</span><span class="nf">send</span> <span class="s2">"get_</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">_price"</span><span class="p">,</span> <span class="vi">@id</span>
+    <span class="n">result</span> <span class="s2">"</span><span class="si">#{</span><span class="nb">name</span><span class="p">.</span><span class="nf">to_s</span><span class="p">.</span><span class="nf">capitalzie</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">info</span><span class="si">}</span><span class="s2"> ($</span><span class="si">#{</span><span class="n">price</span><span class="si">}</span><span class="s2">)"</span>
+    <span class="k">return</span> <span class="s2">"* </span><span class="si">#{</span><span class="n">result</span><span class="si">}</span><span class="s2">"</span> <span class="k">if</span> <span class="n">price</span> <span class="o">&gt;</span> <span class="mi">100</span>
+    <span class="n">result</span>    
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<h4 id="223-覆盖-respond_to">2.2.3 覆盖 <code class="highlighter-rouge">respond_to?</code></h4>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Computer</span>
+  <span class="k">def</span> <span class="nf">initialzie</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">data_source</span><span class="p">)</span>
+    <span class="vi">@id</span> <span class="o">=</span> <span class="nb">id</span>
+    <span class="vi">@data_source</span> <span class="o">=</span> <span class="n">data_source</span>
+  <span class="k">end</span>
+  <span class="k">def</span> <span class="nf">method_missing</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">super</span> <span class="k">unless</span> <span class="vi">@data_source</span><span class="p">.</span><span class="nf">respond_to?</span> <span class="s2">"get_</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">_info"</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="vi">@data_source</span><span class="p">.</span><span class="nf">send</span> <span class="s2">"get_</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">_info"</span><span class="p">,</span> <span class="vi">@id</span>
+    <span class="n">price</span> <span class="o">=</span> <span class="vi">@data_source</span><span class="p">.</span><span class="nf">send</span> <span class="s2">"get_</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">_price"</span><span class="p">,</span> <span class="vi">@id</span>
+    <span class="n">result</span> <span class="s2">"</span><span class="si">#{</span><span class="nb">name</span><span class="p">.</span><span class="nf">to_s</span><span class="p">.</span><span class="nf">capitalzie</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">info</span><span class="si">}</span><span class="s2"> ($</span><span class="si">#{</span><span class="n">price</span><span class="si">}</span><span class="s2">)"</span>
+    <span class="k">return</span> <span class="s2">"* </span><span class="si">#{</span><span class="n">result</span><span class="si">}</span><span class="s2">"</span> <span class="k">if</span> <span class="n">price</span> <span class="o">&gt;</span> <span class="mi">100</span>
+    <span class="n">result</span>    
+  <span class="k">end</span>
+  <span class="k">def</span> <span class="nf">respond_to?</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+    <span class="vi">@data_source</span><span class="p">.</span><span class="nf">respond_to?</span><span class="p">(</span><span class="s2">"get_</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">_info"</span><span class="p">)</span> <span class="o">||</span> <span class="k">super</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<h4 id="224-白板类blankslate">2.2.4 白板类(BlankSlate)</h4>
+
+<p>有时候所要代理的方法，已经存在于类或者祖先类种，这种情况下，调用那个方法时，就不会经过 <code class="highlighter-rouge">method_missing</code> 代理，因此这时，需要将从父类中继承来的那些不需要的方法都删除掉：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Computer</span>
+  <span class="nb">instance_methods</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="nb">method</span><span class="o">|</span>
+    <span class="n">undef_method</span> <span class="nb">method</span> <span class="k">unless</span> <span class="nb">method</span><span class="p">.</span><span class="nf">to_s</span> <span class="o">=~</span> <span class="sr">/method_missing|respond_to\?/</span>
+  <span class="k">end</span>
+  <span class="err">…</span> <span class="err">…</span> 
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>用于从一个类中删除实例方法的方法：</p>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">Module#undef_method(symbol)</code></p>
+
+    <p>Prevents the current class from responding to calls to the named method. Contrast this with remove_method, which deletes the method from the particular class; Ruby will still search superclasses and mixed-in modules for a possible receiver. String arguments are converted to symbols.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">Module#remove_method(symbol)</code></p>
+
+    <p>Removes the method identified by symbol from the current class. For an example, see Module.undef_method. String arguments are converted to symbols.</p>
+  </li>
+</ul>
+
+<blockquote>
+  <p><strong>BasicObject</strong></p>
+</blockquote>
+
+<blockquote>
+
+  <p>从 Ruby 1.9 开始，白板技术被集成到语言自身中，在过去的版本中，<code class="highlighter-rouge">Object</code>是类体系结构的根节点。在 Ruby 1.9 中，<code class="highlighter-rouge">Object</code>类有一个名叫 <code class="highlighter-rouge">BasicObject</code> 的超类，它只提供几个很基本的方法：</p>
+</blockquote>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="nb">p</span> <span class="no">BasicObject</span><span class="p">.</span><span class="nf">instance_methods</span>
+
+<span class="o">=&gt;</span> <span class="p">[</span><span class="ss">:==</span><span class="p">,</span> <span class="ss">:requals?</span><span class="p">,</span> <span class="p">:</span><span class="o">!</span><span class="p">,</span> <span class="p">:</span><span class="o">!=</span><span class="p">,</span> <span class="ss">:instance_eval</span><span class="p">,</span> <span class="ss">:instance_exec</span><span class="p">,</span> <span class="ss">:__sned__</span><span class="p">]</span>
+</code></pre>
+</div>
+
+<blockquote>
+  <p>默认情况下，类还是会从 <code class="highlighter-rouge">Object</code> 继承，从 <code class="highlighter-rouge">BasicObject</code> 继承来的类会自动成为白板类。</p>
+</blockquote>
+
+<h2 id="3-代码块">3. 代码块</h2>
+
+<h3 id="31-当前块">3.1 当前块</h3>
+
+<p>在一个方法中，可以向Ruby询问当前的方法调用是否包含块。这可以通过 <code class="highlighter-rouge">Kernel#block_given?()</code> 方法来做到：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">a_method</span>
+  <span class="k">return</span> <span class="k">yield</span> <span class="k">if</span> <span class="nb">block_given?</span>
+  <span class="s1">'no block'</span>
+<span class="k">end</span>
+
+<span class="n">a_method</span>
+<span class="n">a_method</span> <span class="p">{</span> <span class="s2">"here's a block!"</span> <span class="p">}</span>
+</code></pre>
+</div>
+
+<h3 id="32-使用-ruby-实现-c-的-using-关键字">3.2 使用 Ruby 实现 C# 的 <code class="highlighter-rouge">using</code> 关键字</h3>
+
+<p>设想在写一个 C# 程序，这个程序会连接一个远程服务器，并有一个对象表示这个连接：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="no">RemoteConnection</span> <span class="n">conn</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">RemoteConnection</span><span class="p">(</span><span class="s2">"my_server"</span><span class="p">);</span>
+<span class="no">String</span> <span class="n">stuff</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="nf">readStuff</span><span class="p">();</span>
+<span class="n">conn</span><span class="p">.</span><span class="nf">dispose</span><span class="p">();</span>
+</code></pre>
+</div>
+
+<p>这段代码在使用了连接后，会正确的释放连接。然而，它并没有处理异常。如果 <code class="highlighter-rouge">readStuff()</code> 方法抛出一个异常，那么 <code class="highlighter-rouge">conn</code> 对象将永远不会得到释放。代码需要将异常管理起来，以便不管是否发生异常都能正确地释放连接。幸运的是，C# 提供了一个叫做 <code class="highlighter-rouge">using</code> 的关键字，它能帮助你处理整个过程：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="no">RemoteConnection</span> <span class="n">conn</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">RemoteConnection</span><span class="p">(</span><span class="s2">"some_remote_server"</span><span class="p">);</span>
+<span class="n">using</span> <span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">conn</span><span class="p">.</span><span class="nf">readSomeData</span><span class="p">();</span>
+  <span class="n">doSomeMoreStuff</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>这个 <code class="highlighter-rouge">using</code> 关键字期望 <code class="highlighter-rouge">conn</code> 对象有一个名为 <code class="highlighter-rouge">dispose()</code> 的方法，当大括号中的代码执行完后，不管有没有异常抛出，这个方法都会被自动调用。</p>
+
+<p>OK，下面这个是用Ruby实现的 <code class="highlighter-rouge">using</code> 关键字：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">module</span> <span class="nn">Kernel</span>
+  <span class="k">def</span> <span class="nf">using</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+    <span class="k">begin</span>
+      <span class="k">yield</span>
+    <span class="k">rescue</span>
+      <span class="n">obj</span><span class="p">.</span><span class="nf">dispose</span>
+    <span class="k">end</span> 
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<h3 id="33-闭包">3.3 闭包</h3>
+
+<p><img src="/assets/images/2013-10-03-the-ruby-metaprogramming-in-the-dry/2.png" alt="binding.png" /></p>
+
+<p>正如上图所示，块不仅仅是一段浮动的代码。你不可能在真空中运行代码。当代码运行时，它需要一个执行环境：局部变量、实例变量、self …… 既然这些东西是绑定在对象上的名字，就可以把它们简称为<strong>绑定(binding)</strong>。块的要点在于它们是完整的，可以立即运行。它们既包含代码，也包含一组绑定。</p>
+
+<p>那么块是从哪里获得它的绑定的呢？当定义一个块时，它会获取当时环境中的绑定，并且把它传给一个方法时，它会带着这些绑定一起进入该方法：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">my_method</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="s2">"Goodbye"</span>
+  <span class="k">yield</span> <span class="s2">"cruel"</span>
+<span class="k">end</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="s2">"Hello"</span>
+<span class="n">my_method</span> <span class="p">{</span><span class="o">|</span><span class="n">y</span><span class="o">|</span> <span class="s2">"</span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">, </span><span class="si">#{</span><span class="n">y</span><span class="si">}</span><span class="s2"> world"</span> <span class="p">}</span>  <span class="c1"># =&gt; "Hello, cruel world"</span>
+</code></pre>
+</div>
+
+<p>当创建块时会获取到局部绑定（比如上面的<code class="highlighter-rouge">x</code>），然后把块连同它自己的绑定传给一个方法。在上面的例子中，块的绑定中包括一个名为 <code class="highlighter-rouge">x</code> 的变量。虽然在方法中定义了一个变量 <code class="highlighter-rouge">x</code>，块看到的 <code class="highlighter-rouge">x</code> 也是在块定义时绑定的 <code class="highlighter-rouge">x</code>，但是方法中的 <code class="highlighter-rouge">x</code> 对这个块来说是不可见的。基于这样的特性，计算机科学家喜欢把块称为 <strong>闭包(Closure)</strong>。</p>
+
+<h4 id="331-块局部作用域">3.3.1 块局部作用域</h4>
+
+<p>块会在定义时获取周围的绑定。你可以在块的背部定义额外的绑定，但是这些绑定在快结束时就会消失：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">my_method</span>
+  <span class="k">yield</span>
+<span class="k">end</span>
+
+<span class="n">top_level_variable</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">my_method</span> <span class="k">do</span>
+  <span class="n">top_level_variable</span> <span class="o">+=</span> <span class="mi">1</span>
+  <span class="n">local_to_block</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">end</span>
+
+<span class="n">top_level_variable</span>  <span class="c1"># =&gt; 2</span>
+<span class="n">local_to_block</span>      <span class="c1"># =&gt; Error!</span>
+</code></pre>
+</div>
+
+<p><strong>警告：</strong> 在 Ruby 1.8及之前的版本中，块参数对粗心者而言有一个陷阱。跟你期望的相反，块会覆盖具有相同名字的局部变量：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">my_method</span>
+  <span class="k">yield</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">my_method</span> <span class="k">do</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span>
+  <span class="c1"># 不错什么特殊的操作</span>
+<span class="k">end</span>
+<span class="n">x</span>  <span class="c1"># =&gt; 2</span>
+</code></pre>
+</div>
+
+<p>当把块参数命名为 <code class="highlighter-rouge">x</code> 时，块发现当前上下文中已存在一个 <code class="highlighter-rouge">x</code> 变量，于是它把这个值传给了块。这种让人吃惊的行为在过去常常是引发 bug 的根源。有条好消息是，在 Ruby 1.9 中这个问题已经被修正了。</p>
+
+<h3 id="34-作用域门">3.4 作用域门</h3>
+
+<p>Ruby 程序会在三个地方关闭前一个作用域，同时打开一个新的作用域：</p>
+
+<ul>
+  <li>类定义</li>
+  <li>模块定义</li>
+  <li>方法定义</li>
+</ul>
+
+<p>只要程序进入类或魔窟开及方法的定义，就会发生作用域切换。这三个边界分别用 <strong>class、module</strong> 和 <strong>def</strong>关键字作为标志。每一个关键字都充当了一个<strong>作用域门（Scope Gate）</strong>。</p>
+
+<p>示例：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">v1</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">class</span> <span class="nc">MyClass</span>   <span class="c1"># =&gt; 作用域门：进入 class</span>
+  <span class="n">v2</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="nb">local_variables</span>   <span class="c1"># =&gt; ["v2"]</span>
+  
+  <span class="k">def</span> <span class="nf">my_method</span> <span class="c1"># =&gt; 作用域门：进入 def</span>
+    <span class="n">v3</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="nb">local_variables</span>
+  <span class="k">end</span>         <span class="c1"># =&gt; 作用域门：离开 def</span>
+  
+  <span class="nb">local_variables</span>   <span class="c1"># =&gt; ["v2"]</span>
+<span class="k">end</span>           <span class="c1"># =&gt; 作用域门：离开 class</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="no">MyClass</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">obj</span><span class="p">.</span><span class="nf">my_method</span>     <span class="c1"># =&gt; [:v3]</span>
+<span class="n">obj</span><span class="p">.</span><span class="nf">my_method</span>     <span class="c1"># =&gt; [:v3]</span>
+<span class="nb">local_variables</span>     <span class="c1"># =&gt; [:v1, :obj]</span>
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">Kernel#local_variables</code></p>
+
+<p>Returns the names of the current local variables.</p>
+
+<h3 id="35-全局变量和顶级实例变量">3.5 全局变量和顶级实例变量</h3>
+
+<p>全局变量可以在任何作用域中访问：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">a_scope</span>
+  <span class="vg">$var</span> <span class="o">=</span> <span class="s2">"some value"</span>
+<span class="k">end</span>
+
+<span class="k">def</span> <span class="nf">another_scope</span>
+  <span class="vg">$var</span>
+<span class="k">end</span>
+
+<span class="n">a_scope</span>
+<span class="n">another_scope</span> <span class="c1"># =&gt; "some value"</span>
+</code></pre>
+</div>
+
+<p>全局变量的问题在于系统的任何部分都可以修改它们。因此，你会立即发现几乎没法追踪谁把它们改成了什么。正因为如此，基本的原则是：如非必要，尽可能少使用全局变量：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="vi">@var</span> <span class="o">=</span> <span class="s2">"The top-level @var"</span>
+
+<span class="k">def</span> <span class="nf">my_method</span>
+  <span class="vi">@var</span>
+<span class="k">end</span>
+
+<span class="n">my_method</span>  <span class="c1"># =&gt; "The top-level @var"</span>
+</code></pre>
+</div>
+
+<p>如上面的代码所示，只要 <code class="highlighter-rouge">main</code> 对象在扮演 <code class="highlighter-rouge">self</code> 的角色，就可以访问一个顶级实例变量。但当其他对象成为 <code class="highlighter-rouge">self</code> 时，顶级实例变量就退出作用域了：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyClass</span>
+  <span class="k">def</span> <span class="nf">my_method</span>
+    <span class="vi">@var</span> <span class="o">=</span> <span class="s2">"This is not the top-level @var!"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>由于不像全局变量那么有全局性，一般认为顶级示例变量比全局变量更安全。</p>
+
+<h3 id="36-扁平化作用域">3.6 扁平化作用域</h3>
+
+<ul>
+  <li>
+    <p>当想要使变量穿越过类定义时，使用 <code class="highlighter-rouge">Class.new</code></p>
+  </li>
+  <li>
+    <p>当想要使变量穿越过方法定义时，使用 <code class="highlighter-rouge">Module#define_method</code></p>
+  </li>
+</ul>
+
+<p>示例：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">my_var</span> <span class="o">=</span> <span class="s2">"Success"</span>  
+<span class="k">class</span> <span class="nc">MyClass</span>
+  <span class="c1"># 希望在这里打印 my_var</span>
+  
+  <span class="k">def</span> <span class="nf">my_method</span>
+    <span class="c1"># 还有这里 ……</span>
+  <span class="k">end</span> 
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p><strong>———–&gt;</strong></p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">my_var</span> <span class="o">=</span> <span class="s2">"Success"</span>
+<span class="no">MyClass</span> <span class="o">=</span> <span class="no">Class</span><span class="p">.</span><span class="nf">new</span> <span class="k">do</span>
+  <span class="nb">p</span> <span class="n">my_var</span>
+  <span class="n">define_method</span> <span class="ss">:my_method</span> <span class="k">do</span>
+    <span class="nb">p</span> <span class="n">my_var</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<h3 id="37-上下文探针-objectinstant_eval">3.7 上下文探针 <code class="highlighter-rouge">Object#instant_eval()</code></h3>
+
+<ul>
+  <li><code class="highlighter-rouge">instance_eval(string [, filename [, lineno]] )</code></li>
+  <li><code class="highlighter-rouge">instance_eval {| | block }</code></li>
+</ul>
+
+<p>Evaluates a string containing Ruby source code, or the given block, within the context of the receiver (obj). In order to set the context, the variable self is set to obj while the code is executing, giving the code access to obj’s instance variables. In the version of instance_eval that takes a String, the optional second and third parameters supply a filename and starting line number that are used when reporting compilation errors.</p>
+
+<p>示例：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyClass</span>
+  <span class="k">def</span> <span class="nf">initialize</span>
+    <span class="vi">@v</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">obj</span> <span class="o">=</span> <span class="no">MyClass</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">obj</span><span class="p">.</span><span class="nf">instance_eval</span> <span class="k">do</span>
+  <span class="nb">self</span>      <span class="c1"># =&gt; #&lt;MyClass:0x3340dc @v=1&gt;</span>
+  <span class="vi">@v</span>        <span class="c1"># =&gt; 1</span>
+  <span class="vi">@v</span> <span class="o">+=</span> <span class="mi">1</span>
+  <span class="vi">@v</span>        <span class="c1"># =&gt; 2</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>Ruby 1.9 中引入了一个名为 <code class="highlighter-rouge">instance_exec()</code> 的方法，它跟 <code class="highlighter-rouge">instance_eval()</code> 的功能相似，但它允许对块传入参数：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">C</span>
+  <span class="k">def</span> <span class="nf">initialize</span>
+    <span class="vi">@x</span><span class="p">,</span> <span class="vi">@y</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="no">C</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">instance_exec</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">arg</span><span class="o">|</span> <span class="p">(</span><span class="vi">@x</span> <span class="o">+</span> <span class="vi">@y</span><span class="p">)</span> <span class="o">*</span> <span class="n">arg</span><span class="p">}</span>     <span class="c1"># =&gt; 9</span>
+</code></pre>
+</div>
+
+<h3 id="38-可调用对象">3.8 可调用对象</h3>
+
+<p>可调用对象分为三种：</p>
+
+<ul>
+  <li>proc</li>
+  <li>lambda</li>
+  <li>方法</li>
+</ul>
+
+<h4 id="381-proc-和-lambda-的区别">3.8.1 proc 和 lambda 的区别</h4>
+
+<p>使用 <code class="highlighter-rouge">Kernel#lambda()</code> 生成的 Proc 对象就是 lambda，通过其他方式生成的 Proc 对象都简称为 proc。 lambda 和 proc 主要有两个方面的区别：</p>
+
+<ul>
+  <li>在 lambda 中调用 <code class="highlighter-rouge">return</code> 是从该 Proc 对象中返回，而不是从调用的方法中返回。proc 中调用 <code class="highlighter-rouge">return</code> 是从该 Proc 对象中返回</li>
+  <li>lambda 调用中对参数的个数会有严格的检查，而 proc 没有。</li>
+</ul>
+
+<p>综上所述，lambda 的行为更像是普通的方法/函数，因此一般都使用 lambda 对象，除非是想使用 proc 的某种特殊功能。</p>
+
+<p>另外，在 Ruby 1.8 中 <code class="highlighter-rouge">Kernel#proc()</code> 是 <code class="highlighter-rouge">Kernel#lambda()</code> 的别名，而在 Ruby 1.9 中 <code class="highlighter-rouge">Kernel#proc()</code> 是 <code class="highlighter-rouge">Proc.new()</code> 的别名。</p>
+
+<h4 id="382-方法">3.8.2 方法</h4>
+
+<p>可以通过 <code class="highlighter-rouge">Object#method()</code> 获取一个 Method 对象：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyClass</span>
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="vi">@x</span> <span class="o">=</span> <span class="n">value</span>
+  <span class="k">end</span>
+  
+  <span class="k">def</span> <span class="nf">my_method</span>
+    <span class="vi">@x</span>
+  <span class="k">end</span> 
+<span class="k">end</span>
+
+<span class="n">obj</span> <span class="o">=</span> <span class="no">MyClass</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">obj</span><span class="p">.</span><span class="nf">method</span> <span class="ss">:my_method</span>
+<span class="n">m</span><span class="p">.</span><span class="nf">call</span><span class="p">()</span>            <span class="c1"># =&gt; 1</span>
+</code></pre>
+</div>
+
+<p>可以用 <code class="highlighter-rouge">Method#unbind()</code> 把一个方法跟它所绑定的对象相分离，该方法再返回一个 <code class="highlighter-rouge">UnboundMethod</code> 对象。你不能执行 <code class="highlighter-rouge">UnboundMethod</code> 对象，但能把它绑定到一个对象上，使之再次成为一个 <code class="highlighter-rouge">Method</code> 对象：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">unbound</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="nf">unbind</span>
+<span class="n">another_obj</span> <span class="o">=</span> <span class="no">MyClass</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  
+<span class="n">m</span> <span class="o">=</span> <span class="n">unbound</span><span class="p">.</span><span class="nf">bind</span><span class="p">(</span><span class="n">another_obj</span><span class="p">)</span>
+<span class="n">m</span><span class="p">.</span><span class="nf">call</span><span class="p">()</span>              <span class="c1"># =&gt; 2</span>
+</code></pre>
+</div>
+
+<h3 id="39-redflag">3.9 RedFlag</h3>
+
+<p><strong>初版：</strong></p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">event</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+  <span class="nb">puts</span> <span class="n">msg</span> <span class="k">if</span> <span class="k">yield</span>
+<span class="k">end</span>
+
+<span class="no">Dir</span><span class="p">.</span><span class="nf">glob</span><span class="p">(</span><span class="s2">"*events.rb"</span><span class="p">).</span><span class="nf">each</span> <span class="p">{</span><span class="o">|</span><span class="n">file</span><span class="o">|</span> <span class="nb">load</span> <span class="n">file</span><span class="p">}</span>
+</code></pre>
+</div>
+
+<p><strong>第2版：</strong></p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">event</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+    <span class="vi">@events</span><span class="p">[</span><span class="nb">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">block</span>
+<span class="k">end</span>
+
+<span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+    <span class="vi">@setups</span> <span class="o">&lt;&lt;</span> <span class="n">block</span>
+<span class="k">end</span>
+
+<span class="no">Dir</span><span class="p">.</span><span class="nf">glob</span><span class="p">(</span><span class="s2">"*events.rb"</span><span class="p">).</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
+
+    <span class="vi">@events</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="vi">@setups</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="nb">load</span> <span class="n">file</span>
+    <span class="vi">@events</span><span class="p">.</span><span class="nf">each_pair</span> <span class="k">do</span> <span class="o">|</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="o">|</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="no">Object</span><span class="p">.</span><span class="nf">new</span>
+        <span class="vi">@setups</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">su</span><span class="o">|</span>
+            <span class="n">env</span><span class="p">.</span><span class="nf">instance_eval</span> <span class="o">&amp;</span><span class="n">su</span>
+        <span class="k">end</span>
+        <span class="nb">puts</span> <span class="n">k</span> <span class="k">if</span> <span class="n">env</span><span class="p">.</span><span class="nf">instance_eval</span> <span class="o">&amp;</span><span class="n">v</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p><strong>第3版：</strong></p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="o">-&gt;</span><span class="p">{</span>
+
+    <span class="n">events</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">setups</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="no">Kernel</span><span class="p">.</span><span class="nf">send</span> <span class="ss">:define_method</span><span class="p">,</span> <span class="ss">:event</span> <span class="k">do</span> <span class="o">|</span><span class="nb">name</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="o">|</span>
+        <span class="n">events</span><span class="p">[</span><span class="nb">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">block</span>
+    <span class="k">end</span>
+
+    <span class="no">Kernel</span><span class="p">.</span><span class="nf">send</span> <span class="ss">:define_method</span><span class="p">,</span> <span class="ss">:setup</span> <span class="k">do</span> <span class="o">|&amp;</span><span class="n">block</span><span class="o">|</span>
+        <span class="n">setups</span> <span class="o">&lt;&lt;</span> <span class="n">block</span>
+    <span class="k">end</span>
+
+    <span class="no">Kernel</span><span class="p">.</span><span class="nf">send</span> <span class="ss">:define_method</span><span class="p">,</span> <span class="ss">:each_event</span> <span class="k">do</span> <span class="o">|&amp;</span><span class="n">block</span><span class="o">|</span>
+        <span class="n">events</span><span class="p">.</span><span class="nf">each_pair</span> <span class="k">do</span> <span class="o">|</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="o">|</span>
+            <span class="n">block</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
+
+    <span class="no">Kernel</span><span class="p">.</span><span class="nf">send</span> <span class="ss">:define_method</span><span class="p">,</span> <span class="ss">:each_setup</span> <span class="k">do</span> <span class="o">|&amp;</span><span class="n">block</span><span class="o">|</span>
+        <span class="n">setups</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">su</span><span class="o">|</span>
+            <span class="n">block</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="n">su</span><span class="p">)</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
+
+<span class="p">}.</span><span class="nf">call</span>
+
+<span class="no">Dir</span><span class="p">.</span><span class="nf">glob</span><span class="p">(</span><span class="s2">"*events.rb"</span><span class="p">).</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
+    <span class="nb">load</span> <span class="n">file</span>
+    <span class="n">each_event</span> <span class="k">do</span> <span class="o">|</span><span class="nb">name</span><span class="p">,</span> <span class="n">event</span><span class="o">|</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="no">Object</span><span class="p">.</span><span class="nf">new</span>
+        <span class="n">each_setup</span> <span class="k">do</span> <span class="o">|</span><span class="n">su</span><span class="o">|</span>
+            <span class="n">env</span><span class="p">.</span><span class="nf">instance_eval</span> <span class="o">&amp;</span><span class="n">su</span>
+        <span class="k">end</span>
+        <span class="nb">puts</span> <span class="nb">name</span> <span class="k">if</span> <span class="n">env</span><span class="p">.</span><span class="nf">instance_eval</span> <span class="o">&amp;</span><span class="n">event</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<h2 id="4-类定义">4. 类定义</h2>
+
+<h3 id="41-moduleclass_eval-方法">4.1 <code class="highlighter-rouge">Module#class_eval()</code> 方法</h3>
+
+<p><code class="highlighter-rouge">class_eval</code> 用于在一个类中定义实例方法：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Hello</span><span class="p">;</span> <span class="k">end</span>
+
+<span class="no">Hello</span><span class="p">.</span><span class="nf">class_eval</span> <span class="k">do</span>
+  <span class="k">def</span> <span class="nf">hello</span>
+    <span class="nb">puts</span> <span class="s2">"hello world"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">h</span> <span class="o">=</span> <span class="no">Hello</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">h</span><span class="p">.</span><span class="nf">hello</span>   <span class="c1"># =&gt; hello world</span>
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">instance_eval</code> 用于在一个类中定义类方法：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Hello</span><span class="p">;</span> <span class="k">end</span>
+
+<span class="no">Hello</span><span class="p">.</span><span class="nf">instance_eval</span> <span class="k">do</span>
+  <span class="k">def</span> <span class="nf">hello</span>
+    <span class="nb">puts</span> <span class="s2">"hello world"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="no">Hello</span><span class="p">.</span><span class="nf">hello</span>   <span class="c1"># =&gt; hello world</span>
+</code></pre>
+</div>
+
+<h3 id="42-类实例变量和类变量">4.2 类实例变量和类变量</h3>
+
+<h4 id="421-类实例变量">4.2.1 类实例变量</h4>
+
+<p>Ruby 解释器假定所有的实例变量都属于当前对象 <code class="highlighter-rouge">self</code>。在类定义时也是如此：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyClass</span>
+  <span class="vi">@my_var</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>在类定义的时候，self 的角色由类本身担任，因此实例变量 <code class="highlighter-rouge">@my_var</code> 属于这个类。类的实例变量不同于类的对象的实例变量。另外一个例子：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyClass</span>
+  <span class="vi">@my_var</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">read</span><span class="p">;</span> <span class="vi">@my_var</span><span class="p">;</span> <span class="k">end</span>
+  <span class="k">def</span> <span class="nf">write</span><span class="p">;</span> <span class="vi">@my_var</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="k">end</span>
+  <span class="k">def</span> <span class="nf">read</span><span class="p">;</span> <span class="vi">@my_var</span><span class="p">;</span> <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">obj</span> <span class="o">=</span> <span class="no">MyClass</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">obj</span><span class="p">.</span><span class="nf">write</span>
+<span class="n">obj</span><span class="p">.</span><span class="nf">read</span>      <span class="c1"># =&gt; 2</span>
+<span class="no">MyClass</span><span class="p">.</span><span class="nf">read</span>    <span class="c1"># =&gt; 1</span>
+</code></pre>
+</div>
+<h4 id="422-类变量">4.2.2 类变量</h4>
+
+<p>类变量与类示例变量不同，它们可以被自雷或类的实例所使用（在这个意义上，它们更像是 Java 的静态成员）。</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">D</span> <span class="o">&lt;</span> <span class="no">C</span>
+  <span class="vc">@@v</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="k">def</span> <span class="nf">my_method</span><span class="p">;</span> <span class="vc">@@v</span><span class="p">;</span> <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="no">D</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">my_method</span>     <span class="c1"># =&gt; 1</span>
+</code></pre>
+</div>
+
+<p>不幸的是，类变量有一个很不好的怪癖。下面是一个例子：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="vc">@@v</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="k">class</span> <span class="nc">MyClass</span>
+  <span class="vc">@@v</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="k">end</span>
+
+<span class="vc">@@v</span>     <span class="c1"># =&gt; 2</span>
+</code></pre>
+</div>
+
+<p>的搭配这样的结果是因为类变量并不真正属于类————它们属于类体系结构。由于 <code class="highlighter-rouge">@@v</code> 定义于 <code class="highlighter-rouge">main</code> 的上下文，它属于 <code class="highlighter-rouge">main</code> 的类 <code class="highlighter-rouge">Object</code>，所以也属于 <code class="highlighter-rouge">Object</code> 的所有后台。 <code class="highlighter-rouge">MyClass</code> 继承自 <code class="highlighter-rouge">Object</code>，因此它也共享了这个类变量。</p>
+
+<p>从技术上讲，尽管这种行为可以理解，但它还是很容易把你绊倒，因为可能会遇到上面所示的意外事件，现在绝大多数 Ruby 主义者都避免使用类变量，而尽量使用类实例变量。</p>
+
+<h3 id="43-classnew">4.3 <code class="highlighter-rouge">Class.new</code></h3>
+
+<p><code class="highlighter-rouge">Class.new(super_class=Object) { |mod| … }</code></p>
+
+<p>Creates a new anonymous (unnamed) class with the given superclass (or Object if no parameter is given). You can give a class a name by assigning the class object to a constant.
+If a block is given, it is passed the class object, and the block is evaluated in the context of this class using class_eval.</p>
+
+<p>示例：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="no">Employee</span> <span class="o">=</span> <span class="no">Class</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="no">Person</span><span class="p">)</span> <span class="k">do</span>
+  <span class="k">def</span> <span class="nf">hello</span>
+    <span class="p">.</span><span class="nf">.</span><span class="p">.</span>
+  <span class="nf">end</span>
+<span class="k">end</span>
+
+<span class="n">e</span> <span class="o">=</span> <span class="no">Employee</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">e</span><span class="p">.</span><span class="nf">hello</span>
+</code></pre>
+</div>
+
+<h3 id="44-类方法的写法">4.4 类方法的写法</h3>
+
+<p>1.</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nc">MyClass</span><span class="o">.</span><span class="nf">my_method</span><span class="p">;</span> <span class="k">end</span>
+</code></pre>
+</div>
+
+<p>2.</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyClass</span>
+  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">my_method</span><span class="p">;</span> <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>3.</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyClass</span>
+  <span class="k">class</span> <span class="o">&lt;&lt;</span> <span class="nb">self</span>
+    <span class="k">def</span> <span class="nf">my_method</span><span class="p">;</span> <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>在日常编程中应该使用哪种语法，这在很大程度上取决于个人喜好。大多数人认为 <code class="highlighter-rouge">self</code> 形式的语法可读性更高，而一些人则明确指出 <code class="highlighter-rouge">eigenclass</code> 才是方法的真正所用之处。专家级的 Ruby 程序猿都会不屑于使用“类名”方法的语法，因为这种方式重复了类的名字，给重构带来了不便。</p>
+
+<h3 id="45-类方法和moduleinclude-以及-objectextend">4.5 类方法和<code class="highlighter-rouge">Module#include()</code> 以及 <code class="highlighter-rouge">Object#extend()</code></h3>
+
+<p>使用 <code class="highlighter-rouge">Module#inculde()</code> 方法可以混入一个模块，使得在该模块中定义的方法变为调用类的示例方法：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">module</span> <span class="nn">Hello</span>
+  <span class="k">def</span> <span class="nf">hello</span>
+    <span class="s2">"hello world"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Person</span>
+  <span class="kp">include</span> <span class="no">Hello</span>
+<span class="k">end</span>
+
+<span class="nb">p</span> <span class="o">=</span> <span class="no">Person</span><span class="p">.</span><span class="nf">new</span>
+<span class="nb">p</span><span class="p">.</span><span class="nf">hello</span>     <span class="c1"># =&gt; "hello world"  </span>
+</code></pre>
+</div>
+
+<p>结合 <code class="highlighter-rouge">eigenclass</code> 和 <code class="highlighter-rouge">Module#include()</code> 可以将模块中定义的方法变为调用类的类方法：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">module</span> <span class="nn">Hello</span>
+  <span class="k">def</span> <span class="nf">hello</span>
+    <span class="s2">"hello world"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Person</span>
+  <span class="k">class</span> <span class="o">&lt;&lt;</span> <span class="nb">self</span>
+    <span class="kp">include</span> <span class="no">Hello</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="no">Person</span><span class="p">.</span><span class="nf">hello</span>      <span class="c1"># =&gt; "hello world"</span>
+</code></pre>
+</div>
+
+<p>为了简化上面的操作，Ruby 提供了 <code class="highlighter-rouge">Object#extend</code> 方法，例如：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">module</span> <span class="nn">Hello</span>
+  <span class="k">def</span> <span class="nf">hello</span>
+    <span class="s2">"hello world"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Person</span><span class="p">;</span> <span class="k">end</span>
+<span class="no">Person</span><span class="p">.</span><span class="nf">extend</span> <span class="no">Hello</span>
+<span class="no">Person</span><span class="p">.</span><span class="nf">hello</span>      <span class="c1"># =&gt; "hello world"</span>
+
+<span class="nb">p</span> <span class="o">=</span> <span class="no">Person</span><span class="p">.</span><span class="nf">new</span>
+<span class="nb">p</span><span class="p">.</span><span class="nf">extend</span> <span class="no">Hello</span>
+<span class="nb">p</span><span class="p">.</span><span class="nf">hello</span>         <span class="c1"># =&gt; "hello world"</span>
+</code></pre>
+</div>
+
+<h3 id="46-环绕别名">4.6 环绕别名</h3>
+
+<p>编写环绕别名的步骤：</p>
+
+<ol>
+  <li>给方法定义一个别名</li>
+  <li>重新定义这个方法</li>
+  <li>在新的方法中调用老的方法</li>
+</ol>
+
+<p>示例：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">String</span>
+  <span class="k">alias</span> <span class="n">old_length</span> <span class="n">length</span>
+  <span class="k">def</span> <span class="nf">length</span>
+    <span class="k">if</span> <span class="n">old_length</span> <span class="o">&gt;</span> <span class="mi">5</span>
+      <span class="s2">"long"</span>
+    <span class="k">else</span>
+      <span class="s2">"short"</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span> 
+</code></pre>
+</div>
+<p><strong>警告：</strong> 永远不要把一个环绕别名加载两次！</p>
+
+<h2 id="5-编写代码的代码">5. 编写代码的代码</h2>
+
+<h3 id="51-binding-对象">5.1 Binding 对象</h3>
+
+<p>Binding 就是一个用对象表示的完整作用域。你可以通过创建 Binding 对象来捕获并带走当前的作用域。接下来，你还可以通过 <code class="highlighter-rouge">eval()</code> 方法、<code class="highlighter-rouge">instance_eval()</code> 方法或 <code class="highlighter-rouge">class_eval()</code> 方法，在 Binding 对象所携带的作用域中执行代码。</p>
+
+<p>可以使用 <code class="highlighter-rouge">Kernel#binding()</code> 方法来创建 Binding 对象：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyClass</span>
+  <span class="k">def</span> <span class="nf">my_method</span>
+    <span class="vi">@x</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="nb">binding</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="no">MyClass</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">my_method</span>
+</code></pre>
+</div>
+
+<p>对 <code class="highlighter-rouge">*eval()</code> 方法家族，可以给它们传递一个 Binding 对象作为额外的参数，代码就可以在这个 Binding 对象所携带的作用域中执行：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="nb">eval</span> <span class="s2">"@x"</span><span class="p">,</span> <span class="n">b</span>      <span class="c1"># =&gt; 1</span>
+</code></pre>
+</div>
+
+<p>Ruby 还提供了一个名为 <code class="highlighter-rouge">TOPLEVEL_BINDING</code> 的预定义常量，它表示顶级作用域的 Binding 对象。你可以在程序的任何地方访问这个顶级作用域：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">AnotherClass</span>
+  <span class="k">def</span> <span class="nf">my_method</span>
+    <span class="nb">eval</span> <span class="s2">"self"</span><span class="p">,</span> <span class="no">TOPLEVEL_BINDING</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="no">AnotherClass</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">my_method</span>      <span class="c1"># =&gt; main</span>
+</code></pre>
+</div>
+
+<p>从某种意义上说，你可以把 Binding 对象看成是一个比块更“纯净”的闭包，因为它们只包含作用域而不包含代码。</p>
+
+<h3 id="52-代码字符串">5.2 代码字符串</h3>
+
+<p>代码字符串可以像块一样访问局部变量：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'a'</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">]</span>
+<span class="n">x</span> <span class="o">=</span> <span class="s1">'d'</span>
+<span class="n">array</span><span class="p">.</span><span class="nf">instance_eval</span> <span class="s2">"self[0] = x"</span>
+
+<span class="n">array</span>   <span class="c1"># =&gt; ['d', 'b', 'c']</span>
+</code></pre>
+</div>
+
+<h3 id="53-kerneleval-与-ruby-安全级别">5.3 <code class="highlighter-rouge">Kernel#eval</code> 与 Ruby 安全级别</h3>
+
+<p>使用 <code class="highlighter-rouge">Kernel#eval()</code> 的问题在于，这存在遭受代码注入攻击的危险。</p>
+
+<p>Ruby 会自动把不安全的对象——尤其是从外部传入的对象——标记为被污染的。污染对象包括程序从 Web 表单、文件和命令行读入的字符串，甚至包括系统变量。每次从污染字符串运算而来的新字符串，也是被污染的。下面的例子通过调用 <code class="highlighter-rouge">tainted?()</code> 方法来判断类是不是被污染了：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">user_input</span> <span class="o">=</span> <span class="s2">"User input: </span><span class="si">#{</span><span class="nb">gets</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="n">user_input</span><span class="p">.</span><span class="nf">tainted?</span>
+</code></pre>
+</div>
+
+<p>每次都要检查字符串是否被污染很麻烦，Ruby 提供了一种叫做安全级别的概念，它能很好地弥补污染对象的不足，当设置一个安全你级别（可以通过给 <code class="highlighter-rouge">$SAFE</code> 全局变量赋值来实现）时，就禁止了某些特定的潜在危险操作。</p>
+
+<p>有五个安全级别可供选择，从默认的 0（这里是一个“嬉皮士公社”，在这儿你可以不受约束，也可以格式化硬盘）到 4（这里是“军事管辖区”，在这儿你甚至不能自由地退出程序）。例如，在安全级别 2 上，会禁止绝大多数文件相关工作。值得注意的是，在任何大于 0 的安全级别上，Ruby 都会拒绝执行污染的字符串：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="vg">$SAFE</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">user_input</span> <span class="o">=</span> <span class="s2">"User input: </span><span class="si">#{</span><span class="nb">gets</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">eval</span> <span class="n">user_input</span>
+</code></pre>
+</div>
+
+<p>为了调节安全性，可以在执行代码字符串之前显式去除它的污染小（通过调用 <code class="highlighter-rouge">Object#untaint()</code> 方法），然后可以依赖安全级别来禁止注入文件操作这样的危险动作。</p>
+
+<h3 id="54-类扩展混入class-extension-mixins">5.4 类扩展混入（Class Extension Mixins）</h3>
+
+<p>编写类混入扩展的步骤：</p>
+
+<ol>
+  <li>定义一个模块，姑且叫做 <code class="highlighter-rouge">MyMixin</code></li>
+  <li>在 <code class="highlighter-rouge">MyMixin</code> 中定义一个内部模块（通常把它叫做 <code class="highlighter-rouge">ClassMethods</code>），并给它定义一些方法。这些方法最终会成为类方法。</li>
+  <li>覆盖 <code class="highlighter-rouge">MyMixin#included()</code> 方法来用 <code class="highlighter-rouge">ClassMethods</code> 扩展包含者（使用 <code class="highlighter-rouge">extend()</code> 方法）。</li>
+</ol>
+
+<p>示例：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">module</span> <span class="nn">MyMixin</span>
+  <span class="k">module</span> <span class="nn">ClassMethods</span>
+    <span class="k">def</span> <span class="nf">hello</span>
+      <span class="s2">"hello world"</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+  
+  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">included</span><span class="p">(</span><span class="n">base</span><span class="p">)</span>
+    <span class="n">base</span><span class="p">.</span><span class="nf">extend</span> <span class="no">ClassMethods</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Person</span>
+  <span class="kp">include</span> <span class="no">MyMixin</span>
+<span class="k">end</span>
+
+<span class="no">Person</span><span class="p">.</span><span class="nf">hello</span>      <span class="c1"># =&gt; "hello world"</span>
+</code></pre>
+</div>
+<h3 id="55-checkedattributes">5.5 CheckedAttributes</h3>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">module</span> <span class="nn">CheckedAttributes</span>
+  <span class="k">module</span> <span class="nn">ClassMethods</span>
+    <span class="k">def</span> <span class="nf">attr_checked</span> <span class="nb">name</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span>
+      <span class="n">define_method</span> <span class="nb">name</span> <span class="k">do</span>
+        <span class="nb">instance_variable_get</span> <span class="s2">"@</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">"</span>
+      <span class="k">end</span>
+      
+      <span class="n">define_method</span> <span class="s2">"</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">="</span><span class="p">,</span> <span class="n">value</span> <span class="k">do</span>
+        <span class="k">raise</span> <span class="s2">"Invalid Attribute Value"</span> <span class="k">unless</span> <span class="n">block</span><span class="p">.</span><span class="nf">call</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="nb">instance_variable_set</span> <span class="s2">"@</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">value</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">included</span><span class="p">(</span><span class="n">base</span><span class="p">)</span>
+    <span class="n">base</span><span class="p">.</span><span class="nf">extend</span> <span class="no">ClassMethods</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Person</span>
+  <span class="n">attr_checked</span> <span class="ss">:age</span> <span class="k">do</span> <span class="o">|</span><span class="n">age</span><span class="o">|</span>
+    <span class="n">age</span> <span class="o">&gt;</span> <span class="mi">18</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="nb">p</span> <span class="o">=</span> <span class="no">Person</span><span class="p">.</span><span class="nf">new</span>
+<span class="nb">p</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="nb">p</span><span class="p">.</span><span class="nf">name</span>        <span class="c1"># =&gt; 20</span>
+<span class="nb">p</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="mi">10</span>     <span class="c1"># =&gt; raise "Invalid Attribute Value"</span>
+</code></pre>
+</div>
+
+        </section>
+
+        
+
+        <footer class="post-footer">
+            <!-- If we want to display author's name and bio -->
+            
+                <figure class="author-image">
+                    <a class="img" href="/" style="background-image: url(/assets/images/profile.png)">
+                    <span class="hidden">Liu Xiang's Picture</span></a>
+                </figure>
+                <section class="author">
+                    <!-- Author Name -->
+                    <h4> Liu Xiang </h4>
+                    <!-- Author Bio -->
+                </section>
+            
+
+            <!-- Share links section -->
+            <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?text=《Ruby 元编程》中的那些干货&amp;url=/ruby/2013/10/03/the-ruby-metaprogramming-in-the-dry.html"
+        onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=/ruby/2013/10/03/the-ruby-metaprogramming-in-the-dry.html"
+        onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=/ruby/2013/10/03/the-ruby-metaprogramming-in-the-dry.html"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+
+            <!-- Disqus comments -->
+                <!-- <section class="disqus">
+     <div id="disqus_thread"></div>
+     <script type="text/javascript">
+
+     var disqus_shortname = ''; 
+     var disqus_developer = 0; // developer mode is on
+     (function() {
+     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+     dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+     })();
+     </script>
+     <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+     </section> -->
+
+<section class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+   /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+   var disqus_shortname = "liuxiangblog"; // required: replace example with your forum shortname
+
+   // The following are highly recommended additional parameters. Remove the slashes in front to use.
+   // var disqus_identifier = 'unique_dynamic_id_1234';
+   // var disqus_url = 'http://example.com/permalink-to-page.html';
+
+   /* * * DON'T EDIT BELOW THIS LINE * * */
+   (function() {
+     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+     dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+   })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+        </footer>
+
+    </article>
+
+</main>
+
+    <footer class="site-footer clearfix">
+      <section class="copyright">
+        <a href="/">Lulu's Blog</a> &copy;
+              2017 &bull; All rights reserved.
+      </section>
+      <section class="poweredby">Made with Jekyll using
+        <a href="http://github.com/rosario/kasper">Kasper theme</a>
+      </section>
+    </footer>
+
+    <script type="text/javascript" src="/assets/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', '']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+</body>
+</html>

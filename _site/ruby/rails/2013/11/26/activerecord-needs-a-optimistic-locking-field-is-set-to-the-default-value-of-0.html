@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Lulu's Blog</title>
+    <meta name="description" content="" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
+
+</head>
+<body class="home-template">
+
+    <header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        <a class="back-button icon-arrow-left" href="/">Home</a>
+        <a class="subscribe-button icon-feed" href="/feed.xml">Subscribe</a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">ActiveRecord 的乐观锁字段需要将默认值设置为 0</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2013-11-26">26 Nov 2013</time>
+                
+                    on Ruby and Rails
+                
+            </section>
+        </header>
+
+<!--         <header class="post-header">
+            <a id="blog-logo" href="http://localhost:4000">
+                
+                    <img src="true" alt="Lulu's Blog" />
+                
+            </a>
+        </header> -->
+
+        <!-- <span class="post-meta">
+            <time datetime="2013-11-26">26 Nov 2013</time>
+            
+                on Ruby and Rails
+            
+        </span> -->
+
+        <!-- <h1 class="post-title">ActiveRecord 的乐观锁字段需要将默认值设置为 0</h1> -->
+
+        <section class="post-content">
+            <p>在使用乐观锁时，如果乐观锁字段（默认为 <code class="highlighter-rouge">lock_version</code>）的默认值为 <code class="highlighter-rouge">NULL</code>，那么这条记录被加载到 Rails 中后，将被初始化为 <code class="highlighter-rouge">0</code>。当下一次调用 <code class="highlighter-rouge">save</code> 方法更新这条记录时，Rails 会使用这样的 SQL 语句来查询所更新记录是否已经被更新过：</p>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">UPDATE</span> <span class="nv">"clients"</span> <span class="k">SET</span> <span class="nv">"name"</span> <span class="o">=</span> <span class="s1">'xxx'</span><span class="p">,</span> <span class="nv">"lock_version"</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">WHERE</span> <span class="p">(</span><span class="nv">"clients"</span><span class="p">.</span><span class="nv">"id"</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">AND</span> <span class="nv">"clients"</span><span class="p">.</span><span class="nv">"lock_version"</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>因为该记录的 <code class="highlighter-rouge">lock_version</code> 字段在数据库中的值为默认的 <code class="highlighter-rouge">NULL</code>，因此必然会查询失败，抛出 <code class="highlighter-rouge">ctiveRecord::StaleObjectError</code> 异常。</p>
+
+<p>为了解决这个问题，需要在创建库表或者添加 <code class="highlighter-rouge">lock_version</code> 字段时，指定其默认是为 <code class="highlighter-rouge">0</code> :</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">AddLockVersionToClients</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
+  <span class="k">def</span> <span class="nf">change</span>
+    <span class="n">add_column</span> <span class="ss">:clients</span><span class="p">,</span> <span class="ss">:lock_version</span><span class="p">,</span> <span class="ss">:integer</span><span class="p">,</span> <span class="ss">:default</span> <span class="o">=&gt;</span> <span class="mi">0</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+<p>另外修改一个 Model 的乐观锁字段：</p>
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Client</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="nb">self</span><span class="p">.</span><span class="nf">locking_column</span> <span class="o">=</span> <span class="ss">:lock</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+
+        </section>
+
+        
+
+        <footer class="post-footer">
+            <!-- If we want to display author's name and bio -->
+            
+                <figure class="author-image">
+                    <a class="img" href="/" style="background-image: url(/assets/images/profile.png)">
+                    <span class="hidden">Liu Xiang's Picture</span></a>
+                </figure>
+                <section class="author">
+                    <!-- Author Name -->
+                    <h4> Liu Xiang </h4>
+                    <!-- Author Bio -->
+                </section>
+            
+
+            <!-- Share links section -->
+            <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?text=ActiveRecord 的乐观锁字段需要将默认值设置为 0&amp;url=/ruby/rails/2013/11/26/activerecord-needs-a-optimistic-locking-field-is-set-to-the-default-value-of-0.html"
+        onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=/ruby/rails/2013/11/26/activerecord-needs-a-optimistic-locking-field-is-set-to-the-default-value-of-0.html"
+        onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=/ruby/rails/2013/11/26/activerecord-needs-a-optimistic-locking-field-is-set-to-the-default-value-of-0.html"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+
+            <!-- Disqus comments -->
+                <!-- <section class="disqus">
+     <div id="disqus_thread"></div>
+     <script type="text/javascript">
+
+     var disqus_shortname = ''; 
+     var disqus_developer = 0; // developer mode is on
+     (function() {
+     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+     dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+     })();
+     </script>
+     <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+     </section> -->
+
+<section class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+   /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+   var disqus_shortname = "liuxiangblog"; // required: replace example with your forum shortname
+
+   // The following are highly recommended additional parameters. Remove the slashes in front to use.
+   // var disqus_identifier = 'unique_dynamic_id_1234';
+   // var disqus_url = 'http://example.com/permalink-to-page.html';
+
+   /* * * DON'T EDIT BELOW THIS LINE * * */
+   (function() {
+     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+     dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+   })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+        </footer>
+
+    </article>
+
+</main>
+
+    <footer class="site-footer clearfix">
+      <section class="copyright">
+        <a href="/">Lulu's Blog</a> &copy;
+              2017 &bull; All rights reserved.
+      </section>
+      <section class="poweredby">Made with Jekyll using
+        <a href="http://github.com/rosario/kasper">Kasper theme</a>
+      </section>
+    </footer>
+
+    <script type="text/javascript" src="/assets/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', '']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+</body>
+</html>

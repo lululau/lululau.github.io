@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Lulu's Blog</title>
+    <meta name="description" content="" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
+
+</head>
+<body class="home-template">
+
+    <header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        <a class="back-button icon-arrow-left" href="/">Home</a>
+        <a class="subscribe-button icon-feed" href="/feed.xml">Subscribe</a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">Ruby 魔法之 Symbol#to_proc() 方法</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2013-09-27">28 Sep 2013</time>
+                
+                    on Ruby
+                
+            </section>
+        </header>
+
+<!--         <header class="post-header">
+            <a id="blog-logo" href="http://localhost:4000">
+                
+                    <img src="true" alt="Lulu's Blog" />
+                
+            </a>
+        </header> -->
+
+        <!-- <span class="post-meta">
+            <time datetime="2013-09-27">28 Sep 2013</time>
+            
+                on Ruby
+            
+        </span> -->
+
+        <!-- <h1 class="post-title">Ruby 魔法之 Symbol#to_proc() 方法</h1> -->
+
+        <section class="post-content">
+            <p><em>摘自 “Ruby 元编程” 附录A.5</em></p>
+
+<p>这种有点诡异的法术在 Ruby 程序猿中很流行。当第一次接触这种法术时，笔者也很难理解其背后的道理。下面来一步一步地分析它，这样理解它会更容易。</p>
+
+<p>请看下面的代码：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'bob'</span><span class="p">,</span> <span class="s1">'bill'</span><span class="p">,</span> <span class="s1">'heather'</span><span class="p">]</span>
+<span class="n">names</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span><span class="o">|</span><span class="nb">name</span><span class="o">|</span> <span class="nb">name</span><span class="p">.</span><span class="nf">capitalize</span> <span class="p">}</span>   <span class="c1"># =&gt; ["Bob", "Bill", "Heather"]</span>
+</code></pre>
+</div>
+<p>下面关注这个块——这是一个简单的“一次调用块（one-call block）”，它只有一个参数，并且对这个参数只调用一个方法。一次调用块在 Ruby 中十分常见，尤其在（但并非只是在）处理数组的时候。</p>
+
+<p>在像 Ruby 这样以简明扼要闻名的语言中，一次调用块甚至都显得有点啰嗦。为什么必须费力创建一个带有花括号的完整块来让 Ruby 仅仅调用一个方法呢？Symbol#to_proc() 的目的就是用一种更简单的方式来替代一次调用块。下面从必须的最小信息开始，也就是你希望调用的方法的名字，用一个符号表示为：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="ss">:capitalize</span>
+</code></pre>
+</div>
+<p>你希望把这个符号转换为如下的一次调用块：</p>
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="p">.</span><span class="nf">capitalize</span><span class="p">}</span>
+</code></pre>
+</div>
+<p>作为第一步，你可以给 Symbol 类增加一个方法，用来把符号转换为一个 Proc 对象：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="no">Class</span> <span class="no">Symbol</span>
+  <span class="k">def</span> <span class="nf">to_proc</span>
+    <span class="no">Proc</span><span class="p">.</span><span class="nf">new</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span> <span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</div>
+<p>看到这个方法是怎么工作的了么？如果调用它（比如 <code class="highlighter-rouge">:capitalize</code> 符号），则它会返回一个带有参数的 proc，并且对这个参数调用 <code class="highlighter-rouge">capitalize()</code> 方法。现在可以使用 <code class="highlighter-rouge">to_proc()</code> 方法和 <code class="highlighter-rouge">&amp;</code> 操作符，首先把符号转换为 Proc，然后再转换为块：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'bon'</span><span class="p">,</span> <span class="s1">'bill'</span><span class="p">,</span> <span class="s1">'heather'</span><span class="p">]</span>
+<span class="n">names</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:capitalize</span><span class="p">.</span><span class="nf">to_proc</span><span class="p">)</span>   <span class="c1"># =&gt; ["Bob", "Bill", "Heather"]</span>
+</code></pre>
+</div>
+<p>甚至还可以把这段代码变得更短。由于<code class="highlighter-rouge">&amp;</code>可以作用于任何对象，所以它会调用该对象的 <code class="highlighter-rouge">to_proc</code> 方法来把这个对象转换为 <code class="highlighter-rouge">Proc</code>。（你不会认为是随机选择 <code class="highlighter-rouge">to_proc()</code> 作为方法名了吧？）因此，可以简单使用下面的方式：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'bob'</span><span class="p">,</span> <span class="s1">'bill'</span><span class="p">,</span> <span class="s1">'heather'</span><span class="p">]</span>
+<span class="n">names</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:capitalize</span><span class="p">)</span>   <span class="c1"># =&gt; ["Bob", "Bill", "Heather"]</span>
+</code></pre>
+</div>
+<p>这就是被称为<strong>符号到 Proc</strong> 的法术，漂亮吧？</p>
+
+<p>如果是使用 Ruby 1.9, 你甚至无需自己为 <code class="highlighter-rouge">Symbol</code> 定义 <code class="highlighter-rouge">to_proc</code> 方法，因为它已经存在了。事实上，Ruby 1.9 中实现的 <code class="highlighter-rouge">to_proc()</code> 方法甚至支持对于一个参数的块，可以支持像 inject() 这样的方法：</p>
+
+<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="c1"># 不用 Symbol#to_proc:</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">].</span><span class="nf">inject</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">memo</span><span class="p">,</span> <span class="n">obj</span><span class="o">|</span> <span class="n">memo</span> <span class="o">+</span> <span class="n">obj</span><span class="p">}</span>  <span class="c1"># =&gt; 8</span>
+
+<span class="c1"># 使用 Symbol$to_proc:</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">].</span><span class="nf">inject</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="p">:</span><span class="o">+</span><span class="p">)</span>
+</code></pre>
+</div>
+
+        </section>
+
+        
+
+        <footer class="post-footer">
+            <!-- If we want to display author's name and bio -->
+            
+                <figure class="author-image">
+                    <a class="img" href="/" style="background-image: url(/assets/images/profile.png)">
+                    <span class="hidden">Liu Xiang's Picture</span></a>
+                </figure>
+                <section class="author">
+                    <!-- Author Name -->
+                    <h4> Liu Xiang </h4>
+                    <!-- Author Bio -->
+                </section>
+            
+
+            <!-- Share links section -->
+            <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?text=Ruby 魔法之 Symbol#to_proc() 方法&amp;url=/ruby/2013/09/27/ruby-magic-symbol-to-proc-method.html"
+        onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=/ruby/2013/09/27/ruby-magic-symbol-to-proc-method.html"
+        onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=/ruby/2013/09/27/ruby-magic-symbol-to-proc-method.html"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+
+            <!-- Disqus comments -->
+                <!-- <section class="disqus">
+     <div id="disqus_thread"></div>
+     <script type="text/javascript">
+
+     var disqus_shortname = ''; 
+     var disqus_developer = 0; // developer mode is on
+     (function() {
+     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+     dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+     })();
+     </script>
+     <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+     </section> -->
+
+<section class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+   /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+   var disqus_shortname = "liuxiangblog"; // required: replace example with your forum shortname
+
+   // The following are highly recommended additional parameters. Remove the slashes in front to use.
+   // var disqus_identifier = 'unique_dynamic_id_1234';
+   // var disqus_url = 'http://example.com/permalink-to-page.html';
+
+   /* * * DON'T EDIT BELOW THIS LINE * * */
+   (function() {
+     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+     dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+   })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+        </footer>
+
+    </article>
+
+</main>
+
+    <footer class="site-footer clearfix">
+      <section class="copyright">
+        <a href="/">Lulu's Blog</a> &copy;
+              2017 &bull; All rights reserved.
+      </section>
+      <section class="poweredby">Made with Jekyll using
+        <a href="http://github.com/rosario/kasper">Kasper theme</a>
+      </section>
+    </footer>
+
+    <script type="text/javascript" src="/assets/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', '']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+</body>
+</html>
