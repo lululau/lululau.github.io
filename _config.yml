@@ -32,6 +32,7 @@ gems:
 exclude:
   - Gemfile
   - Gemfile.lock
+  - "*.org"
 category_archive:
   path: 'categories'
   slugify: true
