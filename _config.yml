@@ -19,9 +19,9 @@ email: lululau@me.com
 logo: false
 paginate: 15
 baseurl: "/" # the subpath of your site, e.g. /blog
-url: "http://lululau.github.io" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: jekyllrb
-github_username:  jekyll
+url: "https://lululau.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+twitter_username: lululau
+github_username:  lululau
 
 # Build settings
 markdown: kramdown
@@ -36,5 +36,4 @@ exclude:
 category_archive:
   path: 'categories'
   slugify: true
-url:            'blog url'
 author:         'Liu Xiang'
