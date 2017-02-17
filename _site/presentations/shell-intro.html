@@ -1,0 +1,1636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Shell Intro</title>
+<meta name="author" content="(Liu Xiang)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/solarized.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Shell Intro</h1><h2 class="author">Liu Xiang</h2><p class="date">Created: 2017-02-17 五 13:37</p>
+</section>
+
+<section>
+<section id="slide-org6f6c148">
+<h2 id="org6f6c148"><span class="section-number-2">1</span> 简介</h2>
+<div class="outline-text-2" id="text-1">
+</div></section>
+<section id="slide-org828eeac">
+<h3 id="org828eeac"><span class="section-number-3">1.1</span> Shell 是什么</h3>
+<ol>
+<li class="fragment appear">命令解释器</li>
+<li class="fragment appear">脚本编程语言</li>
+<li class="fragment appear">作业 (Job) 管理</li>
+
+</ol>
+<aside class="notes">
+<ol>
+<li><p>
+命令解释器
+</p>
+
+<p>
+除了可以解释外部命令外还提供内部命令
+</p></li>
+<li>脚本编程语言
+
+<ul>
+<li>shell 提供变量、函数、控制结构等</li>
+<li><code>she-bang</code> VS <code>native code</code></li>
+
+</ul></li>
+<li>作业 (Job) 管理 <code>C-z</code> <code>fg</code> <code>bg</code> <code>jobs</code></li>
+
+</ol>
+
+</aside>
+</section>
+<section id="slide-orged0d67b">
+<h3 id="orged0d67b"><span class="section-number-3">1.2</span> 流行的 Shell</h3>
+<ul>
+<li class="fragment appear">bash</li>
+<li class="fragment appear">zsh</li>
+<li class="fragment appear">fish</li>
+
+</ul>
+
+<aside class="notes">
+<ul>
+<li><p>
+bash
+</p>
+
+<p>
+Bash stands for Bourne Again Shell
+</p>
+
+<p>
+it is the default shell on many Linux distributions today.
+</p>
+
+<p>
+It is also a sh-compatible shell and offers practical
+ improvements over sh for programming and interactive use which includes:
+</p>
+
+<ul>
+<li>Command line editing</li>
+<li>Job Control</li>
+<li>Unlimited size command history</li>
+<li>Shell Functions and Aliases</li>
+<li>Unlimited size Indexed arrays</li>
+<li>Integer arithmetic in any base from two to sixty-four</li>
+
+</ul></li>
+
+<li><p>
+zsh
+</p>
+
+<p>
+Zsh is designed to be interactive and it incorporates many features of
+other Unix/GNU Linux shells such as bash, tcsh and ksh.
+</p>
+
+<ul>
+<li>almost bash-compatible</li>
+<li>completions</li>
+<li>expansions
+<ul>
+<li>path expansion: <code>cd /u/l/share</code></li>
+<li>path replacement: <code>cd share bin</code></li>
+<li>suffix aliases: <code>alias -s rb=vim</code></li>
+<li>brace expansion: <code>echo {10..20}</code></li>
+<li>only directories: <code>ls -d *(/)</code></li>
+<li>only plain files: <code>ls -d *(.)</code></li>
+<li>files larger than 5 MB: <code>ls -lh *(Lm+5)</code></li>
+<li>all empty files (recursively): <code>ls -lh **/*(L0)</code></li>
+
+</ul></li>
+<li>oh-my-zsh</li>
+
+</ul></li>
+
+<li><p>
+fish
+</p>
+
+<p>
+Fish in full stands for “friendly interactive shell” and was authored
+in 2005. It was intended to be fully interactive and user friendly, just like
+the other shells, it has some pretty good features that include:
+</p>
+
+<ul>
+<li>Man page completions</li>
+<li>Web based configuration (<code>fish_config</code>) / <code>help</code></li>
+<li>Searching while completions</li>
+<li>Auto-suggestions</li>
+<li>Fully scriptable with clean scripts</li>
+<li>syntax highlight</li>
+
+</ul></li>
+
+</ul>
+
+<p>
+<a href="http://www.tecmint.com/different-types-of-linux-shells/">http://www.tecmint.com/different-types-of-linux-shells/</a>
+</p>
+
+</aside>
+</section>
+<section id="slide-org333b384">
+<h3 id="org333b384"><span class="section-number-3">1.3</span> 命令的种类</h3>
+<ol>
+<li class="fragment appear">Alias</li>
+<li class="fragment appear">Keyword</li>
+<li class="fragment appear">Function</li>
+<li class="fragment appear">Builtin</li>
+<li class="fragment appear">External</li>
+
+</ol>
+<aside class="notes">
+<ol>
+<li><p>
+Alias
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-sh"><span style="color: #657b83; font-weight: bold;">alias</span> <span style="color: #268bd2;">l</span>=<span style="color: #2aa198;">'ls -lah'</span>
+<span style="color: #657b83; font-weight: bold;">alias</span> <span style="color: #268bd2;">g</span>=<span style="color: #2aa198;">'git'</span>
+</pre>
+</div></li>
+
+<li><p>
+Keyword
+</p>
+
+<p>
+<code>if</code>, <code>while</code>, <code>for</code>
+</p></li>
+
+<li><p>
+Function
+</p>
+
+<p>
+show all defined functions: <code>typeset -f</code>
+</p>
+
+<p>
+<code>type rvm</code>
+</p></li>
+
+<li><p>
+Builtin
+</p>
+
+<p>
+show all builtins: <code>help</code>
+</p>
+
+<p>
+<code>cd</code>, <code>pwd</code>, <code>true</code>, <code>alias</code>
+</p></li>
+
+<li><p>
+External
+</p>
+
+<p>
+<code>ls</code>, <code>git</code>, <code>grep</code>, <code>ruby</code>, <code>java</code>
+</p></li>
+
+<li>如何判断一个命令是哪种类型?
+
+<ul>
+<li><code>type COMMAND</code> (不要用 <code>which COMMAND</code>, 因为 bash 未提供内建的 <code>which</code> 命令，而 <code>/usr/bin/which</code> 只能用于查找外部命令 ）</li>
+
+<li><code>type ls</code></li>
+<li><code>type ruby</code></li>
+<li><code>type cd</code></li>
+<li><code>type while</code></li>
+<li><code>type type</code></li>
+<li><code>type rvm</code></li>
+
+</ul></li>
+
+</ol>
+
+</aside>
+
+</section>
+<section id="slide-orgb1c2258">
+<h3 id="orgb1c2258"><span class="section-number-3">1.4</span> 常用的基本命令</h3>
+<ul>
+<li class="fragment appear"><code>ls</code></li>
+<li class="fragment appear"><code>cd</code></li>
+<li class="fragment appear"><code>cat</code></li>
+<li class="fragment appear"><code>head</code> / <code>tail</code></li>
+<li class="fragment appear"><code>echo</code></li>
+<li class="fragment appear"><code>wc</code></li>
+<li class="fragment appear"><code>od</code></li>
+<li class="fragment appear"><code>iconv</code></li>
+
+</ul>
+<aside class="notes">
+<ul>
+<li><p>
+ls
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-sh">ls -l
+ls -a
+ls -h
+ls -t
+ls -S
+ls -r
+ls -d
+
+stat -f%z file  <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">Mac</span>
+stat -c%s file  <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">Linux</span>
+</pre>
+</div></li>
+<li><p>
+cd
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-sh"><span style="color: #657b83; font-weight: bold;">cd</span> -
+zsh: - / .. / ... / my-dir
+autojump / fzf
+
+cat test.sh
+<span style="color: #93a1a1;">#</span><span style="color: #93a1a1;">!/bin/bash</span>
+<span style="color: #657b83; font-weight: bold;">cd</span> /tmp
+
+./test.sh
+<span style="color: #657b83; font-weight: bold;">pwd</span> ???
+</pre>
+</div></li>
+<li><p>
+cat
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-sh">cat -n
+cat -v  <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">\r</span>
+</pre>
+</div></li>
+<li><p>
+head / tail
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-sh">head file.txt <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">&#40664;&#35748;&#21069; 10 &#34892;</span>
+tail file.txt <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">&#40664;&#35748;&#21518; 10 &#34892;</span>
+head -n <span style="color: #6c71c4;">20</span> file.txt
+tail -n <span style="color: #6c71c4;">20</span> file.txt
+head -c <span style="color: #6c71c4;">3</span> file.txt
+tail -c <span style="color: #6c71c4;">3</span> file.txt
+head -n -2 file.txt <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">&#38500;&#26368;&#21518;&#20004;&#34892;, Linux</span>
+tail -n +2 file.txt <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">&#38500;&#31532;&#19968;&#34892;, Linux, Mac</span>
+tail -f
+</pre>
+</div></li>
+
+<li><p>
+echo
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-sh"><span style="color: #657b83; font-weight: bold;">echo</span> hello
+<span style="color: #657b83; font-weight: bold;">echo</span> hello world
+<span style="color: #657b83; font-weight: bold;">echo</span> hello      world
+<span style="color: #657b83; font-weight: bold;">echo</span> <span style="color: #2aa198;">'hello      world'</span>
+<span style="color: #657b83; font-weight: bold;">echo</span> -n hello
+<span style="color: #657b83; font-weight: bold;">echo</span> <span style="color: #2aa198;">'hello\nworld'</span>
+<span style="color: #657b83; font-weight: bold;">echo</span> -e <span style="color: #2aa198;">'hello\nworld'</span>
+<span style="color: #657b83; font-weight: bold;">echo</span> -e <span style="color: #2aa198;">'\0033[40;32mhello\0033[0m \0033[41;30mworld\0033[0m'</span>
+</pre>
+</div></li>
+<li><p>
+wc
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-sh">wc -l
+wc -c
+ls -l | wc -l  <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">why wrong?</span>
+</pre>
+</div></li>
+<li><p>
+od
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-sh">od -Ad -tx
+</pre>
+</div></li>
+<li>od</li>
+<li>iconv</li>
+<li>file</li>
+
+</ul>
+
+</aside>
+
+</section>
+<section id="slide-org0531d0c">
+<h3 id="org0531d0c"><span class="section-number-3">1.5</span> 获取帮助</h3>
+<ul>
+<li class="fragment appear"><code>man COMMAND</code></li>
+<li class="fragment appear"><code>-h</code> 或 <code>--help</code></li>
+<li class="fragment appear"><code>help COMMAND</code></li>
+<li class="fragment appear"><code>man bash</code></li>
+<li class="fragment appear"><code>man zsh</code> / <code>man zshXXX</code></li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-orge11adca">
+<h2 id="orge11adca"><span class="section-number-2">2</span> 变量与替换</h2>
+<div class="outline-text-2" id="text-2">
+</div></section>
+<section id="slide-org5921a91">
+<h3 id="org5921a91"><span class="section-number-3">2.1</span> 变量赋值</h3>
+<ul>
+<li>一般形式:
+<ul>
+<li><code>name=value</code></li>
+
+</ul></li>
+
+<li>举例：
+<ul>
+<li><code>name=David</code></li>
+<li><code>name = David</code></li>
+<li><code>name=David Beckham</code></li>
+<li><code>name=David\ Beckham</code></li>
+<li>~name="David Beckham"~</li>
+<li>~name='David Beckham'~</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org08e1eeb">
+<h3 id="org08e1eeb"><span class="section-number-3">2.2</span> 引用和转义</h3>
+<ul>
+<li><code>\</code></li>
+<li><code>​'​</code></li>
+<li><code>​"​</code>
+<ul>
+<li><code>\</code></li>
+<li><code>$</code></li>
+
+</ul></li>
+<li><p>
+<code>​$'string'​</code>
+</p>
+
+<aside class="notes">
+<div class="org-src-container">
+
+<pre  class="src src-shell">ls ~/Application<span style="color: #2aa198;">\ </span>Support
+<span style="color: #657b83; font-weight: bold;">echo</span> $<span style="color: #2aa198;">'\e[31mhello\e[0m'</span>
+<span style="color: #657b83; font-weight: bold;">echo</span> $<span style="color: #2aa198;">'\e[32mhello\e[0m world'</span>
+<span style="color: #657b83; font-weight: bold;">echo</span> $<span style="color: #2aa198;">'\033]50;CursorShape=0\007'</span>
+<span style="color: #657b83; font-weight: bold;">echo</span> $<span style="color: #2aa198;">'\033]50;CursorShape=1\007'</span>
+<span style="color: #657b83; font-weight: bold;">echo</span> $<span style="color: #2aa198;">'\033]50;CursorShape=2\007'</span>
+</pre>
+</div>
+
+</aside></li>
+
+</ul>
+
+</section>
+<section id="slide-orgf7d7345">
+<h3 id="orgf7d7345"><span class="section-number-3">2.3</span> 基本变量替换</h3>
+<div class="org-src-container">
+
+<pre  class="src src-shell"><span style="color: #268bd2;">first_name</span>=David
+<span style="color: #268bd2;">last_name</span>=Beckham
+<span style="color: #657b83; font-weight: bold;">echo</span> <span style="color: #2aa198;">"Hello, $first_name"</span>
+<span style="color: #268bd2;">full_name</span>=<span style="color: #2aa198;">"${first_name} $last_name"</span>
+</pre>
+</div>
+
+</section>
+<section id="slide-org3ff2529">
+<h3 id="org3ff2529"><span class="section-number-3">2.4</span> 高级变量替换</h3>
+<ul>
+<li>字符串长度
+<ul>
+<li><code>${#name}</code></li>
+
+</ul></li>
+<li>提取子串
+<ul>
+<li><code>${name:begin:length}</code></li>
+
+</ul></li>
+<li><p>
+子串消除
+</p>
+<ul>
+<li><code>${name#pattern}</code></li>
+<li><code>${name##pattern}</code></li>
+<li><code>${name%pattern}</code></li>
+<li><code>${name%%pattern}</code></li>
+
+</ul>
+<aside class="notes">
+<div class="org-src-container">
+
+<pre  class="src src-shell">$<span style="color: #2aa198;">{</span><span style="color: #268bd2;">string</span>#substring<span style="color: #2aa198;">}</span>    <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">&#20174;$string &#30340;&#24320;&#22836;&#20301;&#32622;&#25130;&#25481;&#26368;&#30701;&#21305;&#37197;&#30340;$substring.</span>
+
+$<span style="color: #2aa198;">{</span><span style="color: #268bd2;">string</span>##substring<span style="color: #2aa198;">}</span>  <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">&#20174;$string &#30340;&#24320;&#22836;&#20301;&#32622;&#25130;&#25481;&#26368;&#38271;&#21305;&#37197;&#30340;$substring.</span>
+
+
+<span style="color: #268bd2;">stringZ</span>=abcABC123ABCabc
+
+<span style="color: #657b83; font-weight: bold;">echo</span> $<span style="color: #2aa198;">{</span><span style="color: #268bd2;">stringZ</span>#a*C<span style="color: #2aa198;">}</span>      <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">123ABCabc</span>
+<span style="color: #657b83; font-weight: bold;">echo</span> $<span style="color: #2aa198;">{</span><span style="color: #268bd2;">stringZ</span>##a*C<span style="color: #2aa198;">}</span>     <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">abc</span>
+
+$<span style="color: #2aa198;">{</span><span style="color: #268bd2;">string</span>%substring<span style="color: #2aa198;">}</span>    <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">&#20174;$string &#30340;&#32467;&#23614;&#20301;&#32622;&#25130;&#25481;&#26368;&#30701;&#21305;&#37197;&#30340;$substring.</span>
+
+$<span style="color: #2aa198;">{</span><span style="color: #268bd2;">string</span>%%substring<span style="color: #2aa198;">}</span>    <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">&#20174;$string &#30340;&#32467;&#23614;&#20301;&#32622;&#25130;&#25481;&#26368;&#38271;&#21305;&#37197;&#30340;$substring.</span>
+
+<span style="color: #268bd2;">stringZ</span>=abcABC123ABCabc
+<span style="color: #657b83; font-weight: bold;">echo</span> $<span style="color: #2aa198;">{</span><span style="color: #268bd2;">stringZ</span>%b*c<span style="color: #2aa198;">}</span>      <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">abcABC123ABCa</span>
+<span style="color: #657b83; font-weight: bold;">echo</span> $<span style="color: #2aa198;">{</span><span style="color: #268bd2;">stringZ</span>%%b*c<span style="color: #2aa198;">}</span>     <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">a</span>
+</pre>
+</div>
+
+</aside></li>
+
+</ul>
+
+</section>
+<section >
+<ul>
+<li>Replacement
+<ul>
+<li><code>${name/pattern/replacement}</code></li>
+<li><code>${name//pattern/replacement}</code></li>
+<li><code>${name/#pattern/replacement}</code></li>
+<li><code>${name/%pattern/replacement}</code></li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org4b39e74">
+<h3 id="org4b39e74"><span class="section-number-3">2.5</span> 文件替换</h3>
+<ul>
+<li><code>*</code></li>
+<li><code>?</code></li>
+<li><code>[characters]</code></li>
+<li><code>[!characters]</code></li>
+<li><code>{sh,rb,mp4}</code></li>
+
+</ul>
+
+<aside class="notes">
+<div class="org-src-container">
+
+<pre  class="src src-shell"><span style="color: #268bd2;">files</span>=D*
+<span style="color: #657b83; font-weight: bold;">echo</span> $<span style="color: #268bd2;">files</span>
+<span style="color: #268bd2;">files</span>=D??????
+<span style="color: #657b83; font-weight: bold;">echo</span> $<span style="color: #268bd2;">files</span>
+
+<span style="color: #268bd2;">files</span>=D*<span style="color: #2aa198;">[</span>sx<span style="color: #2aa198;">]</span>
+<span style="color: #268bd2;">files</span>=D*<span style="color: #2aa198;">[</span><span style="color: #b58900; font-weight: bold;">!</span>sx<span style="color: #2aa198;">]</span>
+<span style="color: #268bd2;">files</span>=D*<span style="color: #2aa198;">{</span>s,x<span style="color: #2aa198;">}</span>
+</pre>
+</div>
+
+<p>
+注意通配符和正则表达式的区别
+</p>
+
+</aside>
+
+</section>
+<section id="slide-orgbb556f3">
+<h3 id="orgbb556f3"><span class="section-number-3">2.6</span> 命令替换</h3>
+<ul>
+<li><code>`command`</code></li>
+<li><code>$(command)</code></li>
+
+</ul>
+
+<aside class="notes">
+<div class="org-src-container">
+
+<pre  class="src src-shell">uname
+<span style="color: #268bd2;">OS_NAME</span>=<span style="color: #6c71c4; font-weight: bold;">`uname`</span>
+<span style="color: #268bd2;">OS_NAME</span>=$<span style="color: #2aa198;">(</span>uname<span style="color: #2aa198;">)</span>
+</pre>
+</div>
+
+</aside>
+
+</section>
+<section id="slide-org7c00926">
+<h3 id="org7c00926"><span class="section-number-3">2.7</span> 算术替换</h3>
+<p>
+<code>$((arithmetic expression))</code>
+</p>
+
+<p>
+或
+</p>
+
+<p>
+<code>$[arithmetic expression]</code>
+</p>
+
+<aside class="notes">
+<div class="org-src-container">
+
+<pre  class="src src-shell"><span style="color: #268bd2;">a</span>=$<span style="color: #2aa198;">(</span><span style="color: #b58900;">(</span><span style="color: #6c71c4;">1</span> + <span style="color: #6c71c4;">2</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+<span style="color: #268bd2;">b</span>=$<span style="color: #2aa198;">(</span><span style="color: #b58900;">(</span><span style="color: #6c71c4;">9</span> * <span style="color: #6c71c4;">21</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+<span style="color: #268bd2;">a</span>=$<span style="color: #2aa198;">(</span><span style="color: #b58900;">(</span>$<span style="color: #268bd2;">a</span> * <span style="color: #6c71c4;">2</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+<span style="color: #268bd2;">b</span>=$<span style="color: #2aa198;">(</span><span style="color: #b58900;">(</span>b + <span style="color: #6c71c4;">1</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>       <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">&#23545;&#21542;?</span>
+
+<span style="color: #2aa198;">(</span><span style="color: #b58900;">(</span><span style="color: #268bd2;">a</span> = <span style="color: #6c71c4;">100</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+<span style="color: #657b83; font-weight: bold;">echo</span> $<span style="color: #268bd2;">a</span>             <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">&#22810;&#23569;&#65311;</span>
+<span style="color: #2aa198;">(</span><span style="color: #b58900;">(</span><span style="color: #268bd2;">a</span> += <span style="color: #6c71c4;">100</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+<span style="color: #657b83; font-weight: bold;">echo</span> $<span style="color: #268bd2;">a</span>            <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">&#22810;&#23569;&#65311;</span>
+
+<span style="color: #2aa198;">(</span><span style="color: #b58900;">(</span><span style="color: #268bd2;">a</span> = hello<span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+<span style="color: #657b83; font-weight: bold;">echo</span> $<span style="color: #268bd2;">a</span>            <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">&#36755;&#20986; 0</span>
+
+<span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">&#21487;&#20197;&#21152;&#20943;&#20056;&#12289;&#25972;&#38500;&#12289;&#21462;&#20313;</span>
+
+<span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">&#24130;</span>
+<span style="color: #657b83; font-weight: bold;">echo</span> $<span style="color: #2aa198;">(</span><span style="color: #b58900;">(</span><span style="color: #6c71c4;">2</span> ** <span style="color: #6c71c4;">3</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+
+<span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">&#36827;&#21046;&#36716;&#25442;</span>
+
+<span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">16 =&gt; 10</span>
+<span style="color: #657b83; font-weight: bold;">echo</span> $<span style="color: #2aa198;">(</span><span style="color: #b58900;">(</span><span style="color: #6c71c4;">16#a0</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+
+<span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">10 =&gt; 16</span>
+printf <span style="color: #2aa198;">"%x"</span> <span style="color: #6c71c4;">255</span>
+</pre>
+</div>
+
+</aside>
+
+</section>
+<section id="slide-org7e75267">
+<h3 id="org7e75267"><span class="section-number-3">2.8</span> 进程替换</h3>
+<p>
+<code>&lt;(command)</code>
+</p>
+
+<aside class="notes">
+<p>
+diff -y &lt;(js-beautify portal.min.js) &lt;(js-beautify portal.modified.min.js)
+</p>
+
+</aside>
+
+</section>
+<section id="slide-orgc53a420">
+<h3 id="orgc53a420"><span class="section-number-3">2.9</span> 数组</h3>
+<div class="outline-text-3" id="text-2-9">
+</div></section>
+<section id="slide-org25f175a">
+<h4 id="org25f175a"><span class="section-number-4">2.9.1</span> 定义</h4>
+<ul>
+<li><code>arr=(3 4 5 6)</code></li>
+<li><code>declare -a arr</code></li>
+
+</ul>
+
+</section>
+<section id="slide-orgcfcff41">
+<h4 id="orgcfcff41"><span class="section-number-4">2.9.2</span> 索引和遍历</h4>
+<div class="org-src-container">
+
+<pre  class="src src-shell">$<span style="color: #2aa198;">{</span><span style="color: #268bd2;">arr</span><span style="color: #b58900;">[</span><span style="color: #6c71c4;">3</span><span style="color: #b58900;">]</span><span style="color: #2aa198;">}</span>    
+
+<span style="color: #859900; font-weight: bold;">for</span> i<span style="color: #859900; font-weight: bold;"> in</span> <span style="color: #2aa198;">"${arr[@]}"</span>
+<span style="color: #859900; font-weight: bold;">do</span>
+    <span style="color: #657b83; font-weight: bold;">echo</span> $<span style="color: #268bd2;">i</span>
+<span style="color: #859900; font-weight: bold;">done</span>
+</pre>
+</div>
+
+<aside class="notes">
+<div class="org-src-container">
+
+<pre  class="src src-sh"><span style="color: #268bd2;">arr</span>=<span style="color: #2aa198;">(</span><span style="color: #2aa198;">'hello world'</span> hi<span style="color: #2aa198;">)</span>
+<span style="color: #859900; font-weight: bold;">for</span> i<span style="color: #859900; font-weight: bold;"> in</span> $<span style="color: #2aa198;">{</span><span style="color: #268bd2;">arr</span><span style="color: #b58900;">[</span>*<span style="color: #b58900;">]</span><span style="color: #2aa198;">}</span>
+<span style="color: #859900; font-weight: bold;">do</span>
+    <span style="color: #657b83; font-weight: bold;">echo</span> $<span style="color: #268bd2;">i</span>
+<span style="color: #859900; font-weight: bold;">done</span>
+
+
+<span style="color: #268bd2;">arr</span>=<span style="color: #2aa198;">(</span><span style="color: #2aa198;">'hello world'</span> hi<span style="color: #2aa198;">)</span>
+<span style="color: #859900; font-weight: bold;">for</span> i<span style="color: #859900; font-weight: bold;"> in</span> <span style="color: #2aa198;">"${arr[@]}"</span>
+<span style="color: #859900; font-weight: bold;">do</span>
+    <span style="color: #657b83; font-weight: bold;">echo</span> $<span style="color: #268bd2;">i</span>
+<span style="color: #859900; font-weight: bold;">done</span>
+</pre>
+</div>
+
+</aside>
+
+</section>
+<section id="slide-org468d845">
+<h4 id="org468d845"><span class="section-number-4">2.9.3</span> 元素赋值</h4>
+<ul>
+<li><code>arr[index]=value</code></li>
+
+</ul>
+
+</section>
+<section id="slide-orgefa3207">
+<h4 id="orgefa3207"><span class="section-number-4">2.9.4</span> 追加元素</h4>
+<ul>
+<li><code>arr+=(7 8 9)</code></li>
+
+</ul>
+
+<aside class="notes">
+<div class="org-src-container">
+
+<pre  class="src src-shell">$ <span style="color: #268bd2;">a</span>=<span style="color: #2aa198;">(</span><span style="color: #6c71c4;">1</span> <span style="color: #6c71c4;">2</span> <span style="color: #6c71c4;">3</span><span style="color: #2aa198;">)</span>
+$ echo $<span style="color: #2aa198;">{</span><span style="color: #268bd2;">a</span><span style="color: #b58900;">[</span>*<span style="color: #b58900;">]</span><span style="color: #2aa198;">}</span>
+<span style="color: #6c71c4;">1</span> <span style="color: #6c71c4;">2</span> <span style="color: #6c71c4;">3</span>
+$ <span style="color: #268bd2;">a</span>+=<span style="color: #2aa198;">(</span><span style="color: #6c71c4;">4</span><span style="color: #2aa198;">)</span>
+$ echo $<span style="color: #2aa198;">{</span><span style="color: #268bd2;">a</span><span style="color: #b58900;">[</span>*<span style="color: #b58900;">]</span><span style="color: #2aa198;">}</span>
+<span style="color: #6c71c4;">1</span> <span style="color: #6c71c4;">2</span> <span style="color: #6c71c4;">3</span> <span style="color: #6c71c4;">4</span>
+$ <span style="color: #268bd2;">a</span>+=<span style="color: #2aa198;">(</span><span style="color: #6c71c4;">5</span> <span style="color: #6c71c4;">6</span> <span style="color: #6c71c4;">7</span><span style="color: #2aa198;">)</span>
+$ echo $<span style="color: #2aa198;">{</span><span style="color: #268bd2;">a</span><span style="color: #b58900;">[</span>*<span style="color: #b58900;">]</span><span style="color: #2aa198;">}</span>
+<span style="color: #6c71c4;">1</span> <span style="color: #6c71c4;">2</span> <span style="color: #6c71c4;">3</span> <span style="color: #6c71c4;">4</span> <span style="color: #6c71c4;">5</span> <span style="color: #6c71c4;">6</span> <span style="color: #6c71c4;">7</span>
+</pre>
+</div>
+
+</aside>
+
+</section>
+<section id="slide-org0e22996">
+<h3 id="org0e22996"><span class="section-number-3">2.10</span> 间接引用</h3>
+<div class="org-src-container">
+
+<pre  class="src src-shell"><span style="color: #268bd2;">a</span>=hello
+<span style="color: #268bd2;">b</span>=a
+<span style="color: #657b83; font-weight: bold;">echo</span> $<span style="color: #2aa198;">{</span><span style="color: #268bd2;">b</span><span style="color: #2aa198;">}</span>
+<span style="color: #657b83; font-weight: bold;">echo</span> $<span style="color: #2aa198;">{</span><span style="color: #268bd2;">!</span>b<span style="color: #2aa198;">}</span>
+</pre>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org7080eaa">
+<h2 id="org7080eaa"><span class="section-number-2">3</span> 输入输出</h2>
+<div class="outline-text-2" id="text-3">
+</div></section>
+<section id="slide-orgff19789">
+<h3 id="orgff19789"><span class="section-number-3">3.1</span> 标准 I/O</h3>
+<ul>
+<li>标准输入 (STDIN)</li>
+<li>标准输出 (STDOUT)</li>
+<li>标准错误 (STDERR)</li>
+
+</ul>
+
+<aside class="notes">
+<p>
+很多文本过滤程序，在不指定输入参数或者指定的输入参数为 <code>-</code> 的时候，会从标准输入读入，在不指定输出参数的时候会输出到标准输出
+</p>
+
+<ol>
+<li></li>
+
+</ol>
+<div class="org-src-container">
+
+<pre  class="src src-shell">cat
+</pre>
+</div>
+
+<ol>
+<li></li>
+
+</ol>
+<div class="org-src-container">
+
+<pre  class="src src-ruby"><span style="color: #93a1a1;">#</span><span style="color: #93a1a1;">!/usr/bin/env ruby</span>
+
+<span style="color: #b58900;">STDOUT</span>.write<span style="color: #2aa198;">(</span><span style="color: #b58900;">ARGF</span>.read<span style="color: #2aa198;">)</span>
+</pre>
+</div>
+
+</aside>
+
+</section>
+<section id="slide-org03c090e">
+<h3 id="org03c090e"><span class="section-number-3">3.2</span> I/O 重定向</h3>
+<div class="outline-text-3" id="text-3-2">
+</div></section>
+<section id="slide-orgc0191c6">
+<h4 id="orgc0191c6"><span class="section-number-4">3.2.1</span> 重定向标准 I/O</h4>
+<ul>
+<li>重定向标准输入
+<code>cat &lt; file</code></li>
+<li>重定向标准输出
+<code>cat /etc/resolver.conf &gt; file</code></li>
+<li>重定向标准错误
+<code>ls --hello 2&gt; file</code></li>
+<li>追加重定向
+<code>date &gt;&gt; file</code></li>
+<li>忽略标准输出/标准错误
+<code>date &gt; /dev/null</code>
+<code>non-exist-command 2&gt; /dev/null</code></li>
+
+</ul>
+
+</section>
+<section id="slide-orgb3d0a66">
+<h4 id="orgb3d0a66"><span class="section-number-4">3.2.2</span> 一般 I/O 重定向</h4>
+<div class="outline-text-4" id="text-3-2-2">
+</div><ol class="org-ol"><li><a id="orge54d14f"></a>File Descriptor (fd)<br><aside class="notes">
+<p>
+对于进程而言,所有打开文件都由文件描述符引用。文件描述符是一个非负整数。当打开 一个现存文件或创建一个新文件时,内核向进程返回一个文件描述符。当读、写一个文件时, 用 open 或 creat 返回的文件描述符标识该文件,
+将其作为参数传送给 read 或 write。
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-c"><span style="color: #268bd2;">#include</span> <span style="color: #2aa198;">&lt;</span><span style="color: #2aa198;">unistd.h</span><span style="color: #2aa198;">&gt;</span>
+<span style="color: #268bd2;">#include</span> <span style="color: #2aa198;">&lt;</span><span style="color: #2aa198;">stdio.h</span><span style="color: #2aa198;">&gt;</span>
+<span style="color: #268bd2;">#include</span> <span style="color: #2aa198;">&lt;</span><span style="color: #2aa198;">fcntl.h</span><span style="color: #2aa198;">&gt;</span>
+
+<span style="color: #b58900;">int</span> <span style="color: #268bd2;">main</span><span style="color: #2aa198;">(</span><span style="color: #b58900;">int</span> <span style="color: #268bd2;">argc</span>, <span style="color: #b58900;">char</span> *<span style="color: #268bd2;">argv</span><span style="color: #b58900;">[]</span><span style="color: #2aa198;">)</span>
+<span style="color: #2aa198;">{</span>
+  <span style="color: #b58900;">int</span> <span style="color: #268bd2;">fd</span> = open<span style="color: #b58900;">(</span><span style="color: #2aa198;">"/etc/hosts"</span>, O_RDONLY<span style="color: #b58900;">)</span>;
+  <span style="color: #b58900;">char</span> <span style="color: #268bd2;">buf</span><span style="color: #b58900;">[</span><span style="color: #6c71c4;">1024</span><span style="color: #b58900;">]</span>;
+  read<span style="color: #b58900;">(</span>fd, buf, <span style="color: #6c71c4;">1024</span><span style="color: #b58900;">)</span>;
+  buf<span style="color: #b58900;">[</span><span style="color: #6c71c4;">1023</span><span style="color: #b58900;">]</span> = <span style="color: #2aa198;">'\0'</span>;
+  printf<span style="color: #b58900;">(</span><span style="color: #2aa198;">"%s\n"</span>, buf<span style="color: #b58900;">)</span>;
+  close<span style="color: #b58900;">(</span>fd<span style="color: #b58900;">)</span>;
+  <span style="color: #859900; font-weight: bold;">return</span> <span style="color: #6c71c4;">0</span>;
+<span style="color: #2aa198;">}</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre  class="src src-shell"> <span style="color: #859900; font-weight: bold;">exec</span> <span style="color: #6c71c4;">5</span>&lt; /etc/hosts
+ <span style="color: #859900; font-weight: bold;">exec</span> <span style="color: #6c71c4;">6</span>&gt; /tmp/test.log
+ <span style="color: #859900; font-weight: bold;">exec</span> <span style="color: #6c71c4;">8</span>&lt;&gt; /hello.txt
+
+command fd1&gt;&amp;fd2
+command fd4&lt;&amp;fd9
+command fd3&gt; file
+command fd5&lt; file
+
+  command &gt; file <span style="color: #6c71c4;">2</span>&gt;&amp;<span style="color: #6c71c4;">1</span>
+  command &amp;&gt; file
+
+  command fd4&gt;&amp;-
+  command fd5&lt;&amp;-
+</pre>
+</div>
+
+</aside></li>
+<li><a id="orge114ad5"></a>在 Shell 中以特定 fd 打开文件<br></li>
+<li><a id="orgefc9d20"></a>一般 I/O 的重定向<br></li>
+<li><a id="org7f52fa0"></a>将标准输出和标准错误重定向到同一个文件<br></li>
+<li><a id="orgb4a4d8a"></a>关闭 fd<br></li></ol>
+</section>
+<section id="slide-org4c875fb">
+<h3 id="org4c875fb"><span class="section-number-3">3.3</span> Here Document</h3>
+<div class="org-src-container">
+
+<pre  class="src src-shell">cat &lt;&lt;EOF
+<span style="color: #b58900; font-weight: bold;">hello world</span>
+<span style="color: #b58900; font-weight: bold;">EOF</span>
+</pre>
+</div>
+
+<aside class="notes">
+<div class="org-src-container">
+
+<pre  class="src src-shell"><span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">heredoc &#30456;&#24403;&#20110;&#21452;&#24341;&#21495;&#24341;&#36215;&#30340;&#23383;&#31526;&#20018;</span>
+
+<span style="color: #268bd2;">hello</span>=world
+cat &lt;&lt;EOF
+<span style="color: #b58900; font-weight: bold;">$hello</span>
+<span style="color: #b58900; font-weight: bold;">EOF</span>
+
+cat &lt;&lt;<span style="color: #2aa198;">'EOF'</span>
+<span style="color: #b58900; font-weight: bold;">$hello</span>
+<span style="color: #b58900; font-weight: bold;">EOF</span>
+</pre>
+</div>
+
+</aside>
+
+</section>
+<section id="slide-org74f2d1e">
+<h3 id="org74f2d1e"><span class="section-number-3">3.4</span> Here String</h3>
+<p>
+<code>cat &lt;&lt;&lt;hello</code>
+</p>
+
+</section>
+<section id="slide-org214c491">
+<h3 id="org214c491"><span class="section-number-3">3.5</span> 管道</h3>
+<ul>
+<li><code>ls | wc -l</code></li>
+<li><code>mkfifo</code></li>
+
+</ul>
+
+<aside class="notes">
+<div class="org-src-container">
+
+<pre  class="src src-shell">mkfifo mypipe
+cat &lt; mypipe
+cat &gt; mypipe
+</pre>
+</div>
+
+</aside>
+
+</section>
+</section>
+<section>
+<section id="slide-orgb394996">
+<h2 id="orgb394996"><span class="section-number-2">4</span> 进程关系</h2>
+<div class="outline-text-2" id="text-4">
+</div></section>
+<section id="slide-orgc792ac7">
+<h3 id="orgc792ac7"><span class="section-number-3">4.1</span> 进程标识</h3>
+<ul>
+<li><code>$$</code></li>
+<li><code>$PPID</code></li>
+
+</ul>
+
+<aside class="notes">
+<div class="org-src-container">
+
+<pre  class="src src-sh">ps -ef | grep COMMAND_NAME
+lsof
+</pre>
+</div>
+
+</aside>
+
+</section>
+<section id="slide-orga3c00cd">
+<h3 id="orga3c00cd"><span class="section-number-3">4.2</span> 退出状态</h3>
+<ul>
+<li>退出状态码</li>
+<li><code>exit</code> 命令</li>
+<li><code>$?</code> 特殊变量</li>
+
+</ul>
+
+</section>
+<section id="slide-org8faa6fe">
+<h3 id="org8faa6fe"><span class="section-number-3">4.3</span> 进程控制</h3>
+<ul>
+<li><code>kill</code> 命令</li>
+
+</ul>
+
+<aside class="notes">
+<p>
+/usr/include/sys/signal.h
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org6a8663a">
+<h3 id="org6a8663a"><span class="section-number-3">4.4</span> 作业管理</h3>
+<ul>
+<li>后台命令</li>
+<li><code>C-z</code></li>
+<li><code>jobs</code> / <code>bg</code> / <code>fg</code></li>
+
+</ul>
+
+<aside class="notes">
+<p>
+hang up while working on remote host:
+</p>
+
+<p>
+nohup / screen / tmux
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org9490fd4">
+<h3 id="org9490fd4"><span class="section-number-3">4.5</span> 环境变量</h3>
+<ol>
+<li><code>export NAME</code></li>
+<li><code>VAR=VALUE command</code></li>
+
+</ol>
+
+<aside class="notes">
+<p>
+当使用 export 命令将一个变量导出时，这个变量就成了环境变量，这个 shell 进程的所有子进程都可以获得该环境变量的值。
+<b>注意</b>  一个进程从父进程继承了环境变量，可以修改这个变量，这样的修改将会影响这个进程的后代进程，但是并不影响该进程的父进程和其他祖先进程。
+</p>
+
+</aside>
+
+</section>
+<section id="slide-orga9fc23e">
+<h3 id="orga9fc23e"><span class="section-number-3">4.6</span> sub shell</h3>
+<div class="outline-text-3" id="text-4-6">
+</div></section>
+<section id="slide-orga23af75">
+<h4 id="orga23af75"><span class="section-number-4">4.6.1</span> 子 Shell 是什么</h4>
+<aside class="notes">
+<p>
+a subshell is not a sub process.
+a subshell environment that is a duplicate
+of  the  shell  environment,  except that traps caught by the shell are
+reset to the values that the shell inherited from its parent at invoca-
+tion. 
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org0a62d80">
+<h4 id="org0a62d80"><span class="section-number-4">4.6.2</span> 子 Shell 带来的问题</h4>
+<div class="org-src-container">
+
+<pre  class="src src-shell"><span style="color: #268bd2;">count</span>=<span style="color: #6c71c4;">0</span>
+cat /etc/resolv.conf | <span style="color: #859900; font-weight: bold;">while </span><span style="color: #657b83; font-weight: bold;">read</span> line
+<span style="color: #859900; font-weight: bold;">do</span>
+  <span style="color: #2aa198;">(</span><span style="color: #b58900;">(</span><span style="color: #268bd2;">count</span> += <span style="color: #6c71c4;">1</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+<span style="color: #859900; font-weight: bold;">done</span>
+<span style="color: #657b83; font-weight: bold;">echo</span> $<span style="color: #268bd2;">count</span>
+</pre>
+</div>
+
+<aside class="notes">
+<div class="org-src-container">
+
+<pre  class="src src-shell"><span style="color: #268bd2;">count</span>=<span style="color: #6c71c4;">0</span>
+<span style="color: #859900; font-weight: bold;">while </span><span style="color: #657b83; font-weight: bold;">read</span> line
+<span style="color: #859900; font-weight: bold;">do</span>
+  <span style="color: #2aa198;">(</span><span style="color: #b58900;">(</span><span style="color: #268bd2;">count</span> += <span style="color: #6c71c4;">1</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+<span style="color: #859900; font-weight: bold;">done</span> &lt; /etc/resolv.conf
+<span style="color: #657b83; font-weight: bold;">echo</span> $<span style="color: #268bd2;">count</span>
+</pre>
+</div>
+
+</aside>
+
+</section>
+<section id="slide-orgb0f25e1">
+<h4 id="orgb0f25e1"><span class="section-number-4">4.6.3</span> 哪些情况是在子 Shell 中执行的</h4>
+<ul>
+<li>后台命令</li>
+<li>命令替换</li>
+<li>管道</li>
+<li>进程替换</li>
+<li>使用圆括号包围的命令组</li>
+
+</ul>
+
+</section>
+<section id="slide-org8801b21">
+<h3 id="org8801b21"><span class="section-number-3">4.7</span> 命令分组</h3>
+<ul>
+<li><code>(list)</code></li>
+<li><code>{ list; }</code></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgaef18b9">
+<h2 id="orgaef18b9"><span class="section-number-2">5</span> 控制结构</h2>
+<div class="outline-text-2" id="text-5">
+</div></section>
+<section id="slide-org6c358a5">
+<h3 id="org6c358a5"><span class="section-number-3">5.1</span> <code>if</code></h3>
+<div class="outline-text-3" id="text-5-1">
+</div></section>
+<section id="slide-orgd85c007">
+<h4 id="orgd85c007"><span class="section-number-4">5.1.1</span> 一般形式</h4>
+<div class="org-src-container">
+
+<pre  class="src src-shell"><span style="color: #859900; font-weight: bold;">if</span> &#26465;&#20214;
+<span style="color: #859900; font-weight: bold;">then</span>
+  body
+<span style="color: #859900; font-weight: bold;">elif</span> &#26465;&#20214;
+<span style="color: #859900; font-weight: bold;">then</span>
+  body
+<span style="color: #859900; font-weight: bold;">else</span>
+  body
+<span style="color: #859900; font-weight: bold;">fi</span>
+</pre>
+</div>
+
+</section>
+<section id="slide-org5ac7ebf">
+<h4 id="org5ac7ebf"><span class="section-number-4">5.1.2</span> 条件</h4>
+<ul>
+<li>命令</li>
+
+</ul>
+
+<aside class="notes">
+<div class="org-src-container">
+
+<pre  class="src src-shell"><span style="color: #657b83; font-weight: bold;">echo</span> hello | grep hello
+<span style="color: #657b83; font-weight: bold;">echo</span> hello | grep -q hello
+<span style="color: #657b83; font-weight: bold;">echo</span> $<span style="color: #268bd2;">?</span>
+
+<span style="color: #657b83; font-weight: bold;">echo</span> hello | grep world
+<span style="color: #657b83; font-weight: bold;">echo</span> hello | grep -q world
+<span style="color: #657b83; font-weight: bold;">echo</span> $<span style="color: #268bd2;">?</span>
+
+<span style="color: #859900; font-weight: bold;">if </span><span style="color: #657b83; font-weight: bold;">echo</span> hello | grep -q hello
+<span style="color: #859900; font-weight: bold;">then</span>
+    <span style="color: #657b83; font-weight: bold;">echo</span> true
+<span style="color: #859900; font-weight: bold;">else</span>
+    <span style="color: #657b83; font-weight: bold;">echo</span> false
+<span style="color: #859900; font-weight: bold;">fi</span>
+
+<span style="color: #859900; font-weight: bold;">if </span><span style="color: #657b83; font-weight: bold;">echo</span> hello | grep -q world
+<span style="color: #859900; font-weight: bold;">then</span>
+    <span style="color: #657b83; font-weight: bold;">echo</span> true
+<span style="color: #859900; font-weight: bold;">else</span>
+    <span style="color: #657b83; font-weight: bold;">echo</span> false
+<span style="color: #859900; font-weight: bold;">fi</span>
+</pre>
+</div>
+
+</aside>
+
+</section>
+<section >
+<ul>
+<li><code>[</code> 特殊命令
+<ul>
+<li>字符串比较</li>
+<li>数字比较</li>
+<li>文件测试
+<ul>
+<li><code>-e</code> 文件存在</li>
+<li><code>-f</code> 是普通文件</li>
+<li><code>-d</code> 是目录文件</li>
+<li><code>-r</code> 当前用户是否具有读权限</li>
+<li><code>A -nt B</code> 文件 A 比文件 B 更新</li>
+<li><code>A -ot B</code> 文件 A 比文件 B 更旧</li>
+
+</ul></li>
+<li>条件组合
+<ul>
+<li><code>-a</code> 与</li>
+<li><code>-o</code> 或</li>
+<li><code>!</code>  非</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<aside class="notes">
+<p>
+有一个专有命令 <code>[</code> (左中括号, 特殊字符). 这个命令与 <code>test</code> 命令等价,
+并且出于效率上的考虑, 这是一个内建命令. 这个命令把它的参数作为比较表达式或者作为文件测试, 并且根据比较的结果来返回一个退出状态码(0 表示真, 1 表示假).
+</p>
+
+<p>
+#+BEGIN_SRC sh
+</p>
+
+<p>
+if [ hello == hello ]
+then 
+    echo true
+else
+    echo false
+fi
+</p>
+
+<p>
+if [ hello &lt; world ]
+then
+    echo true
+else
+    echo false
+fi
+</p>
+
+<p>
+<code>=</code> (和 <code>==</code> 等价)、 <code>!=</code>,  <code>-z</code> (字符串长度是否为 0), <code>-n=（和 =-z</code> 相反）
+</p>
+
+
+<p>
+if [ 2 &lt; 10 ]  # 变成了 IO 重定向
+then
+    echo true
+else
+    echo false
+fi
+</p>
+
+<p>
+if [ 2 -lt 10 ]
+then
+    echo true
+else
+    echo false
+fi
+</p>
+
+<p>
+<code>-eq</code>, <code>-ne</code>, <code>-gt</code>, <code>-ge</code>, <code>-lt</code>, <code>-le</code>
+#+ENC_SRC
+</p>
+
+</aside>
+
+</section>
+<section >
+<ul>
+<li><code>[[</code> 关键字</li>
+
+</ul>
+
+<aside class="notes">
+<p>
+在版本 2.02 的 Bash 中, 引入了 <code>[[</code> 扩展测试命令, 因为这种表现形式可能对某些语言的程序员来说更容易熟悉一些.
+注意 <code>[[</code> 是一个关键字, 并不是一个命令.
+在 <code>[[~结 构中可以使用 ~&amp;&amp;</code> 和 <code>||</code> 分别表示逻辑与和逻辑或
+</p>
+
+</aside>
+
+</section>
+<section >
+<ul>
+<li>算术表达式</li>
+
+</ul>
+
+<div class="org-src-container">
+
+<pre  class="src src-shell"><span style="color: #859900; font-weight: bold;">if</span> <span style="color: #2aa198;">(</span><span style="color: #b58900;">(</span> <span style="color: #6c71c4;">2</span> &lt; <span style="color: #6c71c4;">10</span><span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+<span style="color: #859900; font-weight: bold;">then</span>
+    <span style="color: #657b83; font-weight: bold;">echo</span> true
+<span style="color: #859900; font-weight: bold;">else</span>
+    <span style="color: #657b83; font-weight: bold;">echo</span> false
+</pre>
+</div>
+
+</section>
+<section id="slide-orgddc9c31">
+<h3 id="orgddc9c31"><span class="section-number-3">5.2</span> <code>while</code></h3>
+<div class="org-src-container">
+
+<pre  class="src src-shell"><span style="color: #859900; font-weight: bold;">while</span> &#26465;&#20214;
+<span style="color: #859900; font-weight: bold;">do</span>
+  body
+<span style="color: #859900; font-weight: bold;">done</span>
+</pre>
+</div>
+
+</section>
+<section id="slide-org4c8cc15">
+<h3 id="org4c8cc15"><span class="section-number-3">5.3</span> <code>for</code></h3>
+<div class="outline-text-3" id="text-5-3">
+</div></section>
+<section id="slide-orgc85f697">
+<h4 id="orgc85f697"><span class="section-number-4">5.3.1</span> 形式一</h4>
+<div class="org-src-container">
+
+<pre  class="src src-shell"><span style="color: #859900; font-weight: bold;">for</span> letter<span style="color: #859900; font-weight: bold;"> in</span> a b c d
+<span style="color: #859900; font-weight: bold;">do</span>
+    <span style="color: #657b83; font-weight: bold;">echo</span> <span style="color: #2aa198;">"$letter"</span>
+<span style="color: #859900; font-weight: bold;">done</span>
+</pre>
+</div>
+
+</section>
+<section id="slide-org47137e1">
+<h4 id="org47137e1"><span class="section-number-4">5.3.2</span> 形式二</h4>
+<div class="org-src-container">
+
+<pre  class="src src-shell"><span style="color: #859900; font-weight: bold;">for</span> <span style="color: #2aa198;">(</span><span style="color: #b58900;">(</span><span style="color: #268bd2;">i</span> = <span style="color: #6c71c4;">0</span>; i &lt; <span style="color: #6c71c4;">10</span>; i++<span style="color: #b58900;">)</span><span style="color: #2aa198;">)</span>
+<span style="color: #859900; font-weight: bold;">do</span>
+    <span style="color: #657b83; font-weight: bold;">echo</span> <span style="color: #2aa198;">"$i"</span>
+<span style="color: #859900; font-weight: bold;">done</span>
+</pre>
+</div>
+
+<aside class="notes">
+<div class="org-src-container">
+
+<pre  class="src src-sh"><span style="color: #859900; font-weight: bold;">for</span> i<span style="color: #859900; font-weight: bold;"> in</span> $<span style="color: #2aa198;">(</span>seq <span style="color: #6c71c4;">10</span> <span style="color: #6c71c4;">20</span><span style="color: #2aa198;">)</span>
+<span style="color: #859900; font-weight: bold;">do</span>
+    <span style="color: #657b83; font-weight: bold;">echo</span> $<span style="color: #268bd2;">i</span>
+<span style="color: #859900; font-weight: bold;">done</span>
+
+ZSH:
+
+<span style="color: #859900; font-weight: bold;">for</span> i<span style="color: #859900; font-weight: bold;"> in</span> <span style="color: #2aa198;">{</span><span style="color: #6c71c4;">10..20</span><span style="color: #2aa198;">}</span>
+<span style="color: #859900; font-weight: bold;">do</span>
+    <span style="color: #657b83; font-weight: bold;">echo</span> $<span style="color: #268bd2;">i</span>
+<span style="color: #859900; font-weight: bold;">done</span>
+</pre>
+</div>
+
+</aside>
+
+</section>
+</section>
+<section>
+<section id="slide-org3cf10f8">
+<h2 id="org3cf10f8"><span class="section-number-2">6</span> 函数</h2>
+<div class="outline-text-2" id="text-6">
+</div></section>
+<section id="slide-org924abf7">
+<h3 id="org924abf7"><span class="section-number-3">6.1</span> 函数定义</h3>
+<div class="org-src-container">
+
+<pre  class="src src-shell"><span style="color: #859900; font-weight: bold;">function</span> <span style="color: #268bd2;">function_name</span><span style="color: #2aa198;">()</span> <span style="color: #2aa198;">{</span> 
+    commands... 
+<span style="color: #2aa198;">}</span> 
+
+<span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">More compatible:</span>
+<span style="color: #268bd2;">function_name</span><span style="color: #2aa198;">()</span> <span style="color: #2aa198;">{</span>
+    commands...
+<span style="color: #2aa198;">}</span>
+</pre>
+</div>
+
+</section>
+<section id="slide-orgb5cd085">
+<h3 id="orgb5cd085"><span class="section-number-3">6.2</span> 函数调用和函数返回值</h3>
+<aside class="notes">
+<p>
+<code>return</code> returns the exit code, so it must be a small integer
+</p>
+
+<p>
+use <code>echo</code> to write result to stdout and then use command substitution to
+capture the value if you wanna "return" some value in a function.
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org960b1bd">
+<h3 id="org960b1bd"><span class="section-number-3">6.3</span> 位置参数</h3>
+<ul>
+<li>取值</li>
+<li><code>shift</code></li>
+<li>重设</li>
+<li><p>
+Misc
+</p>
+<ul>
+<li>位置参数的个数</li>
+<li>最后一个位置参数</li>
+
+</ul>
+<aside class="notes">
+<div class="org-src-container">
+
+<pre  class="src src-shell"><span style="color: #657b83; font-weight: bold;">set</span> -- a b c d
+
+<span style="color: #268bd2;">args</span>=$<span style="color: #268bd2;">#</span>           <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">&#20301;&#32622;&#21442;&#25968;&#30340;&#20010;&#25968;.</span>
+<span style="color: #268bd2;">lastarg</span>=$<span style="color: #2aa198;">{</span><span style="color: #268bd2;">!</span>args<span style="color: #2aa198;">}</span>
+<span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">&#25110;:       lastarg=${!#}</span>
+</pre>
+</div>
+
+</aside></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org0ce12bd">
+<h2 id="org0ce12bd"><span class="section-number-2">7</span> 常用文本处理命令</h2>
+<div class="outline-text-2" id="text-7">
+</div></section>
+<section id="slide-org355b06e">
+<h3 id="org355b06e"><span class="section-number-3">7.1</span> find</h3>
+<aside class="notes">
+<div class="org-src-container">
+
+<pre  class="src src-sh">find -name
+find -iname
+find -type
+find -maxdepth
+find -mtime -1h
+find -size +10M
+find -mtime -1h -size +10M
+find -mtime -1h -o -size +10M
+find -name xxx -a <span style="color: #2aa198;">\(</span> -mtime -1h -o -size +10M <span style="color: #2aa198;">\)</span>
+find -exec 
+find -delete
+</pre>
+</div>
+
+</aside>
+</section>
+<section id="slide-org061409b">
+<h3 id="org061409b"><span class="section-number-3">7.2</span> grep</h3>
+<aside class="notes">
+<div class="org-src-container">
+
+<pre  class="src src-sh">grep -E
+grep -P  <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">Linux</span>
+grep -n
+grep -r
+grep -l
+grep -o
+grep -q
+grep -ABC
+grep -v
+grep -vFf a b
+</pre>
+</div>
+
+</aside>
+</section>
+<section id="slide-orgb0cbfc3">
+<h3 id="orgb0cbfc3"><span class="section-number-3">7.3</span> sed</h3>
+<p>
+<a href="http://www.catonmat.net/blog/sed-one-liners-explained-part-one/">sed one-liners</a>
+</p>
+
+<aside class="notes">
+<div class="org-src-container">
+
+<pre  class="src src-sh">gsed  <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">Mac, brew install gnu-sed</span>
+sed -n 
+sed -i
+sed p file  <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">double every line</span>
+sed -n <span style="color: #2aa198;">'p;n'</span> file  <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">print odd lines</span>
+sed -n <span style="color: #2aa198;">'n;p'</span> file  <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">print even lines</span>
+sed <span style="color: #2aa198;">'/^$/d'</span>  <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">delete empty lines</span>
+sed <span style="color: #2aa198;">'s///'</span>
+sed <span style="color: #2aa198;">'s###g'</span>
+sed <span style="color: #2aa198;">'/\n/!G;s/\(.\)\(.*\n\)/&amp;\2\1/;//D;s/.//'</span>  <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">reverse a string</span>
+</pre>
+</div>
+
+</aside>
+</section>
+<section id="slide-org410db3f">
+<h3 id="org410db3f"><span class="section-number-3">7.4</span> awk</h3>
+<p>
+<a href="http://www.catonmat.net/blog/awk-one-liners-explained-part-one/">awk one-liners</a>
+</p>
+<aside class="notes">
+<div class="org-src-container">
+
+<pre  class="src src-sh">ls -l | gawk <span style="color: #2aa198;">'{print $5}'</span>
+ls -l | gawk -v <span style="color: #268bd2;">OFS</span>=, <span style="color: #2aa198;">'$1=$1'</span>
+ls -l | gawk -v <span style="color: #268bd2;">ORS</span>=<span style="color: #2aa198;">'\n\n'</span> <span style="color: #6c71c4;">1</span>
+cat bj.csv | iconv -f LATIN1 | gawk -F, <span style="color: #2aa198;">'{print $8}'</span>
+
+gawk <span style="color: #2aa198;">'{print; print}'</span> file  <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">double every line</span>
+gawk <span style="color: #2aa198;">'NR % 2'</span> file  <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">print odd lines</span>
+gawk <span style="color: #2aa198;">'NR % 2 == 0'</span> file  <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">print even lines</span>
+gawk <span style="color: #2aa198;">'!/^$/'</span>  <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">delete empty lines</span>
+gawk <span style="color: #2aa198;">'{gsub(/l/, "X"); print}'</span>
+<span style="color: #657b83; font-weight: bold;">echo</span> hello | gawk <span style="color: #2aa198;">'{ for(i=length;i!=0;i--)x=x substr($0,i,1); print x}'</span>  <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">reverse a string</span>
+<span style="color: #657b83; font-weight: bold;">echo</span> $<span style="color: #2aa198;">'Jack\nDavid\nJack\nJack'</span> | gawk <span style="color: #2aa198;">'{x[$0]++}; END {for(i in x) {print i ": " x[i]}}'</span>
+</pre>
+</div>
+
+</aside>
+</section>
+<section id="slide-org93ede70">
+<h3 id="org93ede70"><span class="section-number-3">7.5</span> Ruby</h3>
+<p>
+<a href="http://benoithamelin.tumblr.com/ruby1line">Ruby one-liners</a>
+</p>
+<aside class="notes">
+<div class="org-src-container">
+
+<pre  class="src src-sh">ruby -e
+ruby -n
+ruby -p
+$<span style="color: #268bd2;">_</span>
+<span style="color: #657b83; font-weight: bold;">print</span>
+gsub
+
+ruby -a -F
+BEGIN <span style="color: #2aa198;">{</span> ... <span style="color: #2aa198;">}</span>
+END <span style="color: #2aa198;">{</span> ... <span style="color: #2aa198;">}</span>
+
+ls -l | ruby -ane <span style="color: #2aa198;">'puts $F[4]'</span>
+ls -l | ruby -a -pe <span style="color: #2aa198;">'$_=$F*","+"\n"'</span>
+ls -l | ruby -pe <span style="color: #2aa198;">'BEGIN{$\="\n\n"}'</span>
+cat bj.csv | iconv -f LATIN1 | ruby -a -F, -ne <span style="color: #2aa198;">'puts $F[7]'</span>
+
+ruby -pe <span style="color: #2aa198;">'print'</span> file  <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">double every line</span>
+ruby -ne <span style="color: #2aa198;">'print; gets'</span> file  <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">print odd lines</span>
+ruby -ne <span style="color: #2aa198;">'gets; print'</span> file  <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">print even lines</span>
+ruby -ne <span style="color: #2aa198;">'print unless /^$/'</span>  <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">delete empty lines</span>
+ruby -pe <span style="color: #2aa198;">'gsub(/l/, "x")'</span>
+ruby -ne <span style="color: #2aa198;">'chomp; puts $_.reverse'</span>  <span style="color: #93a1a1;"># </span><span style="color: #93a1a1;">reverse a string</span>
+<span style="color: #657b83; font-weight: bold;">echo</span> $<span style="color: #2aa198;">'Jack\nDavid\nJack\nJack'</span> | ruby -ne <span style="color: #2aa198;">'BEGIN{$x=Hash.new(0)}; chomp; $x[$_]+=1; END{$x.each { |k, v| puts "#{k}: #{v}"}}'</span>
+</pre>
+</div>
+
+</aside>
+
+</section>
+</section>
+<section>
+<section id="slide-orgf9b507c">
+<h2 id="orgf9b507c"><span class="section-number-2">8</span> 快捷键</h2>
+<div class="outline-text-2" id="text-8">
+</div></section>
+<section id="slide-org16b038e">
+<h3 id="org16b038e"><span class="section-number-3">8.1</span> 配置 iTerm2</h3>
+
+<div class="figure">
+<p><img src="./shell-intro/images/iterm2.png" alt="iterm2.png">
+</p>
+</div>
+
+</section>
+<section id="slide-org3adbc91">
+<h3 id="org3adbc91"><span class="section-number-3">8.2</span> 配置 Apple Terminal</h3>
+
+<div class="figure">
+<p><img src="./shell-intro/images/apple-terminal.png" alt="apple-terminal.png">
+</p>
+</div>
+
+</section>
+<section id="slide-org198f006">
+<h3 id="org198f006"><span class="section-number-3">8.3</span> 移动光标</h3>
+<ul>
+<li><code>Ctrl + a</code> 移动到行首</li>
+<li><code>Ctrl + e</code> 移动到行尾</li>
+<li><code>Ctrl + f</code> 按字符前移</li>
+<li><code>Ctrl + b</code> 按字符后移</li>
+<li><code>Alt + f</code>  按单词前移</li>
+<li><code>Alt + b</code>  按单词后移</li>
+<li><code>Ctrl + u</code> 从光标处删除至命令行首</li>
+<li><code>Ctrl + e</code> 从光标处删除至命令行尾</li>
+<li><code>Alt + d</code> 从光标处删除至字尾</li>
+<li><code>Ctrl + d</code> 删除光标处的字符</li>
+
+</ul>
+
+</section>
+<section id="slide-org20aef2e">
+<h3 id="org20aef2e"><span class="section-number-3">8.4</span> 搜索历史命令</h3>
+<ul>
+<li><code>Ctrl + r</code> 逆向搜索命令历史</li>
+<li><code>Ctrl + g</code> 从历史搜索模式退出</li>
+<li><code>Ctrl + p</code> 历史中的上一条命令</li>
+<li><code>Ctrl + n</code> 历史中的下一条命令</li>
+
+</ul>
+
+</section>
+<section id="slide-org3bf7818">
+<h3 id="org3bf7818"><span class="section-number-3">8.5</span> 获取上一条命令的参数</h3>
+<ul>
+<li><code>Alt  + .</code> 使用上一条命令的最后一个参数</li>
+
+</ul>
+
+</section>
+<section id="slide-orgd712632">
+<h3 id="orgd712632"><span class="section-number-3">8.6</span> Universal Argument</h3>
+
+</section>
+</section>
+<section>
+<section id="slide-orgb0cdf63">
+<h2 id="orgb0cdf63"><span class="section-number-2">9</span> 推荐工具</h2>
+<ul>
+<li><code>zsh</code>, <code>oh-my-zsh</code></li>
+<li><code>curl</code>, <code>httpie</code></li>
+<li><code>screen</code>, <code>tmux</code></li>
+<li><code>ack</code>, <code>ag</code></li>
+<li><code>jq</code></li>
+<li><code>trash</code></li>
+<li><code>brew services</code></li>
+
+</ul>
+
+<aside class="notes">
+<pre class="example">
+brew tap homebrew/services
+brew services list
+</pre>
+
+<pre class="example">
+lsof
+netstat
+</pre>
+
+</aside>
+
+</section>
+</section>
+<section>
+<section id="slide-orgae22498">
+<h2 id="orgae22498"><span class="section-number-2">10</span> Q&amp;A</h2>
+
+</section>
+</section>
+<section>
+<section id="slide-org4dd9706">
+<h2 id="org4dd9706"><span class="section-number-2">11</span> The END</h2>
+<ul>
+<li>Thank you</li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>

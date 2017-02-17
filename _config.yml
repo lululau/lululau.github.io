@@ -37,3 +37,4 @@ category_archive:
   path: 'categories'
   slugify: true
 author:         'Liu Xiang'
+keep_files: ['presentations']
