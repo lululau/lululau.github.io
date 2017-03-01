@@ -13,9 +13,9 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: "Lulu's Blog"
-name: "Lulu's Blog"
-email: lululau@me.com
+title: "FCP's Blog"
+name: "FCP's Blog"
+email: liuxiang921@gmail.com
 logo: false
 paginate: 15
 baseurl: "/" # the subpath of your site, e.g. /blog
@@ -36,4 +36,4 @@ exclude:
 category_archive:
   path: 'categories'
   slugify: true
-author:         'Liu Xiang'
+author:         'FCP'
