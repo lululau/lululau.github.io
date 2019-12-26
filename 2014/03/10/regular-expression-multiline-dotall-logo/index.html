@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="1. MULTILINE &amp;#x6807;&amp;#x8BC6;   &amp;#x5728; Perl 5 &amp;#x6B63;&amp;#x5219;&amp;#x4E2D;&amp;#xFF0C;&amp;#x7528;&amp;#x4E8E;&amp;#x8868;&amp;#x793A;&amp;#x5B57;&amp;#x7B26;&amp;#x4E32;&amp;#x5F00;&amp;#x5934;&amp;#x548C;&amp;#x5B57;&amp;#x7B26;&amp;#x4E32;&amp;#x7ED3;&amp;#x5C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="正则表达式中的 MULTILINE 和 DOTALL 标识">
+<meta property="og:url" content="http://yoursite.com/2014/03/10/regular-expression-multiline-dotall-logo/index.html">
+<meta property="og:site_name" content="Let&#39;s hack it!">
+<meta property="og:description" content="1. MULTILINE &amp;#x6807;&amp;#x8BC6;   &amp;#x5728; Perl 5 &amp;#x6B63;&amp;#x5219;&amp;#x4E2D;&amp;#xFF0C;&amp;#x7528;&amp;#x4E8E;&amp;#x8868;&amp;#x793A;&amp;#x5B57;&amp;#x7B26;&amp;#x4E32;&amp;#x5F00;&amp;#x5934;&amp;#x548C;&amp;#x5B57;&amp;#x7B26;&amp;#x4E32;&amp;#x7ED3;&amp;#x5C">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2014-03-09T16:00:00.000Z">
+<meta property="article:modified_time" content="2019-12-26T14:05:49.020Z">
+<meta property="article:author" content="zxyho">
+<meta property="article:tag" content="Ruby">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="https://www.gravatar.com/avatar/04f23e358590cdc83f23769e9fd09074?s=16">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/04f23e358590cdc83f23769e9fd09074?s=192" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/04f23e358590cdc83f23769e9fd09074?s=180">
+          
+        
+    
+    <!-- title -->
+    <title>正则表达式中的 MULTILINE 和 DOTALL 标识</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Articles</a></li>
+         
+          <li><a href="https://github.com/lululau" target="_blank" rel="noopener">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2014/03/30/setting-the-time-zone-environment-variables-in-os-x/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2014/03/04/ack-matches-the-smallest-possible-length-of-0-cannot-be-used-in-regular-expressions/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2014/03/10/regular-expression-multiline-dotall-logo/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2014/03/10/regular-expression-multiline-dotall-logo/&text=正则表达式中的 MULTILINE 和 DOTALL 标识" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2014/03/10/regular-expression-multiline-dotall-logo/&title=正则表达式中的 MULTILINE 和 DOTALL 标识" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2014/03/10/regular-expression-multiline-dotall-logo/&is_video=false&description=正则表达式中的 MULTILINE 和 DOTALL 标识" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=正则表达式中的 MULTILINE 和 DOTALL 标识&body=Check out this article: http://yoursite.com/2014/03/10/regular-expression-multiline-dotall-logo/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2014/03/10/regular-expression-multiline-dotall-logo/&title=正则表达式中的 MULTILINE 和 DOTALL 标识" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2014/03/10/regular-expression-multiline-dotall-logo/&title=正则表达式中的 MULTILINE 和 DOTALL 标识" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2014/03/10/regular-expression-multiline-dotall-logo/&title=正则表达式中的 MULTILINE 和 DOTALL 标识" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2014/03/10/regular-expression-multiline-dotall-logo/&title=正则表达式中的 MULTILINE 和 DOTALL 标识" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2014/03/10/regular-expression-multiline-dotall-logo/&name=正则表达式中的 MULTILINE 和 DOTALL 标识&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://yoursite.com/2014/03/10/regular-expression-multiline-dotall-logo/&t=正则表达式中的 MULTILINE 和 DOTALL 标识" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#multiline-&#x6807;&#x8BC6;"><span class="toc-number">1.</span> <span class="toc-text">1. MULTILINE &#x6807;&#x8BC6;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dotall-&#x6807;&#x8BB0;"><span class="toc-number">2.</span> <span class="toc-text">2. DOTALL &#x6807;&#x8BB0;</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        正则表达式中的 MULTILINE 和 DOTALL 标识
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Let's hack it!</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2014-03-09T16:00:00.000Z" itemprop="datePublished">2014-03-10</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Ruby/" rel="tag">Ruby</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <div id="content">
+
+<div id="outline-container-org970e07b" class="outline-2">
+<h2 id="multiline-&#x6807;&#x8BC6;">1. <code>MULTILINE</code> &#x6807;&#x8BC6;</h2>
+<div class="outline-text-2" id="text-multiline-&#x6807;&#x8BC6;">
+<p>
+&#x5728; Perl 5 &#x6B63;&#x5219;&#x4E2D;&#xFF0C;&#x7528;&#x4E8E;&#x8868;&#x793A;&#x5B57;&#x7B26;&#x4E32;&#x5F00;&#x5934;&#x548C;&#x5B57;&#x7B26;&#x4E32;&#x7ED3;&#x5C3E;&#x7684;&#x4E24;&#x4E2A;&#x8868;&#x793A;&#x8FB9;&#x754C;&#x7684;&#x5143;&#x5B57;&#x7B26;
+<code>^</code> &#x548C; <code>&amp;</code>,
+&#x9ED8;&#x8BA4;&#x5206;&#x522B;&#x53EA;&#x5339;&#x914D;&#x6574;&#x4E2A;&#x5B57;&#x7B26;&#x4E32;&#x7684;&#x5F00;&#x5934;&#x548C;&#x7ED3;&#x5C3E;&#x3002;&#x4E3E;&#x4F8B;&#x6765;&#x8BF4;&#xFF0C;&#x5BF9;&#x4E8E;&#x5B57;&#x7B26;&#x5B57;&#x7B26;&#x4E32;
+<code>hello\nwordl\n</code> &#x6765;&#x8BF4;&#xFF0C;&#x867D;&#x7136;&#x6574;&#x4E2A;&#x5B57;&#x7B26;&#x4E32;&#x5B9E;&#x9645;&#x4E0A;&#x5305;&#x542B;&#x4E86;&#x4E24;&#x884C;&#x6587;&#x672C;&#xFF0C;&#x4F46;&#x662F;&#x4F7F;&#x7528;&#x6B63;&#x5219;
+<code>/^./g</code> &#x53EA;&#x4F1A;&#x5339;&#x914D;&#x5230;&#x5B57;&#x7B26; =h=&#xFF0C;&#x800C;&#x4E0D;&#x4F1A;&#x5339;&#x914D;&#x5230;&#x7B2C;&#x4E8C;&#x884C;&#x5F00;&#x5934;&#x7684;&#x5B57;&#x7B26;&#xFF1A; =w=&#x3002;
+</p>
+
+<p>
+&#x5728; Perl 5 &#x6B63;&#x5219;&#x4E2D;&#xFF0C;&#x82E5;&#x8981;&#x4F7F; <code>^</code> &#x548C; <code>$</code>
+&#x5339;&#x914D;&#x5B57;&#x7B26;&#x4E32;&#x4E2D;&#x7684;&#x6BCF;&#x4E00;&#x884C;&#x7684;&#x5F00;&#x5934;&#x548C;&#x7ED3;&#x5C3E;&#xFF0C;&#x90A3;&#x4E48;&#x9700;&#x8981;&#x5728;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x4E2D;&#x52A0;&#x5165; <code>m</code>
+&#x9009;&#x9879;&#x3002;&#x6BD4;&#x8F83;&#x4E0B;&#x9762;&#x4E24;&#x4E2A;&#x793A;&#x4F8B;&#x7684;&#x4E0D;&#x540C;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &#x793A;&#x4F8B;1.pl</span></span><br><span class="line"><span class="keyword">my</span> <span class="variable">$x</span> = <span class="string">&quot;hello\nworld\n&quot;</span>;</span><br><span class="line"><span class="variable">$x</span> =~ <span class="keyword">s</span><span class="comment">#^.#_#g;</span></span><br><span class="line"><span class="variable">$x</span>   <span class="comment"># =&gt; &quot;_ello\nworld\n&quot;</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<div class="org-src-container">
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &#x793A;&#x4F8B;2.pl</span></span><br><span class="line"><span class="keyword">my</span> <span class="variable">$x</span> = <span class="string">&quot;hello\nworld\n&quot;</span>;</span><br><span class="line"><span class="variable">$x</span> =~ <span class="keyword">s</span><span class="comment">#^.#_#mg;</span></span><br><span class="line"><span class="variable">$x</span>   <span class="comment"># =&gt; &quot;_ello\n_orld\n&quot;;</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x5728; Python &#x4E2D;&#xFF0C;&#x4F7F;&#x7528; <code>re.M</code> &#x6216; <code>re.MULTILINE</code>
+&#x6765;&#x83B7;&#x5F97;&#x793A;&#x4F8B;2&#x6240;&#x6F14;&#x793A;&#x7684;&#x7279;&#x6027;&#x3002;&#x6BD4;&#x8F83;&#x4E0B;&#x9762;&#x4E24;&#x4E2A;&#x793A;&#x4F8B;&#x7684;&#x4E0D;&#x540C;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &#x793A;&#x4F8B;3.py</span></span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line">x = <span class="string">&quot;hello\nworld\n&quot;</span></span><br><span class="line">re.sub(<span class="string">r&quot;^.&quot;</span>, <span class="string">&quot;_&quot;</span>, x)   <span class="comment"># =&gt; &quot;_ello\nworld\n&quot;</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<div class="org-src-container">
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &#x793A;&#x4F8B;4.py</span></span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line">x = <span class="string">&quot;hello\nworld\n&quot;</span></span><br><span class="line">re.sub(<span class="string">r&quot;^.&quot;</span>, <span class="string">&quot;_&quot;</span>, x, flags=re.M)   <span class="comment"># =&gt; &quot;_ello\n_orld\n&quot;</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+Ruby &#x7684;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x5F15;&#x64CE;&#x9ED8;&#x8BA4;&#x5373;&#x652F;&#x6301; MULTILINE &#x6A21;&#x5F0F;&#xFF0C;&#x56E0;&#x6B64;&#x4E0D;&#x9700;&#x8981;&#x50CF; Perl &#x548C;
+Python &#x4E2D;&#x90A3;&#x6837;&#x6307;&#x5B9A;&#x4E00;&#x4E2A;&#x6807;&#x8BB0;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &#x793A;&#x4F8B;5.rb</span></span><br><span class="line">x = <span class="string">&quot;hello\nworld\n&quot;</span></span><br><span class="line">x.gsub /^./, <span class="string">&apos;_&apos;</span>  <span class="comment"># =&gt; &quot;_ello\n_orld\n&quot;</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgebf0fcb" class="outline-2">
+<h2 id="dotall-&#x6807;&#x8BB0;">2. <code>DOTALL</code> &#x6807;&#x8BB0;</h2>
+<div class="outline-text-2" id="text-dotall-&#x6807;&#x8BB0;">
+<p>
+&#x5728; Perl 5 &#x6B63;&#x5219;&#x4E2D;&#xFF0C;&#x5143;&#x5B57;&#x7B26; <code>.</code>
+&#x867D;&#x7136;&#x88AB;&#x8BA4;&#x4E3A;&#x53EF;&#x4EE5;&#x5339;&#x914D;&#x4EFB;&#x4F55;&#x5B57;&#x7B26;&#xFF0C;&#x4F46;&#x5B9E;&#x9645;&#x4E0A;&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B; <code>.</code>
+&#x5E76;&#x4E0D;&#x5339;&#x914D;&#x6362;&#x884C;&#x7B26;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &#x793A;&#x4F8B;6.pl</span></span><br><span class="line"><span class="keyword">my</span> <span class="variable">$x</span> = <span class="string">&quot;hello\nworld\n&quot;</span>;</span><br><span class="line"><span class="variable">$x</span> =~ <span class="keyword">s</span><span class="comment">#.*#_#;</span></span><br><span class="line"><span class="variable">$x</span>    <span class="comment"># =&gt; &quot;_\nworld\n&quot;</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x5982;&#x679C;&#x60F3;&#x4F7F; <code>.</code> &#x4E5F;&#x5339;&#x914D;&#x6362;&#x884C;&#x7B26;&#xFF0C;&#x9700;&#x8981;&#x5728;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x540E;&#x9762;&#x52A0;&#x4E0A; <code>s</code> &#x9009;&#x9879;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &#x793A;&#x4F8B;7.pl</span></span><br><span class="line"><span class="keyword">my</span> <span class="variable">$x</span> = <span class="string">&quot;hello\nworld\n&quot;</span>;</span><br><span class="line"><span class="variable">$x</span> =~ <span class="keyword">s</span><span class="comment">#.*#_#s;</span></span><br><span class="line"><span class="variable">$x</span>    <span class="comment"># =&gt; &quot;_&quot;</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x5728; Python &#x4E2D;&#xFF0C;&#x4F7F;&#x7528; <code>re.S</code> &#x6216; <code>re.DOTALL</code> &#x9009;&#x9879;&#x3002;&#x6BD4;&#x8F83;&#x4E0B;&#x9762;&#x4E24;&#x4E2A;&#x4F8B;&#x5B50;&#x7684;&#x533A;&#x522B;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &#x793A;&#x4F8B;8.py</span></span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line">x = <span class="string">&quot;hello\nworld\n&quot;</span></span><br><span class="line">re.sub(<span class="string">r&quot;.*&quot;</span>, <span class="string">&quot;_&quot;</span>, x, count=<span class="number">1</span>)  <span class="comment"># =&gt; &quot;_\nworld\n&quot;</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<div class="org-src-container">
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &#x793A;&#x4F8B;9.py</span></span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line">x = <span class="string">&quot;hello\nworld\n&quot;</span></span><br><span class="line">re.sub(<span class="string">r&quot;.*&quot;</span>, <span class="string">&quot;_&quot;</span>, x, count=<span class="number">1</span>, flags=re.S)  <span class="comment"># =&gt; &quot;_&quot;</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#x5728; Ruby &#x4E2D;&#xFF0C;&#x9700;&#x8981;&#x4F7F;&#x7528; <code>m</code>
+&#x6807;&#x8BB0;&#x6765;&#x8FBE;&#x6210;&#x540C;&#x6837;&#x7684;&#x6548;&#x679C;&#x3002;&#x6BD4;&#x8F83;&#x4E0B;&#x9762;&#x4E24;&#x4E2A;&#x4F8B;&#x5B50;&#x7684;&#x533A;&#x522B;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &#x793A;&#x4F8B;10.rb</span></span><br><span class="line">x = <span class="string">&quot;hello\nworld\n&quot;</span></span><br><span class="line">x.sub /.*<span class="regexp">/, &quot;_&quot;    # =&gt; &quot;_\nworld\n&quot;</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &#x793A;&#x4F8B;11.rb</span></span><br><span class="line">x = <span class="string">&quot;hello\nworld\n&quot;</span></span><br><span class="line">x.sub /.*<span class="regexp">/m, &quot;_&quot;    # =&gt; &quot;_&quot;</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+</div>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Articles</a></li>
+         
+          <li><a href="https://github.com/lululau" target="_blank" rel="noopener">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#multiline-&#x6807;&#x8BC6;"><span class="toc-number">1.</span> <span class="toc-text">1. MULTILINE &#x6807;&#x8BC6;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dotall-&#x6807;&#x8BB0;"><span class="toc-number">2.</span> <span class="toc-text">2. DOTALL &#x6807;&#x8BB0;</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2014/03/10/regular-expression-multiline-dotall-logo/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2014/03/10/regular-expression-multiline-dotall-logo/&text=正则表达式中的 MULTILINE 和 DOTALL 标识" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2014/03/10/regular-expression-multiline-dotall-logo/&title=正则表达式中的 MULTILINE 和 DOTALL 标识" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2014/03/10/regular-expression-multiline-dotall-logo/&is_video=false&description=正则表达式中的 MULTILINE 和 DOTALL 标识" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=正则表达式中的 MULTILINE 和 DOTALL 标识&body=Check out this article: http://yoursite.com/2014/03/10/regular-expression-multiline-dotall-logo/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2014/03/10/regular-expression-multiline-dotall-logo/&title=正则表达式中的 MULTILINE 和 DOTALL 标识" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2014/03/10/regular-expression-multiline-dotall-logo/&title=正则表达式中的 MULTILINE 和 DOTALL 标识" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2014/03/10/regular-expression-multiline-dotall-logo/&title=正则表达式中的 MULTILINE 和 DOTALL 标识" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2014/03/10/regular-expression-multiline-dotall-logo/&title=正则表达式中的 MULTILINE 和 DOTALL 标识" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2014/03/10/regular-expression-multiline-dotall-logo/&name=正则表达式中的 MULTILINE 和 DOTALL 标识&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://yoursite.com/2014/03/10/regular-expression-multiline-dotall-logo/&t=正则表达式中的 MULTILINE 和 DOTALL 标识" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 zxyho
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Articles</a></li>
+         
+          <li><a href="https://github.com/lululau" target="_blank" rel="noopener">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

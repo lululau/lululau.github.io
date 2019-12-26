@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="1. &amp;#x5BF9;&amp;#x8C61;&amp;#x6A21;&amp;#x578B;     1.1 &amp;#x6253;&amp;#x5F00;&amp;#x7C7B;   &amp;#x4ECE;&amp;#x67D0;&amp;#x79CD;&amp;#x610F;&amp;#x4E49;&amp;#x4E0A;&amp;#x8BF4;&amp;#xFF0C;Ruby &amp;#x7684; class &amp;#x5173;&amp;#x952E;&amp;#x5B57;&amp;#x66F4;&amp;#x50CF;&amp;#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ruby 元编程中的那些干货">
+<meta property="og:url" content="http://yoursite.com/2013/10/03/the-ruby-metaprogramming-in-the-dry/index.html">
+<meta property="og:site_name" content="Let&#39;s hack it!">
+<meta property="og:description" content="1. &amp;#x5BF9;&amp;#x8C61;&amp;#x6A21;&amp;#x578B;     1.1 &amp;#x6253;&amp;#x5F00;&amp;#x7C7B;   &amp;#x4ECE;&amp;#x67D0;&amp;#x79CD;&amp;#x610F;&amp;#x4E49;&amp;#x4E0A;&amp;#x8BF4;&amp;#xFF0C;Ruby &amp;#x7684; class &amp;#x5173;&amp;#x952E;&amp;#x5B57;&amp;#x66F4;&amp;#x50CF;&amp;#">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2013/10/03/the-ruby-metaprogramming-in-the-dry/1.png">
+<meta property="og:image" content="http://yoursite.com/2013/10/03/the-ruby-metaprogramming-in-the-dry/2.png">
+<meta property="article:published_time" content="2013-10-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2019-12-26T13:05:54.070Z">
+<meta property="article:author" content="zxyho">
+<meta property="article:tag" content="Ruby">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2013/10/03/the-ruby-metaprogramming-in-the-dry/1.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="https://www.gravatar.com/avatar/04f23e358590cdc83f23769e9fd09074?s=16">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="https://www.gravatar.com/avatar/04f23e358590cdc83f23769e9fd09074?s=192" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/04f23e358590cdc83f23769e9fd09074?s=180">
+          
+        
+    
+    <!-- title -->
+    <title>Ruby 元编程中的那些干货</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Articles</a></li>
+         
+          <li><a href="https://github.com/lululau" target="_blank" rel="noopener">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2013/11/20/the-difference-between-rubys-time-and-datetime-classes/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2013/09/27/ruby-magic-symbol-to-proc-method/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2013/10/03/the-ruby-metaprogramming-in-the-dry/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2013/10/03/the-ruby-metaprogramming-in-the-dry/&text=Ruby 元编程中的那些干货" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2013/10/03/the-ruby-metaprogramming-in-the-dry/&title=Ruby 元编程中的那些干货" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2013/10/03/the-ruby-metaprogramming-in-the-dry/&is_video=false&description=Ruby 元编程中的那些干货" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Ruby 元编程中的那些干货&body=Check out this article: http://yoursite.com/2013/10/03/the-ruby-metaprogramming-in-the-dry/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2013/10/03/the-ruby-metaprogramming-in-the-dry/&title=Ruby 元编程中的那些干货" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2013/10/03/the-ruby-metaprogramming-in-the-dry/&title=Ruby 元编程中的那些干货" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2013/10/03/the-ruby-metaprogramming-in-the-dry/&title=Ruby 元编程中的那些干货" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2013/10/03/the-ruby-metaprogramming-in-the-dry/&title=Ruby 元编程中的那些干货" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2013/10/03/the-ruby-metaprogramming-in-the-dry/&name=Ruby 元编程中的那些干货&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://yoursite.com/2013/10/03/the-ruby-metaprogramming-in-the-dry/&t=Ruby 元编程中的那些干货" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x5BF9;&#x8C61;&#x6A21;&#x578B;"><span class="toc-number">1.</span> <span class="toc-text">1. &#x5BF9;&#x8C61;&#x6A21;&#x578B;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x6253;&#x5F00;&#x7C7B;"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 &#x6253;&#x5F00;&#x7C7B;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x51E0;&#x4E2A;-reflection-&#x65B9;&#x6CD5;"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 &#x51E0;&#x4E2A; Reflection &#x65B9;&#x6CD5;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#objectinstance_variables"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.2.1 Object#instance_variables()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#objectmethodsalltrue"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2.2 Object#methods(all=true)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#moduleinstance_methodsinclude_supertrue"><span class="toc-number">1.2.3.</span> <span class="toc-text">1.2.3 Module#instance_methods(include_super=true)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#moduleancesotrs"><span class="toc-number">1.2.4.</span> <span class="toc-text">1.2.4 Module#ancesotrs()</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5E38;&#x91CF;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x548C;&#x8DEF;&#x5F84;"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 &#x5E38;&#x91CF;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x548C;&#x8DEF;&#x5F84;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x51E0;&#x4E2A;&#x548C;&#x5E38;&#x91CF;&#x6709;&#x5173;&#x7684;&#x65B9;&#x6CD5;"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 &#x51E0;&#x4E2A;&#x548C;&#x5E38;&#x91CF;&#x6709;&#x5173;&#x7684;&#x65B9;&#x6CD5;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#moduleconstantsinherittrue"><span class="toc-number">1.4.1.</span> <span class="toc-text">1.4.1 Module#constants(inherit=true)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#module.constants-&#x548C;-module.constantsinherit"><span class="toc-number">1.4.2.</span> <span class="toc-text">1.4.2 Module.constants() &#x548C; Module.constants(inherit)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#module.nesting"><span class="toc-number">1.4.3.</span> <span class="toc-text">1.4.3 Module.nesting()</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4FEE;&#x526A;&#x5E38;&#x91CF;&#x6811;"><span class="toc-number">1.5.</span> <span class="toc-text">1.5 &#x4FEE;&#x526A;&#x5E38;&#x91CF;&#x6811;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5173;&#x4E8E;-kernel-&#x6A21;&#x5757;"><span class="toc-number">1.6.</span> <span class="toc-text">1.6 &#x5173;&#x4E8E; Kernel &#x6A21;&#x5757;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#private-&#x7A76;&#x7ADF;&#x610F;&#x5473;&#x7740;&#x4EC0;&#x4E48;"><span class="toc-number">1.7.</span> <span class="toc-text">1.7 private &#x7A76;&#x7ADF;&#x610F;&#x5473;&#x7740;&#x4EC0;&#x4E48;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x6DF7;&#x4E71;&#x7684;&#x6A21;&#x5757;"><span class="toc-number">1.8.</span> <span class="toc-text">1.8 &#x6DF7;&#x4E71;&#x7684;&#x6A21;&#x5757;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5B8C;&#x6574;&#x7684;&#x7C7B;&#x548C;&#x5BF9;&#x8C61;&#x6A21;&#x578B;&#x56FE;"><span class="toc-number">1.9.</span> <span class="toc-text">1.9 &#x5B8C;&#x6574;&#x7684;&#x7C7B;&#x548C;&#x5BF9;&#x8C61;&#x6A21;&#x578B;&#x56FE;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x65B9;&#x6CD5;"><span class="toc-number">2.</span> <span class="toc-text">2. &#x65B9;&#x6CD5;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x52A8;&#x6001;&#x65B9;&#x6CD5;"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 &#x52A8;&#x6001;&#x65B9;&#x6CD5;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x52A8;&#x6001;&#x65B9;&#x6CD5;&#x6240;&#x4F9D;&#x8D56;&#x7684;&#x57FA;&#x7840;"><span class="toc-number">2.1.1.</span> <span class="toc-text">2.1.1 &#x52A8;&#x6001;&#x65B9;&#x6CD5;&#x6240;&#x4F9D;&#x8D56;&#x7684;&#x57FA;&#x7840;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x793A;&#x4F8B;"><span class="toc-number">2.1.2.</span> <span class="toc-text">2.1.2 &#x793A;&#x4F8B;</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#method_missing-&#x5E7D;&#x7075;&#x65B9;&#x6CD5;ghost-method"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 method_missing &#x5E7D;&#x7075;&#x65B9;&#x6CD5;(Ghost Method)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#method_missingsymbol-args-&#x65B9;&#x6CD5;"><span class="toc-number">2.2.1.</span> <span class="toc-text">2.2.1 method_missing(symbol [, *args] ) &#x65B9;&#x6CD5;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x4F7F;&#x7528;-method_missing-&#x91CD;&#x6784;-computer.rb"><span class="toc-number">2.2.2.</span> <span class="toc-text">2.2.2 &#x4F7F;&#x7528; method_missing &#x91CD;&#x6784; computer.rb</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x8986;&#x76D6;-respond_to"><span class="toc-number">2.2.3.</span> <span class="toc-text">2.2.3 &#x8986;&#x76D6; respond_to?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x767D;&#x677F;&#x7C7B;blankslate"><span class="toc-number">2.2.4.</span> <span class="toc-text">2.2.4 &#x767D;&#x677F;&#x7C7B;(BlankSlate)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x4EE3;&#x7801;&#x5757;"><span class="toc-number">3.</span> <span class="toc-text">3. &#x4EE3;&#x7801;&#x5757;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5F53;&#x524D;&#x5757;"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 &#x5F53;&#x524D;&#x5757;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4F7F;&#x7528;-ruby-&#x5B9E;&#x73B0;-c-&#x7684;-using-&#x5173;&#x952E;&#x5B57;"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 &#x4F7F;&#x7528; Ruby &#x5B9E;&#x73B0; C# &#x7684; using &#x5173;&#x952E;&#x5B57;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x95ED;&#x5305;"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 &#x95ED;&#x5305;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x5757;&#x5C40;&#x90E8;&#x4F5C;&#x7528;&#x57DF;"><span class="toc-number">3.3.1.</span> <span class="toc-text">3.3.1 &#x5757;&#x5C40;&#x90E8;&#x4F5C;&#x7528;&#x57DF;</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4F5C;&#x7528;&#x57DF;&#x95E8;"><span class="toc-number">3.4.</span> <span class="toc-text">3.4 &#x4F5C;&#x7528;&#x57DF;&#x95E8;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x548C;&#x9876;&#x7EA7;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;"><span class="toc-number">3.5.</span> <span class="toc-text">3.5 &#x5168;&#x5C40;&#x53D8;&#x91CF;&#x548C;&#x9876;&#x7EA7;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x6241;&#x5E73;&#x5316;&#x4F5C;&#x7528;&#x57DF;"><span class="toc-number">3.6.</span> <span class="toc-text">3.6 &#x6241;&#x5E73;&#x5316;&#x4F5C;&#x7528;&#x57DF;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4E0A;&#x4E0B;&#x6587;&#x63A2;&#x9488;-objectinstant_eval"><span class="toc-number">3.7.</span> <span class="toc-text">3.7 &#x4E0A;&#x4E0B;&#x6587;&#x63A2;&#x9488; Object#instant_eval()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x53EF;&#x8C03;&#x7528;&#x5BF9;&#x8C61;"><span class="toc-number">3.8.</span> <span class="toc-text">3.8 &#x53EF;&#x8C03;&#x7528;&#x5BF9;&#x8C61;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#proc-&#x548C;-lambda-&#x7684;&#x533A;&#x522B;"><span class="toc-number">3.8.1.</span> <span class="toc-text">3.8.1 proc &#x548C; lambda &#x7684;&#x533A;&#x522B;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x65B9;&#x6CD5;-1"><span class="toc-number">3.8.2.</span> <span class="toc-text">3.8.2 &#x65B9;&#x6CD5;</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#redflag"><span class="toc-number">3.9.</span> <span class="toc-text">3.9 RedFlag</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x7C7B;&#x5B9A;&#x4E49;"><span class="toc-number">4.</span> <span class="toc-text">4. &#x7C7B;&#x5B9A;&#x4E49;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#moduleclass_eval-&#x65B9;&#x6CD5;"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 Module#class_eval() &#x65B9;&#x6CD5;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x548C;&#x7C7B;&#x53D8;&#x91CF;"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 &#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x548C;&#x7C7B;&#x53D8;&#x91CF;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;"><span class="toc-number">4.2.1.</span> <span class="toc-text">4.2.1 &#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x7C7B;&#x53D8;&#x91CF;"><span class="toc-number">4.2.2.</span> <span class="toc-text">4.2.2 &#x7C7B;&#x53D8;&#x91CF;</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#class.new"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 Class.new</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x7C7B;&#x65B9;&#x6CD5;&#x7684;&#x5199;&#x6CD5;"><span class="toc-number">4.4.</span> <span class="toc-text">4.4 &#x7C7B;&#x65B9;&#x6CD5;&#x7684;&#x5199;&#x6CD5;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x7C7B;&#x65B9;&#x6CD5;&#x548C;moduleinclude-&#x4EE5;&#x53CA;-objectextend"><span class="toc-number">4.5.</span> <span class="toc-text">4.5 &#x7C7B;&#x65B9;&#x6CD5;&#x548C;=Module#include()= &#x4EE5;&#x53CA; Object#extend()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x73AF;&#x7ED5;&#x522B;&#x540D;"><span class="toc-number">4.6.</span> <span class="toc-text">4.6 &#x73AF;&#x7ED5;&#x522B;&#x540D;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x7F16;&#x5199;&#x4EE3;&#x7801;&#x7684;&#x4EE3;&#x7801;"><span class="toc-number">5.</span> <span class="toc-text">5. &#x7F16;&#x5199;&#x4EE3;&#x7801;&#x7684;&#x4EE3;&#x7801;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#binding-&#x5BF9;&#x8C61;"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 Binding &#x5BF9;&#x8C61;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4EE3;&#x7801;&#x5B57;&#x7B26;&#x4E32;"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 &#x4EE3;&#x7801;&#x5B57;&#x7B26;&#x4E32;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#kerneleval-&#x4E0E;-ruby-&#x5B89;&#x5168;&#x7EA7;&#x522B;"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 Kernel#eval &#x4E0E; Ruby &#x5B89;&#x5168;&#x7EA7;&#x522B;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x7C7B;&#x6269;&#x5C55;&#x6DF7;&#x5165;class-extension-mixins"><span class="toc-number">5.4.</span> <span class="toc-text">5.4 &#x7C7B;&#x6269;&#x5C55;&#x6DF7;&#x5165;&#xFF08;Class Extension Mixins&#xFF09;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#checkedattributes"><span class="toc-number">5.5.</span> <span class="toc-text">5.5 CheckedAttributes</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Ruby 元编程中的那些干货
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Let's hack it!</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2013-10-02T16:00:00.000Z" itemprop="datePublished">2013-10-03</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Ruby/" rel="tag">Ruby</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <div id="content">
+
+<div id="outline-container-orgfb3223b" class="outline-2">
+<h2 id="&#x5BF9;&#x8C61;&#x6A21;&#x578B;">1. &#x5BF9;&#x8C61;&#x6A21;&#x578B;</h2>
+<div class="outline-text-2" id="text-&#x5BF9;&#x8C61;&#x6A21;&#x578B;">
+</div>
+
+<div id="outline-container-org60b6f99" class="outline-3">
+<h3 id="&#x6253;&#x5F00;&#x7C7B;">1.1 &#x6253;&#x5F00;&#x7C7B;</h3>
+<div class="outline-text-3" id="text-&#x6253;&#x5F00;&#x7C7B;">
+<p>
+&#x4ECE;&#x67D0;&#x79CD;&#x610F;&#x4E49;&#x4E0A;&#x8BF4;&#xFF0C;Ruby &#x7684; <code>class</code>
+&#x5173;&#x952E;&#x5B57;&#x66F4;&#x50CF;&#x662F;&#x4E00;&#x4E2A;&#x4F5C;&#x7528;&#x57DF;&#x64CD;&#x4F5C;&#x7B26;&#x800C;&#x4E0D;&#x662F;&#x7C7B;&#x58F0;&#x660E;&#x8BED;&#x53E5;&#x3002;&#x5B83;&#x7684;&#x786E;&#x53EF;&#x4EE5;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x8FD8;&#x4E0D;&#x5B58;&#x5728;&#x7684;&#x7C7B;&#xFF0C;&#x4E0D;&#x8FC7;&#x4E5F;&#x53EF;&#x4EE5;&#x628A;&#x8FD9;&#x770B;&#x6210;&#x4E00;&#x79CD;&#x526F;&#x4F5C;&#x7528;&#x3002;&#x5BF9;&#x4E8E;
+<code>class</code>
+&#x5173;&#x952E;&#x5B57;&#xFF0C;&#x5176;&#x6838;&#x5FC3;&#x4EFB;&#x52A1;&#x662F;&#x628A;&#x4F60;&#x5E26;&#x5230;&#x7C7B;&#x7684;&#x4E0A;&#x4E0B;&#x6587;&#x4E2D;&#xFF0C;&#x8BA9;&#x4F60;&#x53EF;&#x4EE5;&#x5728;&#x5176;&#x4E2D;&#x5B9A;&#x4E49;&#x65B9;&#x6CD5;&#x3002;
+</p>
+
+<p>
+<b>&#x793A;&#x4F8B;1:</b>
+</p>
+
+<p>
+&#x4F60;&#x7684;&#x4EE3;&#x7801;&#x4E2D;&#x9700;&#x8981;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x53BB;&#x6389;&#x5B57;&#x7B26;&#x4E32;&#x4E2D;&#x7684;&#x6807;&#x70B9;&#x7B26;&#x53F7;&#x548C;&#x7279;&#x6B8A;&#x5B57;&#x7B26;&#xFF0C;&#x53EA;&#x4FDD;&#x7559;&#x5B57;&#x6BCD;&#x3001;&#x6570;&#x5B57;&#x548C;&#x7A7A;&#x683C;&#x3002;
+</p>
+
+<p>
+&#x5728;&#x50CF; Java &#x8FD9;&#x6837;&#x7684;&#x7F16;&#x7A0B;&#x8BED;&#x8A00;&#x4E2D;&#xFF0C;&#x4F60;&#x5FC5;&#x987B;&#x8FD9;&#x6837;&#x5B9A;&#x4E49;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringUtil</span> </span>{</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">to_alphanumeric</span><span class="params">(s)</span> </span>{</span><br><span class="line">	<span class="keyword">return</span> s.replaceAll(<span class="string">&quot;[^\\w\\s]&quot;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x800C;&#x5728; Ruby &#x4E2D;&#x4F60;&#x53EF;&#x4EE5;&#x5C06;&#x8FD9;&#x4E2A; to_alphanumeric &#x65B9;&#x6CD5;&#x76F4;&#x63A5;&#x5B9A;&#x4E49;&#x4E3A; String
+&#x7C7B;&#x7684;&#x5B9E;&#x4F8B;&#x65B9;&#x6CD5;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">String</span></span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">to_alphanumeric</span></span></span><br><span class="line">	<span class="keyword">self</span>.gsub /[^\w\s]/, <span class="string">&apos;&apos;</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+<b>&#x793A;&#x4F8B;2:</b>
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span></span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">x</span>;</span> <span class="string">&apos;x&apos;</span>; <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span></span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">y</span>;</span> <span class="string">&apos;y&apos;</span>; <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">obj = <span class="constant">D</span>.new</span><br><span class="line">obj.x        <span class="comment"># =&gt; &apos;x&apos;</span></span><br><span class="line">obj.y        <span class="comment"># =&gt; &apos;y&apos;</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+<i>&#x4F7F;&#x7528;&quot;&#x6253;&#x5F00;&#x7C7B;&quot;&#x6280;&#x672F;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x95EE;&#x9898;&#xFF1A;&#x5728;&#x6253;&#x5F00;&#x4E00;&#x4E2A;&#x7C7B;&#x5411;&#x5176;&#x4E2D;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x65B9;&#x6CD5;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x8FD9;&#x4E2A;&#x7C7B;&#x4E2D;&#x662F;&#x5426;&#x5DF2;&#x7ECF;&#x5B58;&#x5728;&#x4E00;&#x4E2A;&#x540C;&#x540D;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x4EE5;&#x514D;&#x4E0D;&#x5C0F;&#x5FC3;&#x8986;&#x76D6;&#x4E86;&#x7C7B;&#x4E2D;&#x539F;&#x6709;&#x7684;&#x540C;&#x540D;&#x65B9;&#x6CD5;&#x3002;</i>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1fad7d5" class="outline-3">
+<h3 id="&#x51E0;&#x4E2A;-reflection-&#x65B9;&#x6CD5;">1.2 &#x51E0;&#x4E2A; Reflection &#x65B9;&#x6CD5;</h3>
+<div class="outline-text-3" id="text-&#x51E0;&#x4E2A;-reflection-&#x65B9;&#x6CD5;">
+</div>
+
+<div id="outline-container-org76a58c9" class="outline-4">
+<h4 id="objectinstance_variables">1.2.1 <code>Object#instance_variables()</code></h4>
+<div class="outline-text-4" id="text-objectinstance_variables">
+<p>
+Returns an array of instance variable names for the receiver. Note that
+simply defining an accessor does not create the corresponding instance
+variable.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7642610" class="outline-4">
+<h4 id="objectmethodsalltrue">1.2.2 <code>Object#methods(all=true)</code></h4>
+<div class="outline-text-4" id="text-objectmethodsalltrue">
+<p>
+Returns a list of the names of public and protected methods of obj. This
+will include all the methods accessible in obj&apos;s ancestors. If the all
+parameter is set to false, only those methods in the receiver will be
+listed.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1504c54" class="outline-4">
+<h4 id="moduleinstance_methodsinclude_supertrue">1.2.3 <code>Module#instance_methods(include_super=true)</code></h4>
+<div class="outline-text-4" id="text-moduleinstance_methodsinclude_supertrue">
+<p>
+Returns an array containing the names of the public and protected
+instance methods in the receiver. For a module, these are the public and
+protected methods; for a class, they are the instance (not singleton)
+methods. With no argument, or with an argument that is false, the
+instance methods in mod are returned, otherwise the methods in mod and
+mod&apos;s superclasses are returned.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3bf62ff" class="outline-4">
+<h4 id="moduleancesotrs">1.2.4 <code>Module#ancesotrs()</code></h4>
+<div class="outline-text-4" id="text-moduleancesotrs">
+<p>
+Returns a list of modules included in mod (including mod itself).
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">my_methods</span>;</span> <span class="string">&apos;my_method()&apos;</span>; <span class="keyword">end</span>    </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySubclass</span> <span class="inheritance">&lt; <span class="parent">MyClass</span></span></span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="constant">MySubclass</span>.ancestors()        <span class="comment"># =&gt; [MySubclass, MyClass, Object, Kernel, BasicObject]</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdf312d9" class="outline-3">
+<h3 id="&#x5E38;&#x91CF;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x548C;&#x8DEF;&#x5F84;">1.3 &#x5E38;&#x91CF;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x548C;&#x8DEF;&#x5F84;</h3>
+<div class="outline-text-3" id="text-&#x5E38;&#x91CF;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x548C;&#x8DEF;&#x5F84;">
+<p>
+&#x5E38;&#x91CF;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x4E0D;&#x540C;&#x4E8E;&#x53D8;&#x91CF;&#xFF0C;&#x5B83;&#x6709;&#x81EA;&#x5DF1;&#x72EC;&#x7279;&#x7684;&#x89C4;&#x5219;&#x3002;&#x4F8B;&#x5982;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">MyModule</span></span></span><br><span class="line">    <span class="constant">MyConstant</span> = <span class="string">&apos;Outer Constant&apos;</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line">	<span class="constant">MyConstant</span> = <span class="string">&apos;Inner Constant&apos;</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x8FD9;&#x6BB5;&#x4EE3;&#x7801;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x5E38;&#x91CF;&#x50CF;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x4E00;&#x6837;&#x7EC4;&#x7EC7;&#x6210;&#x6811;&#x5F62;&#x7ED3;&#x6784;&#xFF1A;
+</p>
+
+<pre class="example">
+MyModule
+&#x251C;&#x2500;&#x2500; MyClass
+&#x2502;   &#x2514;&#x2500;&#x2500; MyConstant
+&#x2514;&#x2500;&#x2500; MyConstant</pre>
+</div>
+</div>
+
+<div id="outline-container-org5678141" class="outline-3">
+<h3 id="&#x51E0;&#x4E2A;&#x548C;&#x5E38;&#x91CF;&#x6709;&#x5173;&#x7684;&#x65B9;&#x6CD5;">1.4 &#x51E0;&#x4E2A;&#x548C;&#x5E38;&#x91CF;&#x6709;&#x5173;&#x7684;&#x65B9;&#x6CD5;</h3>
+<div class="outline-text-3" id="text-&#x51E0;&#x4E2A;&#x548C;&#x5E38;&#x91CF;&#x6709;&#x5173;&#x7684;&#x65B9;&#x6CD5;">
+</div>
+
+<div id="outline-container-org4213bf9" class="outline-4">
+<h4 id="moduleconstantsinherittrue">1.4.1 <code>Module#constants(inherit=true)</code></h4>
+<div class="outline-text-4" id="text-moduleconstantsinherittrue">
+<p>
+Returns an array of the names of the constants accessible in mod. This
+includes the names of constants in any included modules (example at
+start of section), unless the inherit parameter is set to false.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org92b8ad3" class="outline-4">
+<h4 id="module.constants-&#x548C;-module.constantsinherit">1.4.2 <code>Module.constants()</code> &#x548C; <code>Module.constants(inherit)</code></h4>
+<div class="outline-text-4" id="text-module.constants-&#x548C;-module.constantsinherit">
+<p>
+In the first form, returns an array of the names of all constants
+accessible from the point of call. This list includes the names of all
+modules and classes defined in the global scope.
+</p>
+
+<p>
+The second form calls the instance method constants.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org74cdc52" class="outline-4">
+<h4 id="module.nesting">1.4.3 <code>Module.nesting()</code></h4>
+<div class="outline-text-4" id="text-module.nesting">
+<p>
+&#x83B7;&#x53D6;&#x5F53;&#x524D;&#x5E38;&#x91CF;&#x7684;&#x8DEF;&#x5F84;&#x3002;&#x4F8B;&#x5982;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">moudle <span class="constant">M</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">C</span></span></span><br><span class="line">	<span class="class"><span class="keyword">module</span> <span class="title">M2</span></span></span><br><span class="line">	    <span class="constant">Module</span>.nesting        <span class="comment"># =&gt; [M::C::M2, M::C, M]</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span>        </span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf6ff461" class="outline-3">
+<h3 id="&#x4FEE;&#x526A;&#x5E38;&#x91CF;&#x6811;">1.5 &#x4FEE;&#x526A;&#x5E38;&#x91CF;&#x6811;</h3>
+<div class="outline-text-3" id="text-&#x4FEE;&#x526A;&#x5E38;&#x91CF;&#x6811;">
+<p>
+&#x82E5;&#x60F3;&#x5728;&#x7F51;&#x4E0A;&#x627E;&#x5230;&#x4E00;&#x4E2A; <code>motd.rb</code>
+&#x6587;&#x4EF6;&#x7528;&#x6765;&#x5728;&#x63A7;&#x5236;&#x53F0;&#x4E0A;&#x663E;&#x793A;&quot;&#x5F53;&#x5929;&#x7684;&#x6D88;&#x606F;&quot;&#xFF0C;&#x4E14;&#x60F3;&#x628A;&#x8FD9;&#x6BB5;&#x4EE3;&#x7801;&#x96C6;&#x6210;&#x5230;&#x6700;&#x65B0;&#x7684;&#x7A0B;&#x5E8F;&#x4E2D;&#x53BB;&#xFF0C;&#x90A3;&#x4E48;&#x4F7F;&#x7528;=load=&#x6267;&#x884C;&#x8BE5;&#x6587;&#x4EF6;&#x6765;&#x663E;&#x793A;&#x6D88;&#x606F;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">load(<span class="string">&apos;motd.rb&apos;</span>)</span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x4E0D;&#x8FC7;&#xFF0C;&#x4F7F;&#x7528; <code>load()</code> &#x65B9;&#x6CD5;&#x6709;&#x4E00;&#x4E2A;&#x526F;&#x4F5C;&#x7528;&#x3002;=motd.rb=
+&#x6587;&#x4EF6;&#x5F88;&#x53EF;&#x80FD;&#x5B9A;&#x4E49;&#x4E86;&#x53D8;&#x91CF;&#x548C;&#x7C7B;&#x3002;&#x5C3D;&#x7BA1;&#x53D8;&#x91CF;&#x5728;&#x52A0;&#x8F7D;&#x5B8C;&#x6210;&#x540E;&#x4F1A;&#x843D;&#x5728;&#x5F53;&#x524D;&#x4F5C;&#x7528;&#x57DF;&#x4E4B;&#x5916;&#xFF0C;&#x4F46;&#x5E38;&#x91CF;&#x4E0D;&#x4F1A;&#x3002;&#x8FD9;&#x6837;&#xFF0C;=motd.rb=&#x53EF;&#x80FD;&#x4F1A;&#x901A;&#x8FC7;&#x5B83;&#x7684;&#x5E38;&#x91CF;&#xFF08;&#x5C24;&#x5176;&#x662F;&#x7C7B;&#x540D;&#xFF09;&#x6C61;&#x67D3;&#x5F53;&#x524D;&#x7A0B;&#x5E8F;&#x7684;&#x547D;&#x540D;&#x7A7A;&#x95F4;&#x3002;
+</p>
+
+<p>
+&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4F7F;&#x7528;&#x7B2C;&#x4E8C;&#x4E2A;&#x53EF;&#x9009;&#x53C2;&#x6570;&#x6765;&#x63A7;&#x5236;&#x5176;&#x5E38;&#x91CF;&#x4EC5;&#x5728;&#x81EA;&#x8EAB;&#x8303;&#x56F4;&#x5185;&#x6709;&#x6548;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">load(<span class="string">&apos;motd.rb&apos;</span>, <span class="keyword">true</span>)</span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x901A;&#x8FC7;&#x8FD9;&#x79CD;&#x65B9;&#x5F0F;&#x52A0;&#x8F7D;&#x7684;&#x6587;&#x4EF6;&#xFF0C;Ruby
+&#x4F1A;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x533F;&#x540D;&#x6A21;&#x5757;&#xFF0C;&#x4F7F;&#x7528;&#x5B83;&#x4F5C;&#x4E3A;&#x547D;&#x540D;&#x7A7A;&#x95F4;&#x6765;&#x5BB9;&#x7EB3; <code>motd.rb</code>
+&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x6240;&#x6709;&#x5E38;&#x91CF;&#xFF0C;&#x52A0;&#x8F7D;&#x5B8C;&#x6210;&#x540E;&#xFF0C;&#x8BE5;&#x6A21;&#x5757;&#x4F1A;&#x88AB;&#x9500;&#x6BC1;&#x3002;
+</p>
+
+<p>
+=require()=&#x65B9;&#x6CD5;&#x4E0E;=load()=&#x65B9;&#x6CD5;&#x9887;&#x4E3A;&#x76F8;&#x4F3C;&#xFF0C;&#x4F46;&#x662F;&#x5B83;&#x7684;&#x76EE;&#x7684;&#x4E0D;&#x540C;&#x3002;&#x901A;&#x8FC7;=load()=&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x6267;&#x884C;&#x4EE3;&#x7801;&#xFF0C;&#x800C;=require()=&#x5219;&#x662F;&#x7528;&#x6765;&#x5BFC;&#x5165;&#x7C7B;&#x5E93;&#x3002;&#x8FD9;&#x5C31;&#x662F;=require()=&#x65B9;&#x6CD5;&#x6CA1;&#x6709;&#x7B2C;&#x4E8C;&#x4E2A;&#x53EF;&#x9009;&#x53C2;&#x6570;&#x7684;&#x539F;&#x56E0;&#x3002;&#x5728;&#x8FD9;&#x4E9B;&#x7C7B;&#x5E93;&#x4E2D;&#x7684;&#x7C7B;&#x540D;&#x901A;&#x5E38;&#x662F;&#x4F60;&#x5BFC;&#x5165;&#x8FD9;&#x4E9B;&#x5E93;&#x65F6;&#x6240;&#x5E0C;&#x671B;&#x5F97;&#x5230;&#x7684;&#xFF0C;&#x56E0;&#x6B64;&#x6CA1;&#x6709;&#x7406;&#x7531;&#x5728;&#x52A0;&#x8F7D;&#x540E;&#x9500;&#x6BC1;&#x5B83;&#x4EEC;&#x3002;
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgac41042" class="outline-3">
+<h3 id="&#x5173;&#x4E8E;-kernel-&#x6A21;&#x5757;">1.6 &#x5173;&#x4E8E; Kernel &#x6A21;&#x5757;</h3>
+<div class="outline-text-3" id="text-&#x5173;&#x4E8E;-kernel-&#x6A21;&#x5757;">
+<p>
+&#x5982;&#x679C;&#x9700;&#x8981;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x5DE5;&#x5177;&#x51FD;&#x6570;&#xFF0C;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x7684;&#x4F5C;&#x7528;&#x5F88;&#x5E7F;&#x6CDB;&#xFF0C;&#x4EE5;&#x81F3;&#x4E8E;&#x5B83;&#x4F7F;&#x7528;&#x8D77;&#x6765;&#x66F4;&#x50CF;&#x8BED;&#x8A00;&#x5185;&#x6838;&#x7684;&#x4E00;&#x90E8;&#x5206;&#xFF0C;&#x90A3;&#x4E48;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x6700;&#x597D;&#x5B9A;&#x4E49;
+Kernel &#x6A21;&#x5757;&#x7684;&#x65B9;&#x6CD5;&#x3002;
+</p>
+</div>
+</div>
+
+<div id="outline-container-org50a8179" class="outline-3">
+<h3 id="private-&#x7A76;&#x7ADF;&#x610F;&#x5473;&#x7740;&#x4EC0;&#x4E48;">1.7 <code>private</code> &#x7A76;&#x7ADF;&#x610F;&#x5473;&#x7740;&#x4EC0;&#x4E48;</h3>
+<div class="outline-text-3" id="text-private-&#x7A76;&#x7ADF;&#x610F;&#x5473;&#x7740;&#x4EC0;&#x4E48;">
+<p>
+&#x79C1;&#x6709;&#x65B9;&#x6CD5;&#x670D;&#x4ECE;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x89C4;&#x5219;&#xFF1A;&#x4E0D;&#x80FD;&#x660E;&#x786E;&#x6307;&#x5B9A;&#x4E00;&#x4E2A;&#x63A5;&#x53D7;&#x8005;&#x6765;&#x8C03;&#x7528;&#x4E00;&#x4E2A;&#x79C1;&#x6709;&#x65B9;&#x6CD5;&#x3002;&#x6362;&#x8A00;&#x4E4B;&#xFF0C;&#x6BCF;&#x6B21;&#x8C03;&#x7528;&#x4E00;&#x4E2A;&#x79C1;&#x6709;&#x65B9;&#x6CD5;&#x65F6;&#xFF0C;&#x53EA;&#x80FD;&#x8C03;&#x7528;&#x4E8E;&#x9690;&#x542B;&#x7684;&#x63A5;&#x53D7;&#x8005;
+-&#x2013;&#x2014; <code>self</code> &#x4E0A;&#x3002;&#x4E0B;&#x9762;&#x770B;&#x4E00;&#x4E2A;&#x6781;&#x7AEF;&#x4F8B;&#x5B50;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span></span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">public_method</span></span></span><br><span class="line">	<span class="keyword">self</span>.private_method</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    private</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">private_method</span>;</span> <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="constant">C</span>.new.public_method</span><br><span class="line"></span><br><span class="line"> <span class="comment"># =&gt; NoMethodError: private method `private_method&apos; called [&#x2026;]</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x5728;&#x8FD9;&#x6BB5;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;&#x5982;&#x679C;&#x53BB;&#x6389; <code>self</code> &#x5173;&#x952E;&#x5B57;&#xFF0C;&#x5B83;&#x5C31;&#x53EF;&#x4EE5;&#x6B63;&#x5E38;&#x8FD0;&#x884C;&#x3002;
+</p>
+
+<p>
+&#x8FD9;&#x4E2A;&#x4EBA;&#x4E3A;&#x5236;&#x9020;&#x7684;&#x4F8B;&#x5B50;&#x6F14;&#x793A;&#x4E86;&#x79C1;&#x6709;&#x65B9;&#x6CD5;&#x662F;&#x7531;&#x4E24;&#x6761;&#x89C4;&#x5219;&#x4E00;&#x8D77;&#x63A7;&#x5236;&#x7684;&#xFF1A;&#x7B2C;&#x4E00;&#x6761;&#xFF1A;&#x5982;&#x679C;&#x8C03;&#x7528;&#x65B9;&#x6CD5;&#x7684;&#x63A5;&#x53D7;&#x8005;&#x4E0D;&#x662F;&#x4F60;&#x81EA;&#x5DF1;&#xFF0C;&#x5219;&#x5FC5;&#x987B;&#x660E;&#x786E;&#x6307;&#x660E;&#x4E00;&#x4E2A;&#x63A5;&#x53D7;&#x8005;&#xFF1B;&#x7B2C;&#x4E8C;&#x6761;&#xFF0C;&#x79C1;&#x6709;&#x65B9;&#x6CD5;&#x53EA;&#x80FD;&#x88AB;&#x9690;&#x542B;&#x63A5;&#x53D7;&#x8005;&#x8C03;&#x7528;&#x3002;&#x628A;&#x8FD9;&#x4E24;&#x6761;&#x89C4;&#x5219;&#x7CC5;&#x5408;&#x5728;&#x4E00;&#x8D77;&#xFF0C;&#x4F60;&#x4F1A;&#x53D1;&#x73B0;&#x53EA;&#x80FD;&#x5728;&#x81EA;&#x8EAB;&#x4E2D;&#x8C03;&#x7528;&#x4E00;&#x4E2A;&#x79C1;&#x6709;&#x65B9;&#x6CD5;&#x3002;&#x4F60;&#x53EF;&#x4EE5;&#x628A;&#x8FD9;&#x4E2A;&#x7CC5;&#x5408;&#x540E;&#x7684;&#x89C4;&#x5219;&#x6210;&#x4E3A;&quot;&#x4F3C;&#x6709;&#x89C4;&#x5219;&quot;&#x3002;
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf76f0b7" class="outline-3">
+<h3 id="&#x6DF7;&#x4E71;&#x7684;&#x6A21;&#x5757;">1.8 &#x6DF7;&#x4E71;&#x7684;&#x6A21;&#x5757;</h3>
+<div class="outline-text-3" id="text-&#x6DF7;&#x4E71;&#x7684;&#x6A21;&#x5757;">
+<p>
+&#x6709;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">Printable</span></span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">print</span>;</span> <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">Document</span></span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">print</span>;</span> <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Book</span></span></span><br><span class="line">    <span class="keyword">include</span> <span class="constant">Document</span></span><br><span class="line">    <span class="keyword">include</span> <span class="constant">Printable</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">book = <span class="constant">Book</span>.new</span><br><span class="line">b.print</span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x95EE;&#xFF1A;=b.print= &#x8C03;&#x7528;&#x7684;&#x662F; <code>Printable</code> &#x8FD8;&#x662F; <code>Document</code> &#x4E2D;&#x5B9A;&#x4E49;&#x7684; <code>print</code>
+&#x65B9;&#x6CD5;&#xFF1F;
+</p>
+
+<p>
+&#x7B54;&#xFF1A;=Book.ancestors=
+&#x7684;&#x8F93;&#x51FA;&#xFF1A;=[Book, Printable, Document, Object, .. ..]=&#xFF0C;&#x56E0;&#x6B64;&#x8C03;&#x7528;&#x7684;&#x662F;
+<code>Printable</code> &#x4E2D;&#x5B9A;&#x4E49;&#x7684; <code>print</code> &#x65B9;&#x6CD5;&#x3002;
+</p>
+</div>
+</div>
+
+<div id="outline-container-org37c0b76" class="outline-3">
+<h3 id="&#x5B8C;&#x6574;&#x7684;&#x7C7B;&#x548C;&#x5BF9;&#x8C61;&#x6A21;&#x578B;&#x56FE;">1.9 &#x5B8C;&#x6574;&#x7684;&#x7C7B;&#x548C;&#x5BF9;&#x8C61;&#x6A21;&#x578B;&#x56FE;</h3>
+<div class="outline-text-3" id="text-&#x5B8C;&#x6574;&#x7684;&#x7C7B;&#x548C;&#x5BF9;&#x8C61;&#x6A21;&#x578B;&#x56FE;">
+<p>
+&#x4E0B;&#x5217;&#x4EE3;&#x7801;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">method_a</span>;</span> <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">obj1 = <span class="constant">MyClass</span>.new</span><br><span class="line">obj2 = <span class="constant">MyClass</span>.new</span><br><span class="line">obj3 = <span class="constant">MyClass</span>.new</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="inheritance">&lt;</span><span class="inheritance">&lt; <span class="parent">obj3</span></span></span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">method_b</span>;</span> <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x5BF9;&#x5E94;&#x7684;&#x6A21;&#x578B;&#x56FE;&#x5982;&#xFF1A;
+</p>
+
+
+<div class="figure">
+<p><img src="1.png">
+</p>
+<p><span class="figure-number">Figure 1: </span>ObjectModel.png</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2436556" class="outline-2">
+<h2 id="&#x65B9;&#x6CD5;">2. &#x65B9;&#x6CD5;</h2>
+<div class="outline-text-2" id="text-&#x65B9;&#x6CD5;">
+</div>
+
+<div id="outline-container-orgdea6dfc" class="outline-3">
+<h3 id="&#x52A8;&#x6001;&#x65B9;&#x6CD5;">2.1 &#x52A8;&#x6001;&#x65B9;&#x6CD5;</h3>
+<div class="outline-text-3" id="text-&#x52A8;&#x6001;&#x65B9;&#x6CD5;">
+</div>
+
+<div id="outline-container-org4ed3f1c" class="outline-4">
+<h4 id="&#x52A8;&#x6001;&#x65B9;&#x6CD5;&#x6240;&#x4F9D;&#x8D56;&#x7684;&#x57FA;&#x7840;">2.1.1 &#x52A8;&#x6001;&#x65B9;&#x6CD5;&#x6240;&#x4F9D;&#x8D56;&#x7684;&#x57FA;&#x7840;</h4>
+<div class="outline-text-4" id="text-&#x52A8;&#x6001;&#x65B9;&#x6CD5;&#x6240;&#x4F9D;&#x8D56;&#x7684;&#x57FA;&#x7840;">
+<ul class="org-ul">
+<li><p>
+&#x52A8;&#x6001;&#x6D3E;&#x53D1;&#xFF1A;=Object#send(symbol_or_string [, args&#x2026;])=
+</p>
+
+<p>
+Invokes the method identified by symbol, passing it any arguments
+specified. You can use <code>__send__</code> if the name send clashes with an
+existing method in obj. When the method is identified by a string, the
+string is converted to a symbol.
+</p></li>
+
+<li><p>
+&#x52A8;&#x6001;&#x5B9A;&#x4E49;&#xFF1A;=Module#define_method(symbol, method)= &#x6216;
+<code>Module#define_method(symbol){ block }</code>
+</p>
+
+<p>
+Defines an instance method in the receiver. The method parameter can
+be a Proc, a Method or an UnboundMethod object. If a block is
+specified, it is used as the method body. This block is evaluated
+using instance_eval. <code>define_method</code> is a <b>private</b> method.
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgcb90827" class="outline-4">
+<h4 id="&#x793A;&#x4F8B;">2.1.2 &#x793A;&#x4F8B;</h4>
+<div class="outline-text-4" id="text-&#x793A;&#x4F8B;">
+<p>
+&#x6709;&#x8FD9;&#x6837;&#x4E00;&#x4E2A;&#x7A0B;&#x5E8F;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment"># data_source.rb:</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DS</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">initialzie</span> <span class="comment"># connect to data source&#x2026;</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">get_mouse_info</span><span class="params">(workstation_id)</span>  <span class="comment"># &#x2026;</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">get_mouse_price</span><span class="params">(workstation_id)</span>  <span class="comment"># &#x2026;</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">get_keyboard_info</span><span class="params">(workstation_id)</span>  <span class="comment"># &#x2026;</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">get_keyboard_price</span><span class="params">(workstation_id)</span>  <span class="comment"># &#x2026;</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">get_cpu_info</span><span class="params">(workstatiob_id)</span>  <span class="comment">#&#x2026;</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">get_cpu_price</span><span class="params">(workstation_id)</span>  <span class="comment">#&#x2026;</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">get_display_info</span><span class="params">(workstation_id)</span>  <span class="comment"># &#x2026;</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">get_display_price</span><span class="params">(workstation_id)</span>  <span class="comment">#...</span></span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"> <span class="comment"># computer.rb</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Computer</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">initialzie</span><span class="params">(id, data_source)</span></span></span><br><span class="line">    <span class="variable">@id</span> = id</span><br><span class="line">    <span class="variable">@data_source</span> = data_source</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">mouse</span></span></span><br><span class="line">    info = <span class="variable">@data_souce</span>.get_mouse_info(<span class="variable">@id</span>)</span><br><span class="line">    price = <span class="variable">@data_source</span>.get_mouse_price(<span class="variable">@id</span>)</span><br><span class="line">    result = <span class="string">&quot;Mouse: <span class="subst">#{info}</span> ($<span class="subst">#{price}</span>)&quot;</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;* <span class="subst">#{result}</span>&quot;</span> <span class="keyword">if</span> price &gt; <span class="number">100</span></span><br><span class="line">    result</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">cpu</span></span></span><br><span class="line">    info = <span class="variable">@data_souce</span>.get_cpu_info(<span class="variable">@id</span>)</span><br><span class="line">    price = <span class="variable">@data_source</span>.get_cpu_price(<span class="variable">@id</span>)</span><br><span class="line">    result = <span class="string">&quot;Mouse: <span class="subst">#{info}</span> ($<span class="subst">#{price}</span>)&quot;</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;* <span class="subst">#{result}</span>&quot;</span> <span class="keyword">if</span> price &gt; <span class="number">100</span></span><br><span class="line">    result  </span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">  &#x2026; &#x2026; </span><br><span class="line"><span class="keyword">end</span>  </span><br></pre></td></tr></table></figure>
+</div>
+</div>
+
+<ul class="org-ul">
+<li><a id="&#x4F7F;&#x7528;&#x52A8;&#x6001;&#x6D3E;&#x53D1;&#x91CD;&#x6784;-computer.rb"></a>2.1.2.1 &#x4F7F;&#x7528;&#x52A8;&#x6001;&#x6D3E;&#x53D1;&#x91CD;&#x6784; <code>computer.rb</code><br>
+<div class="outline-text-5" id="text-&#x4F7F;&#x7528;&#x52A8;&#x6001;&#x6D3E;&#x53D1;&#x91CD;&#x6784;-computer.rb">
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Computer</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">initialize</span><span class="params">(id, data_source)</span></span></span><br><span class="line">    <span class="variable">@id</span> = id</span><br><span class="line">    <span class="variable">@data_source</span> = data_source</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">mouse</span></span></span><br><span class="line">    component <span class="symbol">:mouse</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">cpu</span></span></span><br><span class="line">    component <span class="symbol">:cpu</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">  &#x2026; &#x2026;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">component</span><span class="params">(name)</span></span></span><br><span class="line">    info = <span class="variable">@data_source</span>.send(<span class="string">&quot;get_<span class="subst">#{name}</span>_info&quot;</span>, <span class="variable">@id</span>)</span><br><span class="line">    price = <span class="variable">@data_source</span>.send(<span class="string">&quot;get_<span class="subst">#{name}</span>_price&quot;</span>, <span class="variable">@id</span>)</span><br><span class="line">    result = <span class="string">&quot;<span class="subst">#{name.to_s.capitalize}</span>: <span class="subst">#{info}</span> ($<span class="subst">#{price}</span>)&quot;</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;* <span class="subst">#{result}</span>&quot;</span> <span class="keyword">if</span> price &gt; <span class="number">100</span></span><br><span class="line">    result</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</li>
+
+<li><a id="&#x4F7F;&#x7528;&#x52A8;&#x6001;&#x5B9A;&#x4E49;&#x91CD;&#x6784;-computer.rb"></a>2.1.2.2 &#x4F7F;&#x7528;&#x52A8;&#x6001;&#x5B9A;&#x4E49;&#x91CD;&#x6784; <code>computer.rb</code><br>
+<div class="outline-text-5" id="text-&#x4F7F;&#x7528;&#x52A8;&#x6001;&#x5B9A;&#x4E49;&#x91CD;&#x6784;-computer.rb">
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Computer</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">initialzie</span><span class="params">(id, data_source)</span></span></span><br><span class="line">    <span class="variable">@id</span> = id</span><br><span class="line">    <span class="variable">@data_source</span> = data_source</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">self</span>.<span class="title">component</span><span class="params">(name)</span></span></span><br><span class="line">    define_method name <span class="keyword">do</span> </span><br><span class="line">      info = <span class="variable">@data_source</span>.send <span class="string">&quot;get_<span class="subst">#{name}</span>_info&quot;</span>, <span class="variable">@id</span></span><br><span class="line">      price = <span class="variable">@data_source</span>.send <span class="string">&quot;get_<span class="subst">#{name}</span>_price&quot;</span>, <span class="variable">@id</span></span><br><span class="line">      result = <span class="string">&quot;<span class="subst">#{name.to_s.capitalize}</span>: <span class="subst">#{info}</span> ($<span class="subst">#{price}</span>)&quot;</span></span><br><span class="line">      <span class="keyword">return</span> <span class="string">&quot;* <span class="subst">#{result}</span>&quot;</span> <span class="keyword">if</span> price &gt; <span class="number">100</span></span><br><span class="line">      result</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  component <span class="symbol">:mouse</span></span><br><span class="line">  component <span class="symbol">:cpu</span></span><br><span class="line">  &#x2026; &#x2026;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</li>
+
+<li><a id="&#x4F7F;&#x7528;&#x5185;&#x7701;&#x91CD;&#x6784;-computer.rb"></a>2.1.2.3 &#x4F7F;&#x7528;&#x5185;&#x7701;&#x91CD;&#x6784; <code>computer.rb</code><br>
+<div class="outline-text-5" id="text-&#x4F7F;&#x7528;&#x5185;&#x7701;&#x91CD;&#x6784;-computer.rb">
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Computer</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">initialzie</span><span class="params">(id, data_source)</span></span></span><br><span class="line">    <span class="variable">@id</span> = id</span><br><span class="line">    <span class="variable">@data_source</span> = data_source</span><br><span class="line">    <span class="variable">@data_source</span>.methods.grep(<span class="regexp">/^get_(\w+)_info/</span>) {<span class="keyword">self</span>.<span class="keyword">class</span>.component <span class="variable">$1</span>}</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">self</span>.<span class="title">component</span><span class="params">(name)</span></span></span><br><span class="line">    define_method name <span class="keyword">do</span> </span><br><span class="line">      info = <span class="variable">@data_source</span>.send <span class="string">&quot;get_<span class="subst">#{name}</span>_info&quot;</span>, <span class="variable">@id</span></span><br><span class="line">      price = <span class="variable">@data_source</span>.send <span class="string">&quot;get_<span class="subst">#{name}</span>_price&quot;</span>, <span class="variable">@id</span></span><br><span class="line">      result = <span class="string">&quot;<span class="subst">#{name.to_s.capitalize}</span>: <span class="subst">#{info}</span> ($<span class="subst">#{price}</span>)&quot;</span></span><br><span class="line">      <span class="keyword">return</span> <span class="string">&quot;* <span class="subst">#{result}</span>&quot;</span> <span class="keyword">if</span> price &gt; <span class="number">100</span></span><br><span class="line">      result</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span> </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org934686f" class="outline-3">
+<h3 id="method_missing-&#x5E7D;&#x7075;&#x65B9;&#x6CD5;ghost-method">2.2 <code>method_missing</code> &#x5E7D;&#x7075;&#x65B9;&#x6CD5;(Ghost Method)</h3>
+<div class="outline-text-3" id="text-method_missing-&#x5E7D;&#x7075;&#x65B9;&#x6CD5;ghost-method">
+</div>
+
+<div id="outline-container-orgf72cbc4" class="outline-4">
+<h4 id="method_missingsymbol-args-&#x65B9;&#x6CD5;">2.2.1 <code>method_missing(symbol [, *args] )</code> &#x65B9;&#x6CD5;</h4>
+<div class="outline-text-4" id="text-method_missingsymbol-args-&#x65B9;&#x6CD5;">
+<p>
+Invoked by Ruby when obj is sent a message it cannot handle. symbol is
+the symbol for the method called, and args are any arguments that were
+passed to it. By default, the interpreter raises an error when this
+method is called. However, it is possible to override the method to
+provide more dynamic behavior. If it is decided that a particular method
+should not be handled, then super should be called, so that ancestors
+can pick up the missing method.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org04fc9f3" class="outline-4">
+<h4 id="&#x4F7F;&#x7528;-method_missing-&#x91CD;&#x6784;-computer.rb">2.2.2 &#x4F7F;&#x7528; <code>method_missing</code> &#x91CD;&#x6784; <code>computer.rb</code></h4>
+<div class="outline-text-4" id="text-&#x4F7F;&#x7528;-method_missing-&#x91CD;&#x6784;-computer.rb">
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Computer</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">initialzie</span><span class="params">(id, data_source)</span></span></span><br><span class="line">    <span class="variable">@id</span> = id</span><br><span class="line">    <span class="variable">@data_source</span> = data_source</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">method_missing</span><span class="params">(name, *args)</span></span></span><br><span class="line">    <span class="keyword">super</span> <span class="keyword">unless</span> <span class="variable">@data_source</span>.respond_to? <span class="string">&quot;get_<span class="subst">#{name}</span>_info&quot;</span></span><br><span class="line">    info = <span class="variable">@data_source</span>.send <span class="string">&quot;get_<span class="subst">#{name}</span>_info&quot;</span>, <span class="variable">@id</span></span><br><span class="line">    price = <span class="variable">@data_source</span>.send <span class="string">&quot;get_<span class="subst">#{name}</span>_price&quot;</span>, <span class="variable">@id</span></span><br><span class="line">    result <span class="string">&quot;<span class="subst">#{name.to_s.capitalzie}</span>: <span class="subst">#{info}</span> ($<span class="subst">#{price}</span>)&quot;</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;* <span class="subst">#{result}</span>&quot;</span> <span class="keyword">if</span> price &gt; <span class="number">100</span></span><br><span class="line">    result    </span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb65243c" class="outline-4">
+<h4 id="&#x8986;&#x76D6;-respond_to">2.2.3 &#x8986;&#x76D6; <code>respond_to?</code></h4>
+<div class="outline-text-4" id="text-&#x8986;&#x76D6;-respond_to">
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Computer</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">initialzie</span><span class="params">(id, data_source)</span></span></span><br><span class="line">    <span class="variable">@id</span> = id</span><br><span class="line">    <span class="variable">@data_source</span> = data_source</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">method_missing</span><span class="params">(name, *args)</span></span></span><br><span class="line">    <span class="keyword">super</span> <span class="keyword">unless</span> <span class="variable">@data_source</span>.respond_to? <span class="string">&quot;get_<span class="subst">#{name}</span>_info&quot;</span></span><br><span class="line">    info = <span class="variable">@data_source</span>.send <span class="string">&quot;get_<span class="subst">#{name}</span>_info&quot;</span>, <span class="variable">@id</span></span><br><span class="line">    price = <span class="variable">@data_source</span>.send <span class="string">&quot;get_<span class="subst">#{name}</span>_price&quot;</span>, <span class="variable">@id</span></span><br><span class="line">    result <span class="string">&quot;<span class="subst">#{name.to_s.capitalzie}</span>: <span class="subst">#{info}</span> ($<span class="subst">#{price}</span>)&quot;</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;* <span class="subst">#{result}</span>&quot;</span> <span class="keyword">if</span> price &gt; <span class="number">100</span></span><br><span class="line">    result    </span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">respond_to?</span><span class="params">(name)</span></span></span><br><span class="line">    <span class="variable">@data_source</span>.respond_to?(<span class="string">&quot;get_<span class="subst">#{name}</span>_info&quot;</span>) || <span class="keyword">super</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org294fc9f" class="outline-4">
+<h4 id="&#x767D;&#x677F;&#x7C7B;blankslate">2.2.4 &#x767D;&#x677F;&#x7C7B;(BlankSlate)</h4>
+<div class="outline-text-4" id="text-&#x767D;&#x677F;&#x7C7B;blankslate">
+<p>
+&#x6709;&#x65F6;&#x5019;&#x6240;&#x8981;&#x4EE3;&#x7406;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x5DF2;&#x7ECF;&#x5B58;&#x5728;&#x4E8E;&#x7C7B;&#x6216;&#x8005;&#x7956;&#x5148;&#x7C7B;&#x79CD;&#xFF0C;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x8C03;&#x7528;&#x90A3;&#x4E2A;&#x65B9;&#x6CD5;&#x65F6;&#xFF0C;&#x5C31;&#x4E0D;&#x4F1A;&#x7ECF;&#x8FC7;
+<code>method_missing</code>
+&#x4EE3;&#x7406;&#xFF0C;&#x56E0;&#x6B64;&#x8FD9;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x5C06;&#x4ECE;&#x7236;&#x7C7B;&#x4E2D;&#x7EE7;&#x627F;&#x6765;&#x7684;&#x90A3;&#x4E9B;&#x4E0D;&#x9700;&#x8981;&#x7684;&#x65B9;&#x6CD5;&#x90FD;&#x5220;&#x9664;&#x6389;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Computer</span></span></span><br><span class="line">  instance_methods.each <span class="keyword">do</span> |method|</span><br><span class="line">    undef_method method <span class="keyword">unless</span> method.to_s =~ <span class="regexp">/method_missing|respond_to\?/</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">  &#x2026; &#x2026; </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x7528;&#x4E8E;&#x4ECE;&#x4E00;&#x4E2A;&#x7C7B;&#x4E2D;&#x5220;&#x9664;&#x5B9E;&#x4F8B;&#x65B9;&#x6CD5;&#x7684;&#x65B9;&#x6CD5;&#xFF1A;
+</p>
+
+<ul class="org-ul">
+<li><p>
+<code>Module#undef_method(symbol)</code>
+</p>
+
+<p>
+Prevents the current class from responding to calls to the named
+method. Contrast this with remove_method, which deletes the method
+from the particular class; Ruby will still search superclasses and
+mixed-in modules for a possible receiver. String arguments are
+converted to symbols.
+</p></li>
+
+<li><p>
+<code>Module#remove_method(symbol)</code>
+</p>
+
+<p>
+Removes the method identified by symbol from the current class. For an
+example, see Module.undef_method. String arguments are converted to
+symbols.
+</p></li>
+</ul>
+
+<blockquote>
+<p>
+<b>BasicObject</b>
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+&#x4ECE; Ruby 1.9
+&#x5F00;&#x59CB;&#xFF0C;&#x767D;&#x677F;&#x6280;&#x672F;&#x88AB;&#x96C6;&#x6210;&#x5230;&#x8BED;&#x8A00;&#x81EA;&#x8EAB;&#x4E2D;&#xFF0C;&#x5728;&#x8FC7;&#x53BB;&#x7684;&#x7248;&#x672C;&#x4E2D;&#xFF0C;=Object=&#x662F;&#x7C7B;&#x4F53;&#x7CFB;&#x7ED3;&#x6784;&#x7684;&#x6839;&#x8282;&#x70B9;&#x3002;&#x5728;
+Ruby 1.9 &#x4E2D;&#xFF0C;=Object=&#x7C7B;&#x6709;&#x4E00;&#x4E2A;&#x540D;&#x53EB; <code>BasicObject</code>
+&#x7684;&#x8D85;&#x7C7B;&#xFF0C;&#x5B83;&#x53EA;&#x63D0;&#x4F9B;&#x51E0;&#x4E2A;&#x5F88;&#x57FA;&#x672C;&#x7684;&#x65B9;&#x6CD5;&#xFF1A;
+</p>
+</blockquote>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">p <span class="constant">BasicObject</span>.instance_methods</span><br><span class="line"><span class="status"></span><br><span class="line">=&gt;</span> [<span class="symbol">:==</span>, <span class="symbol">:requals?</span>, <span class="symbol">:</span>!, <span class="symbol">:</span>!=, <span class="symbol">:instance_eval</span>, <span class="symbol">:instance_exec</span>, <span class="symbol">:__sned__</span>]</span><br></pre></td></tr></table></figure>
+</div>
+
+<blockquote>
+<p>
+&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x7C7B;&#x8FD8;&#x662F;&#x4F1A;&#x4ECE; <code>Object</code> &#x7EE7;&#x627F;&#xFF0C;&#x4ECE; <code>BasicObject</code>
+&#x7EE7;&#x627F;&#x6765;&#x7684;&#x7C7B;&#x4F1A;&#x81EA;&#x52A8;&#x6210;&#x4E3A;&#x767D;&#x677F;&#x7C7B;&#x3002;
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org39a9fbe" class="outline-2">
+<h2 id="&#x4EE3;&#x7801;&#x5757;">3. &#x4EE3;&#x7801;&#x5757;</h2>
+<div class="outline-text-2" id="text-&#x4EE3;&#x7801;&#x5757;">
+</div>
+
+<div id="outline-container-org3c6721b" class="outline-3">
+<h3 id="&#x5F53;&#x524D;&#x5757;">3.1 &#x5F53;&#x524D;&#x5757;</h3>
+<div class="outline-text-3" id="text-&#x5F53;&#x524D;&#x5757;">
+<p>
+&#x5728;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#x4E2D;&#xFF0C;&#x53EF;&#x4EE5;&#x5411;Ruby&#x8BE2;&#x95EE;&#x5F53;&#x524D;&#x7684;&#x65B9;&#x6CD5;&#x8C03;&#x7528;&#x662F;&#x5426;&#x5305;&#x542B;&#x5757;&#x3002;&#x8FD9;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;
+<code>Kernel#block_given?()</code> &#x65B9;&#x6CD5;&#x6765;&#x505A;&#x5230;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">a_method</span></span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">yield</span> <span class="keyword">if</span> block_given?</span><br><span class="line">  <span class="string">&apos;no block&apos;</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">a_method</span><br><span class="line">a_method { <span class="string">&quot;here&apos;s a block!&quot;</span> }</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7695fe3" class="outline-3">
+<h3 id="&#x4F7F;&#x7528;-ruby-&#x5B9E;&#x73B0;-c-&#x7684;-using-&#x5173;&#x952E;&#x5B57;">3.2 &#x4F7F;&#x7528; Ruby &#x5B9E;&#x73B0; C# &#x7684; <code>using</code> &#x5173;&#x952E;&#x5B57;</h3>
+<div class="outline-text-3" id="text-&#x4F7F;&#x7528;-ruby-&#x5B9E;&#x73B0;-c-&#x7684;-using-&#x5173;&#x952E;&#x5B57;">
+<p>
+&#x8BBE;&#x60F3;&#x5728;&#x5199;&#x4E00;&#x4E2A; C#
+&#x7A0B;&#x5E8F;&#xFF0C;&#x8FD9;&#x4E2A;&#x7A0B;&#x5E8F;&#x4F1A;&#x8FDE;&#x63A5;&#x4E00;&#x4E2A;&#x8FDC;&#x7A0B;&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x5E76;&#x6709;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x8868;&#x793A;&#x8FD9;&#x4E2A;&#x8FDE;&#x63A5;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="constant">RemoteConnection</span> conn = new <span class="constant">RemoteConnection</span>(<span class="string">&quot;my_server&quot;</span>);</span><br><span class="line"><span class="constant">String</span> stuff = conn.readStuff();</span><br><span class="line">conn.dispose();</span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x8FD9;&#x6BB5;&#x4EE3;&#x7801;&#x5728;&#x4F7F;&#x7528;&#x4E86;&#x8FDE;&#x63A5;&#x540E;&#xFF0C;&#x4F1A;&#x6B63;&#x786E;&#x7684;&#x91CA;&#x653E;&#x8FDE;&#x63A5;&#x3002;&#x7136;&#x800C;&#xFF0C;&#x5B83;&#x5E76;&#x6CA1;&#x6709;&#x5904;&#x7406;&#x5F02;&#x5E38;&#x3002;&#x5982;&#x679C;
+<code>readStuff()</code> &#x65B9;&#x6CD5;&#x629B;&#x51FA;&#x4E00;&#x4E2A;&#x5F02;&#x5E38;&#xFF0C;&#x90A3;&#x4E48; <code>conn</code>
+&#x5BF9;&#x8C61;&#x5C06;&#x6C38;&#x8FDC;&#x4E0D;&#x4F1A;&#x5F97;&#x5230;&#x91CA;&#x653E;&#x3002;&#x4EE3;&#x7801;&#x9700;&#x8981;&#x5C06;&#x5F02;&#x5E38;&#x7BA1;&#x7406;&#x8D77;&#x6765;&#xFF0C;&#x4EE5;&#x4FBF;&#x4E0D;&#x7BA1;&#x662F;&#x5426;&#x53D1;&#x751F;&#x5F02;&#x5E38;&#x90FD;&#x80FD;&#x6B63;&#x786E;&#x5730;&#x91CA;&#x653E;&#x8FDE;&#x63A5;&#x3002;&#x5E78;&#x8FD0;&#x7684;&#x662F;&#xFF0C;C#
+&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A;&#x53EB;&#x505A; <code>using</code> &#x7684;&#x5173;&#x952E;&#x5B57;&#xFF0C;&#x5B83;&#x80FD;&#x5E2E;&#x52A9;&#x4F60;&#x5904;&#x7406;&#x6574;&#x4E2A;&#x8FC7;&#x7A0B;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="constant">RemoteConnection</span> conn = new <span class="constant">RemoteConnection</span>(<span class="string">&quot;some_remote_server&quot;</span>);</span><br><span class="line">using (conn)</span><br><span class="line">{</span><br><span class="line">  conn.readSomeData();</span><br><span class="line">  doSomeMoreStuff();</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x8FD9;&#x4E2A; <code>using</code> &#x5173;&#x952E;&#x5B57;&#x671F;&#x671B; <code>conn</code> &#x5BF9;&#x8C61;&#x6709;&#x4E00;&#x4E2A;&#x540D;&#x4E3A; <code>dispose()</code>
+&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x5F53;&#x5927;&#x62EC;&#x53F7;&#x4E2D;&#x7684;&#x4EE3;&#x7801;&#x6267;&#x884C;&#x5B8C;&#x540E;&#xFF0C;&#x4E0D;&#x7BA1;&#x6709;&#x6CA1;&#x6709;&#x5F02;&#x5E38;&#x629B;&#x51FA;&#xFF0C;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x90FD;&#x4F1A;&#x88AB;&#x81EA;&#x52A8;&#x8C03;&#x7528;&#x3002;
+</p>
+
+<p>
+OK&#xFF0C;&#x4E0B;&#x9762;&#x8FD9;&#x4E2A;&#x662F;&#x7528;Ruby&#x5B9E;&#x73B0;&#x7684; <code>using</code> &#x5173;&#x952E;&#x5B57;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">Kernel</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">using</span><span class="params">(obj)</span></span></span><br><span class="line">    <span class="keyword">begin</span></span><br><span class="line">      <span class="keyword">yield</span></span><br><span class="line">    <span class="keyword">rescue</span></span><br><span class="line">      obj.dispose</span><br><span class="line">    <span class="keyword">end</span> </span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga31b770" class="outline-3">
+<h3 id="&#x95ED;&#x5305;">3.3 &#x95ED;&#x5305;</h3>
+<div class="outline-text-3" id="text-&#x95ED;&#x5305;">
+
+<div class="figure">
+<p><img src="2.png">
+</p>
+<p><span class="figure-number">Figure 2: </span>binding.png</p>
+</div>
+
+<p>
+&#x6B63;&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#xFF0C;&#x5757;&#x4E0D;&#x4EC5;&#x4EC5;&#x662F;&#x4E00;&#x6BB5;&#x6D6E;&#x52A8;&#x7684;&#x4EE3;&#x7801;&#x3002;&#x4F60;&#x4E0D;&#x53EF;&#x80FD;&#x5728;&#x771F;&#x7A7A;&#x4E2D;&#x8FD0;&#x884C;&#x4EE3;&#x7801;&#x3002;&#x5F53;&#x4EE3;&#x7801;&#x8FD0;&#x884C;&#x65F6;&#xFF0C;&#x5B83;&#x9700;&#x8981;&#x4E00;&#x4E2A;&#x6267;&#x884C;&#x73AF;&#x5883;&#xFF1A;&#x5C40;&#x90E8;&#x53D8;&#x91CF;&#x3001;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x3001;self
+&#x2026;&#x2026;
+&#x65E2;&#x7136;&#x8FD9;&#x4E9B;&#x4E1C;&#x897F;&#x662F;&#x7ED1;&#x5B9A;&#x5728;&#x5BF9;&#x8C61;&#x4E0A;&#x7684;&#x540D;&#x5B57;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x628A;&#x5B83;&#x4EEC;&#x7B80;&#x79F0;&#x4E3A;*&#x7ED1;&#x5B9A;(binding)*&#x3002;&#x5757;&#x7684;&#x8981;&#x70B9;&#x5728;&#x4E8E;&#x5B83;&#x4EEC;&#x662F;&#x5B8C;&#x6574;&#x7684;&#xFF0C;&#x53EF;&#x4EE5;&#x7ACB;&#x5373;&#x8FD0;&#x884C;&#x3002;&#x5B83;&#x4EEC;&#x65E2;&#x5305;&#x542B;&#x4EE3;&#x7801;&#xFF0C;&#x4E5F;&#x5305;&#x542B;&#x4E00;&#x7EC4;&#x7ED1;&#x5B9A;&#x3002;
+</p>
+
+<p>
+&#x90A3;&#x4E48;&#x5757;&#x662F;&#x4ECE;&#x54EA;&#x91CC;&#x83B7;&#x5F97;&#x5B83;&#x7684;&#x7ED1;&#x5B9A;&#x7684;&#x5462;&#xFF1F;&#x5F53;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x5757;&#x65F6;&#xFF0C;&#x5B83;&#x4F1A;&#x83B7;&#x53D6;&#x5F53;&#x65F6;&#x73AF;&#x5883;&#x4E2D;&#x7684;&#x7ED1;&#x5B9A;&#xFF0C;&#x5E76;&#x4E14;&#x628A;&#x5B83;&#x4F20;&#x7ED9;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#x65F6;&#xFF0C;&#x5B83;&#x4F1A;&#x5E26;&#x7740;&#x8FD9;&#x4E9B;&#x7ED1;&#x5B9A;&#x4E00;&#x8D77;&#x8FDB;&#x5165;&#x8BE5;&#x65B9;&#x6CD5;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_method</span></span></span><br><span class="line">  x = <span class="string">&quot;Goodbye&quot;</span></span><br><span class="line">  <span class="keyword">yield</span> <span class="string">&quot;cruel&quot;</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">x = <span class="string">&quot;Hello&quot;</span></span><br><span class="line">my_method {|y| <span class="string">&quot;<span class="subst">#{x}</span>, <span class="subst">#{y}</span> world&quot;</span> }  <span class="comment"># =&gt; &quot;Hello, cruel world&quot;</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x5F53;&#x521B;&#x5EFA;&#x5757;&#x65F6;&#x4F1A;&#x83B7;&#x53D6;&#x5230;&#x5C40;&#x90E8;&#x7ED1;&#x5B9A;&#xFF08;&#x6BD4;&#x5982;&#x4E0A;&#x9762;&#x7684;=x=&#xFF09;&#xFF0C;&#x7136;&#x540E;&#x628A;&#x5757;&#x8FDE;&#x540C;&#x5B83;&#x81EA;&#x5DF1;&#x7684;&#x7ED1;&#x5B9A;&#x4F20;&#x7ED9;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#x3002;&#x5728;&#x4E0A;&#x9762;&#x7684;&#x4F8B;&#x5B50;&#x4E2D;&#xFF0C;&#x5757;&#x7684;&#x7ED1;&#x5B9A;&#x4E2D;&#x5305;&#x62EC;&#x4E00;&#x4E2A;&#x540D;&#x4E3A;
+<code>x</code> &#x7684;&#x53D8;&#x91CF;&#x3002;&#x867D;&#x7136;&#x5728;&#x65B9;&#x6CD5;&#x4E2D;&#x5B9A;&#x4E49;&#x4E86;&#x4E00;&#x4E2A;&#x53D8;&#x91CF; <code>x=&#xFF0C;&#x5757;&#x770B;&#x5230;&#x7684; =x</code>
+&#x4E5F;&#x662F;&#x5728;&#x5757;&#x5B9A;&#x4E49;&#x65F6;&#x7ED1;&#x5B9A;&#x7684; <code>x=&#xFF0C;&#x4F46;&#x662F;&#x65B9;&#x6CD5;&#x4E2D;&#x7684; =x</code>
+&#x5BF9;&#x8FD9;&#x4E2A;&#x5757;&#x6765;&#x8BF4;&#x662F;&#x4E0D;&#x53EF;&#x89C1;&#x7684;&#x3002;&#x57FA;&#x4E8E;&#x8FD9;&#x6837;&#x7684;&#x7279;&#x6027;&#xFF0C;&#x8BA1;&#x7B97;&#x673A;&#x79D1;&#x5B66;&#x5BB6;&#x559C;&#x6B22;&#x628A;&#x5757;&#x79F0;&#x4E3A;
+*&#x95ED;&#x5305;(Closure)*&#x3002;
+</p>
+</div>
+
+<div id="outline-container-org69faf99" class="outline-4">
+<h4 id="&#x5757;&#x5C40;&#x90E8;&#x4F5C;&#x7528;&#x57DF;">3.3.1 &#x5757;&#x5C40;&#x90E8;&#x4F5C;&#x7528;&#x57DF;</h4>
+<div class="outline-text-4" id="text-&#x5757;&#x5C40;&#x90E8;&#x4F5C;&#x7528;&#x57DF;">
+<p>
+&#x5757;&#x4F1A;&#x5728;&#x5B9A;&#x4E49;&#x65F6;&#x83B7;&#x53D6;&#x5468;&#x56F4;&#x7684;&#x7ED1;&#x5B9A;&#x3002;&#x4F60;&#x53EF;&#x4EE5;&#x5728;&#x5757;&#x7684;&#x80CC;&#x90E8;&#x5B9A;&#x4E49;&#x989D;&#x5916;&#x7684;&#x7ED1;&#x5B9A;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x4E9B;&#x7ED1;&#x5B9A;&#x5728;&#x5FEB;&#x7ED3;&#x675F;&#x65F6;&#x5C31;&#x4F1A;&#x6D88;&#x5931;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_method</span></span></span><br><span class="line">  <span class="keyword">yield</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">top_level_variable = <span class="number">1</span></span><br><span class="line">my_method <span class="keyword">do</span></span><br><span class="line">  top_level_variable += <span class="number">1</span></span><br><span class="line">  local_to_block = <span class="number">1</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">top_level_variable  <span class="comment"># =&gt; 2</span></span><br><span class="line">local_to_block      <span class="comment"># =&gt; Error!</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+<b>&#x8B66;&#x544A;&#xFF1A;</b> &#x5728; Ruby
+1.8&#x53CA;&#x4E4B;&#x524D;&#x7684;&#x7248;&#x672C;&#x4E2D;&#xFF0C;&#x5757;&#x53C2;&#x6570;&#x5BF9;&#x7C97;&#x5FC3;&#x8005;&#x800C;&#x8A00;&#x6709;&#x4E00;&#x4E2A;&#x9677;&#x9631;&#x3002;&#x8DDF;&#x4F60;&#x671F;&#x671B;&#x7684;&#x76F8;&#x53CD;&#xFF0C;&#x5757;&#x4F1A;&#x8986;&#x76D6;&#x5177;&#x6709;&#x76F8;&#x540C;&#x540D;&#x5B57;&#x7684;&#x5C40;&#x90E8;&#x53D8;&#x91CF;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_method</span></span></span><br><span class="line">  <span class="keyword">yield</span>(<span class="number">2</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">x = <span class="number">1</span></span><br><span class="line">my_method <span class="keyword">do</span> |x|</span><br><span class="line">  <span class="comment"># &#x4E0D;&#x9519;&#x4EC0;&#x4E48;&#x7279;&#x6B8A;&#x7684;&#x64CD;&#x4F5C;</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">x  <span class="comment"># =&gt; 2</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x5F53;&#x628A;&#x5757;&#x53C2;&#x6570;&#x547D;&#x540D;&#x4E3A; <code>x</code> &#x65F6;&#xFF0C;&#x5757;&#x53D1;&#x73B0;&#x5F53;&#x524D;&#x4E0A;&#x4E0B;&#x6587;&#x4E2D;&#x5DF2;&#x5B58;&#x5728;&#x4E00;&#x4E2A; <code>x</code>
+&#x53D8;&#x91CF;&#xFF0C;&#x4E8E;&#x662F;&#x5B83;&#x628A;&#x8FD9;&#x4E2A;&#x503C;&#x4F20;&#x7ED9;&#x4E86;&#x5757;&#x3002;&#x8FD9;&#x79CD;&#x8BA9;&#x4EBA;&#x5403;&#x60CA;&#x7684;&#x884C;&#x4E3A;&#x5728;&#x8FC7;&#x53BB;&#x5E38;&#x5E38;&#x662F;&#x5F15;&#x53D1; bug
+&#x7684;&#x6839;&#x6E90;&#x3002;&#x6709;&#x6761;&#x597D;&#x6D88;&#x606F;&#x662F;&#xFF0C;&#x5728; Ruby 1.9 &#x4E2D;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x5DF2;&#x7ECF;&#x88AB;&#x4FEE;&#x6B63;&#x4E86;&#x3002;
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5a18cc2" class="outline-3">
+<h3 id="&#x4F5C;&#x7528;&#x57DF;&#x95E8;">3.4 &#x4F5C;&#x7528;&#x57DF;&#x95E8;</h3>
+<div class="outline-text-3" id="text-&#x4F5C;&#x7528;&#x57DF;&#x95E8;">
+<p>
+Ruby &#x7A0B;&#x5E8F;&#x4F1A;&#x5728;&#x4E09;&#x4E2A;&#x5730;&#x65B9;&#x5173;&#x95ED;&#x524D;&#x4E00;&#x4E2A;&#x4F5C;&#x7528;&#x57DF;&#xFF0C;&#x540C;&#x65F6;&#x6253;&#x5F00;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#xFF1A;
+</p>
+
+<ul class="org-ul">
+<li>&#x7C7B;&#x5B9A;&#x4E49;</li>
+<li>&#x6A21;&#x5757;&#x5B9A;&#x4E49;</li>
+<li>&#x65B9;&#x6CD5;&#x5B9A;&#x4E49;</li>
+</ul>
+
+<p>
+&#x53EA;&#x8981;&#x7A0B;&#x5E8F;&#x8FDB;&#x5165;&#x7C7B;&#x6216;&#x9B54;&#x7A9F;&#x5F00;&#x53CA;&#x65B9;&#x6CD5;&#x7684;&#x5B9A;&#x4E49;&#xFF0C;&#x5C31;&#x4F1A;&#x53D1;&#x751F;&#x4F5C;&#x7528;&#x57DF;&#x5207;&#x6362;&#x3002;&#x8FD9;&#x4E09;&#x4E2A;&#x8FB9;&#x754C;&#x5206;&#x522B;&#x7528;
+<b>class&#x3001;module</b> &#x548C;
+*def*&#x5173;&#x952E;&#x5B57;&#x4F5C;&#x4E3A;&#x6807;&#x5FD7;&#x3002;&#x6BCF;&#x4E00;&#x4E2A;&#x5173;&#x952E;&#x5B57;&#x90FD;&#x5145;&#x5F53;&#x4E86;&#x4E00;&#x4E2A;*&#x4F5C;&#x7528;&#x57DF;&#x95E8;&#xFF08;Scope Gate&#xFF09;*&#x3002;
+</p>
+
+<p>
+&#x793A;&#x4F8B;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">v1 = <span class="number">1</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span>   <span class="comment"># =&gt; &#x4F5C;&#x7528;&#x57DF;&#x95E8;&#xFF1A;&#x8FDB;&#x5165; class</span></span></span><br><span class="line">  v2 = <span class="number">2</span></span><br><span class="line">  local_variables   <span class="comment"># =&gt; [&quot;v2&quot;]</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">my_method</span> <span class="comment"># =&gt; &#x4F5C;&#x7528;&#x57DF;&#x95E8;&#xFF1A;&#x8FDB;&#x5165; def</span></span></span><br><span class="line">    v3 = <span class="number">3</span></span><br><span class="line">    local_variables</span><br><span class="line">  <span class="keyword">end</span>         <span class="comment"># =&gt; &#x4F5C;&#x7528;&#x57DF;&#x95E8;&#xFF1A;&#x79BB;&#x5F00; def</span></span><br><span class="line"></span><br><span class="line">  local_variables   <span class="comment"># =&gt; [&quot;v2&quot;]</span></span><br><span class="line"><span class="keyword">end</span>           <span class="comment"># =&gt; &#x4F5C;&#x7528;&#x57DF;&#x95E8;&#xFF1A;&#x79BB;&#x5F00; class</span></span><br><span class="line">obj = <span class="constant">MyClass</span>.new</span><br><span class="line">obj.my_method     <span class="comment"># =&gt; [:v3]</span></span><br><span class="line">obj.my_method     <span class="comment"># =&gt; [:v3]</span></span><br><span class="line">local_variables     <span class="comment"># =&gt; [:v1, :obj]</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+<code>Kernel#local_variables</code>
+</p>
+
+<p>
+Returns the names of the current local variables.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgfe73592" class="outline-3">
+<h3 id="&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x548C;&#x9876;&#x7EA7;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;">3.5 &#x5168;&#x5C40;&#x53D8;&#x91CF;&#x548C;&#x9876;&#x7EA7;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;</h3>
+<div class="outline-text-3" id="text-&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x548C;&#x9876;&#x7EA7;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;">
+<p>
+&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x53EF;&#x4EE5;&#x5728;&#x4EFB;&#x4F55;&#x4F5C;&#x7528;&#x57DF;&#x4E2D;&#x8BBF;&#x95EE;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">a_scope</span></span></span><br><span class="line">  <span class="variable">$var</span> = <span class="string">&quot;some value&quot;</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">another_scope</span></span></span><br><span class="line">  <span class="variable">$var</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">a_scope</span><br><span class="line">another_scope <span class="comment"># =&gt; &quot;some value&quot;</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x7684;&#x95EE;&#x9898;&#x5728;&#x4E8E;&#x7CFB;&#x7EDF;&#x7684;&#x4EFB;&#x4F55;&#x90E8;&#x5206;&#x90FD;&#x53EF;&#x4EE5;&#x4FEE;&#x6539;&#x5B83;&#x4EEC;&#x3002;&#x56E0;&#x6B64;&#xFF0C;&#x4F60;&#x4F1A;&#x7ACB;&#x5373;&#x53D1;&#x73B0;&#x51E0;&#x4E4E;&#x6CA1;&#x6CD5;&#x8FFD;&#x8E2A;&#x8C01;&#x628A;&#x5B83;&#x4EEC;&#x6539;&#x6210;&#x4E86;&#x4EC0;&#x4E48;&#x3002;&#x6B63;&#x56E0;&#x4E3A;&#x5982;&#x6B64;&#xFF0C;&#x57FA;&#x672C;&#x7684;&#x539F;&#x5219;&#x662F;&#xFF1A;&#x5982;&#x975E;&#x5FC5;&#x8981;&#xFF0C;&#x5C3D;&#x53EF;&#x80FD;&#x5C11;&#x4F7F;&#x7528;&#x5168;&#x5C40;&#x53D8;&#x91CF;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@var</span> = <span class="string">&quot;The top-level @var&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_method</span></span></span><br><span class="line">  <span class="variable">@var</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">my_method  <span class="comment"># =&gt; &quot;The top-level <span class="doctag">@var</span>&quot;</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x5982;&#x4E0A;&#x9762;&#x7684;&#x4EE3;&#x7801;&#x6240;&#x793A;&#xFF0C;&#x53EA;&#x8981; <code>main</code> &#x5BF9;&#x8C61;&#x5728;&#x626E;&#x6F14; <code>self</code>
+&#x7684;&#x89D2;&#x8272;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x8BBF;&#x95EE;&#x4E00;&#x4E2A;&#x9876;&#x7EA7;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x3002;&#x4F46;&#x5F53;&#x5176;&#x4ED6;&#x5BF9;&#x8C61;&#x6210;&#x4E3A; <code>self</code>
+&#x65F6;&#xFF0C;&#x9876;&#x7EA7;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x5C31;&#x9000;&#x51FA;&#x4F5C;&#x7528;&#x57DF;&#x4E86;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">my_method</span></span></span><br><span class="line">    <span class="variable">@var</span> = <span class="string">&quot;This is not the top-level @var!&quot;</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x7531;&#x4E8E;&#x4E0D;&#x50CF;&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x90A3;&#x4E48;&#x6709;&#x5168;&#x5C40;&#x6027;&#xFF0C;&#x4E00;&#x822C;&#x8BA4;&#x4E3A;&#x9876;&#x7EA7;&#x793A;&#x4F8B;&#x53D8;&#x91CF;&#x6BD4;&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x66F4;&#x5B89;&#x5168;&#x3002;
+</p>
+</div>
+</div>
+
+<div id="outline-container-org702a8f0" class="outline-3">
+<h3 id="&#x6241;&#x5E73;&#x5316;&#x4F5C;&#x7528;&#x57DF;">3.6 &#x6241;&#x5E73;&#x5316;&#x4F5C;&#x7528;&#x57DF;</h3>
+<div class="outline-text-3" id="text-&#x6241;&#x5E73;&#x5316;&#x4F5C;&#x7528;&#x57DF;">
+<ul class="org-ul">
+<li>&#x5F53;&#x60F3;&#x8981;&#x4F7F;&#x53D8;&#x91CF;&#x7A7F;&#x8D8A;&#x8FC7;&#x7C7B;&#x5B9A;&#x4E49;&#x65F6;&#xFF0C;&#x4F7F;&#x7528; <code>Class.new</code></li>
+
+<li>&#x5F53;&#x60F3;&#x8981;&#x4F7F;&#x53D8;&#x91CF;&#x7A7F;&#x8D8A;&#x8FC7;&#x65B9;&#x6CD5;&#x5B9A;&#x4E49;&#x65F6;&#xFF0C;&#x4F7F;&#x7528; <code>Module#define_method</code></li>
+</ul>
+
+<p>
+&#x793A;&#x4F8B;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">my_var = <span class="string">&quot;Success&quot;</span>  </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line">  <span class="comment"># &#x5E0C;&#x671B;&#x5728;&#x8FD9;&#x91CC;&#x6253;&#x5370; my_var</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">my_method</span></span></span><br><span class="line">    <span class="comment"># &#x8FD8;&#x6709;&#x8FD9;&#x91CC; &#x2026;&#x2026;</span></span><br><span class="line">  <span class="keyword">end</span> </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+<b>------&#x2013;&#x2014;&gt;</b>
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">my_var = <span class="string">&quot;Success&quot;</span></span><br><span class="line"><span class="constant">MyClass</span> = <span class="constant">Class</span>.new <span class="keyword">do</span></span><br><span class="line">  p my_var</span><br><span class="line">  define_method <span class="symbol">:my_method</span> <span class="keyword">do</span></span><br><span class="line">    p my_var</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgca04712" class="outline-3">
+<h3 id="&#x4E0A;&#x4E0B;&#x6587;&#x63A2;&#x9488;-objectinstant_eval">3.7 &#x4E0A;&#x4E0B;&#x6587;&#x63A2;&#x9488; <code>Object#instant_eval()</code></h3>
+<div class="outline-text-3" id="text-&#x4E0A;&#x4E0B;&#x6587;&#x63A2;&#x9488;-objectinstant_eval">
+<ul class="org-ul">
+<li><code>instance_eval(string [, filename [, lineno]] )</code></li>
+<li><code>instance_eval {| | block }</code></li>
+</ul>
+
+<p>
+Evaluates a string containing Ruby source code, or the given block,
+within the context of the receiver (obj). In order to set the context,
+the variable self is set to obj while the code is executing, giving the
+code access to obj&apos;s instance variables. In the version of instance_eval
+that takes a String, the optional second and third parameters supply a
+filename and starting line number that are used when reporting
+compilation errors.
+</p>
+
+<p>
+&#x793A;&#x4F8B;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">initialize</span></span></span><br><span class="line">    <span class="variable">@v</span> = <span class="number">1</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">obj = <span class="constant">MyClass</span>.new</span><br><span class="line">obj.instance_eval <span class="keyword">do</span></span><br><span class="line">  <span class="keyword">self</span>      <span class="comment"># =&gt; #&lt;MyClass:0x3340dc <span class="doctag">@v</span>=1&gt;</span></span><br><span class="line">  <span class="variable">@v</span>        <span class="comment"># =&gt; 1</span></span><br><span class="line">  <span class="variable">@v</span> += <span class="number">1</span></span><br><span class="line">  <span class="variable">@v</span>        <span class="comment"># =&gt; 2</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+Ruby 1.9 &#x4E2D;&#x5F15;&#x5165;&#x4E86;&#x4E00;&#x4E2A;&#x540D;&#x4E3A; <code>instance_exec()</code> &#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x5B83;&#x8DDF;
+<code>instance_eval()</code> &#x7684;&#x529F;&#x80FD;&#x76F8;&#x4F3C;&#xFF0C;&#x4F46;&#x5B83;&#x5141;&#x8BB8;&#x5BF9;&#x5757;&#x4F20;&#x5165;&#x53C2;&#x6570;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">initialize</span></span></span><br><span class="line">    <span class="variable">@x</span>, <span class="variable">@y</span> = <span class="number">1</span>, <span class="number">2</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="constant">C</span>.new.instance_exec(<span class="number">3</span>) {|arg| (<span class="variable">@x</span> + <span class="variable">@y</span>) * arg}     <span class="comment"># =&gt; 9</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf71c6a0" class="outline-3">
+<h3 id="&#x53EF;&#x8C03;&#x7528;&#x5BF9;&#x8C61;">3.8 &#x53EF;&#x8C03;&#x7528;&#x5BF9;&#x8C61;</h3>
+<div class="outline-text-3" id="text-&#x53EF;&#x8C03;&#x7528;&#x5BF9;&#x8C61;">
+<p>
+&#x53EF;&#x8C03;&#x7528;&#x5BF9;&#x8C61;&#x5206;&#x4E3A;&#x4E09;&#x79CD;&#xFF1A;
+</p>
+
+<ul class="org-ul">
+<li>proc</li>
+<li>lambda</li>
+<li>&#x65B9;&#x6CD5;</li>
+</ul>
+</div>
+
+<div id="outline-container-org71c4840" class="outline-4">
+<h4 id="proc-&#x548C;-lambda-&#x7684;&#x533A;&#x522B;">3.8.1 proc &#x548C; lambda &#x7684;&#x533A;&#x522B;</h4>
+<div class="outline-text-4" id="text-proc-&#x548C;-lambda-&#x7684;&#x533A;&#x522B;">
+<p>
+&#x4F7F;&#x7528; <code>Kernel#lambda()</code> &#x751F;&#x6210;&#x7684; Proc &#x5BF9;&#x8C61;&#x5C31;&#x662F; lambda&#xFF0C;&#x901A;&#x8FC7;&#x5176;&#x4ED6;&#x65B9;&#x5F0F;&#x751F;&#x6210;&#x7684;
+Proc &#x5BF9;&#x8C61;&#x90FD;&#x7B80;&#x79F0;&#x4E3A; proc&#x3002; lambda &#x548C; proc &#x4E3B;&#x8981;&#x6709;&#x4E24;&#x4E2A;&#x65B9;&#x9762;&#x7684;&#x533A;&#x522B;&#xFF1A;
+</p>
+
+<ul class="org-ul">
+<li>&#x5728; lambda &#x4E2D;&#x8C03;&#x7528; <code>return</code> &#x662F;&#x4ECE;&#x8BE5; Proc
+&#x5BF9;&#x8C61;&#x4E2D;&#x8FD4;&#x56DE;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x4ECE;&#x8C03;&#x7528;&#x7684;&#x65B9;&#x6CD5;&#x4E2D;&#x8FD4;&#x56DE;&#x3002;proc &#x4E2D;&#x8C03;&#x7528; <code>return</code> &#x662F;&#x4ECE;&#x8BE5; Proc
+&#x5BF9;&#x8C61;&#x4E2D;&#x8FD4;&#x56DE;</li>
+<li>lambda &#x8C03;&#x7528;&#x4E2D;&#x5BF9;&#x53C2;&#x6570;&#x7684;&#x4E2A;&#x6570;&#x4F1A;&#x6709;&#x4E25;&#x683C;&#x7684;&#x68C0;&#x67E5;&#xFF0C;&#x800C; proc &#x6CA1;&#x6709;&#x3002;</li>
+</ul>
+
+<p>
+&#x7EFC;&#x4E0A;&#x6240;&#x8FF0;&#xFF0C;lambda &#x7684;&#x884C;&#x4E3A;&#x66F4;&#x50CF;&#x662F;&#x666E;&#x901A;&#x7684;&#x65B9;&#x6CD5;/&#x51FD;&#x6570;&#xFF0C;&#x56E0;&#x6B64;&#x4E00;&#x822C;&#x90FD;&#x4F7F;&#x7528; lambda
+&#x5BF9;&#x8C61;&#xFF0C;&#x9664;&#x975E;&#x662F;&#x60F3;&#x4F7F;&#x7528; proc &#x7684;&#x67D0;&#x79CD;&#x7279;&#x6B8A;&#x529F;&#x80FD;&#x3002;
+</p>
+
+<p>
+&#x53E6;&#x5916;&#xFF0C;&#x5728; Ruby 1.8 &#x4E2D; <code>Kernel#proc()</code> &#x662F; <code>Kernel#lambda()</code> &#x7684;&#x522B;&#x540D;&#xFF0C;&#x800C;&#x5728;
+Ruby 1.9 &#x4E2D; <code>Kernel#proc()</code> &#x662F; <code>Proc.new()</code> &#x7684;&#x522B;&#x540D;&#x3002;
+</p>
+</div>
+</div>
+
+<div id="outline-container-org56b3faa" class="outline-4">
+<h4 id="&#x65B9;&#x6CD5;-1">3.8.2 &#x65B9;&#x6CD5;</h4>
+<div class="outline-text-4" id="text-&#x65B9;&#x6CD5;-1">
+<p>
+&#x53EF;&#x4EE5;&#x901A;&#x8FC7; <code>Object#method()</code> &#x83B7;&#x53D6;&#x4E00;&#x4E2A; Method &#x5BF9;&#x8C61;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">initialize</span><span class="params">(value)</span></span></span><br><span class="line">    <span class="variable">@x</span> = value</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">my_method</span></span></span><br><span class="line">    <span class="variable">@x</span></span><br><span class="line">  <span class="keyword">end</span> </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">obj = <span class="constant">MyClass</span>.new(<span class="number">1</span>)</span><br><span class="line">m = obj.method <span class="symbol">:my_method</span></span><br><span class="line">m.call()            <span class="comment"># =&gt; 1</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x53EF;&#x4EE5;&#x7528; <code>Method#unbind()</code>
+&#x628A;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#x8DDF;&#x5B83;&#x6240;&#x7ED1;&#x5B9A;&#x7684;&#x5BF9;&#x8C61;&#x76F8;&#x5206;&#x79BB;&#xFF0C;&#x8BE5;&#x65B9;&#x6CD5;&#x518D;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A; <code>UnboundMethod</code>
+&#x5BF9;&#x8C61;&#x3002;&#x4F60;&#x4E0D;&#x80FD;&#x6267;&#x884C; <code>UnboundMethod</code>
+&#x5BF9;&#x8C61;&#xFF0C;&#x4F46;&#x80FD;&#x628A;&#x5B83;&#x7ED1;&#x5B9A;&#x5230;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x4E0A;&#xFF0C;&#x4F7F;&#x4E4B;&#x518D;&#x6B21;&#x6210;&#x4E3A;&#x4E00;&#x4E2A; <code>Method</code> &#x5BF9;&#x8C61;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">unbound = m.unbind</span><br><span class="line">another_obj = <span class="constant">MyClass</span>.new(<span class="number">2</span>)  </span><br><span class="line">m = unbound.bind(another_obj)</span><br><span class="line">m.call()              <span class="comment"># =&gt; 2</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org11197e0" class="outline-3">
+<h3 id="redflag">3.9 RedFlag</h3>
+<div class="outline-text-3" id="text-redflag">
+<p>
+<b>&#x521D;&#x7248;&#xFF1A;</b>
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">event</span><span class="params">(msg)</span></span></span><br><span class="line">  puts msg <span class="keyword">if</span> <span class="keyword">yield</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="constant">Dir</span>.glob(<span class="string">&quot;*events.rb&quot;</span>).each {|file| load file}</span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+<b>&#x7B2C;2&#x7248;&#xFF1A;</b>
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">event</span><span class="params">(name, &amp;block)</span></span></span><br><span class="line">    <span class="variable">@events</span>[name] = block</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">setup</span><span class="params">(&amp;block)</span></span></span><br><span class="line">    <span class="variable">@setups</span> &lt;&lt; block</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="constant">Dir</span>.glob(<span class="string">&quot;*events.rb&quot;</span>).each <span class="keyword">do</span> |file|</span><br><span class="line"></span><br><span class="line">    <span class="variable">@events</span> = {}</span><br><span class="line">    <span class="variable">@setups</span> = []</span><br><span class="line">    load file</span><br><span class="line">    <span class="variable">@events</span>.each_pair <span class="keyword">do</span> |k, v|</span><br><span class="line">	env = <span class="constant">Object</span>.new</span><br><span class="line">	<span class="variable">@setups</span>.each <span class="keyword">do</span> |su|</span><br><span class="line">	    env.instance_eval &amp;su</span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">	puts k <span class="keyword">if</span> env.instance_eval &amp;v</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+<b>&#x7B2C;3&#x7248;&#xFF1A;</b>
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">-&gt;{</span><br><span class="line"></span><br><span class="line">    events = {}</span><br><span class="line">    setups = []</span><br><span class="line"></span><br><span class="line">    <span class="constant">Kernel</span>.send <span class="symbol">:define_method</span>, <span class="symbol">:event</span> <span class="keyword">do</span> |name, &amp;block|</span><br><span class="line">	events[name] = block</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="constant">Kernel</span>.send <span class="symbol">:define_method</span>, <span class="symbol">:setup</span> <span class="keyword">do</span> |&amp;block|</span><br><span class="line">	setups &lt;&lt; block</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="constant">Kernel</span>.send <span class="symbol">:define_method</span>, <span class="symbol">:each_event</span> <span class="keyword">do</span> |&amp;block|</span><br><span class="line">	events.each_pair <span class="keyword">do</span> |k, v|</span><br><span class="line">	    block.call(k, v)</span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="constant">Kernel</span>.send <span class="symbol">:define_method</span>, <span class="symbol">:each_setup</span> <span class="keyword">do</span> |&amp;block|</span><br><span class="line">	setups.each <span class="keyword">do</span> |su|</span><br><span class="line">	    block.call(su)</span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">}.call</span><br><span class="line"></span><br><span class="line"><span class="constant">Dir</span>.glob(<span class="string">&quot;*events.rb&quot;</span>).each <span class="keyword">do</span> |file|</span><br><span class="line">    load file</span><br><span class="line">    each_event <span class="keyword">do</span> |name, event|</span><br><span class="line">	env = <span class="constant">Object</span>.new</span><br><span class="line">	each_setup <span class="keyword">do</span> |su|</span><br><span class="line">	    env.instance_eval &amp;su</span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">	puts name <span class="keyword">if</span> env.instance_eval &amp;event</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge44d7c3" class="outline-2">
+<h2 id="&#x7C7B;&#x5B9A;&#x4E49;">4. &#x7C7B;&#x5B9A;&#x4E49;</h2>
+<div class="outline-text-2" id="text-&#x7C7B;&#x5B9A;&#x4E49;">
+</div>
+
+<div id="outline-container-org60be00b" class="outline-3">
+<h3 id="moduleclass_eval-&#x65B9;&#x6CD5;">4.1 <code>Module#class_eval()</code> &#x65B9;&#x6CD5;</h3>
+<div class="outline-text-3" id="text-moduleclass_eval-&#x65B9;&#x6CD5;">
+<p>
+<code>class_eval</code> &#x7528;&#x4E8E;&#x5728;&#x4E00;&#x4E2A;&#x7C7B;&#x4E2D;&#x5B9A;&#x4E49;&#x5B9E;&#x4F8B;&#x65B9;&#x6CD5;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hello</span>;</span> <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="constant">Hello</span>.class_eval <span class="keyword">do</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">hello</span></span></span><br><span class="line">    puts <span class="string">&quot;hello world&quot;</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">h = <span class="constant">Hello</span>.new</span><br><span class="line">h.hello   <span class="comment"># =&gt; hello world</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+<code>instance_eval</code> &#x7528;&#x4E8E;&#x5728;&#x4E00;&#x4E2A;&#x7C7B;&#x4E2D;&#x5B9A;&#x4E49;&#x7C7B;&#x65B9;&#x6CD5;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hello</span>;</span> <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="constant">Hello</span>.instance_eval <span class="keyword">do</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">hello</span></span></span><br><span class="line">    puts <span class="string">&quot;hello world&quot;</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="constant">Hello</span>.hello   <span class="comment"># =&gt; hello world</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd4cbf10" class="outline-3">
+<h3 id="&#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x548C;&#x7C7B;&#x53D8;&#x91CF;">4.2 &#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x548C;&#x7C7B;&#x53D8;&#x91CF;</h3>
+<div class="outline-text-3" id="text-&#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x548C;&#x7C7B;&#x53D8;&#x91CF;">
+</div>
+
+<div id="outline-container-org835ceb4" class="outline-4">
+<h4 id="&#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;">4.2.1 &#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;</h4>
+<div class="outline-text-4" id="text-&#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;">
+<p>
+Ruby &#x89E3;&#x91CA;&#x5668;&#x5047;&#x5B9A;&#x6240;&#x6709;&#x7684;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x90FD;&#x5C5E;&#x4E8E;&#x5F53;&#x524D;&#x5BF9;&#x8C61; =self=&#x3002;&#x5728;&#x7C7B;&#x5B9A;&#x4E49;&#x65F6;&#x4E5F;&#x662F;&#x5982;&#x6B64;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line">  <span class="variable">@my_var</span> = <span class="number">1</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x5728;&#x7C7B;&#x5B9A;&#x4E49;&#x7684;&#x65F6;&#x5019;&#xFF0C;self &#x7684;&#x89D2;&#x8272;&#x7531;&#x7C7B;&#x672C;&#x8EAB;&#x62C5;&#x4EFB;&#xFF0C;&#x56E0;&#x6B64;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF; <code>@my_var</code>
+&#x5C5E;&#x4E8E;&#x8FD9;&#x4E2A;&#x7C7B;&#x3002;&#x7C7B;&#x7684;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x4E0D;&#x540C;&#x4E8E;&#x7C7B;&#x7684;&#x5BF9;&#x8C61;&#x7684;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x3002;&#x53E6;&#x5916;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line">  <span class="variable">@my_var</span> = <span class="number">1</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">self</span>.<span class="title">read</span>;</span> <span class="variable">@my_var</span>; <span class="keyword">end</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">write</span>;</span> <span class="variable">@my_var</span> = <span class="number">2</span>; <span class="keyword">end</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">read</span>;</span> <span class="variable">@my_var</span>; <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">obj = <span class="constant">MyClass</span>.new</span><br><span class="line">obj.write</span><br><span class="line">obj.read      <span class="comment"># =&gt; 2</span></span><br><span class="line"><span class="constant">MyClass</span>.read    <span class="comment"># =&gt; 1</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6cb456e" class="outline-4">
+<h4 id="&#x7C7B;&#x53D8;&#x91CF;">4.2.2 &#x7C7B;&#x53D8;&#x91CF;</h4>
+<div class="outline-text-4" id="text-&#x7C7B;&#x53D8;&#x91CF;">
+<p>
+&#x7C7B;&#x53D8;&#x91CF;&#x4E0E;&#x7C7B;&#x793A;&#x4F8B;&#x53D8;&#x91CF;&#x4E0D;&#x540C;&#xFF0C;&#x5B83;&#x4EEC;&#x53EF;&#x4EE5;&#x88AB;&#x81EA;&#x96F7;&#x6216;&#x7C7B;&#x7684;&#x5B9E;&#x4F8B;&#x6240;&#x4F7F;&#x7528;&#xFF08;&#x5728;&#x8FD9;&#x4E2A;&#x610F;&#x4E49;&#x4E0A;&#xFF0C;&#x5B83;&#x4EEC;&#x66F4;&#x50CF;&#x662F;
+Java &#x7684;&#x9759;&#x6001;&#x6210;&#x5458;&#xFF09;&#x3002;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span> <span class="inheritance">&lt; <span class="parent">C</span></span></span></span><br><span class="line">  <span class="variable">@@v</span> = <span class="number">1</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">my_method</span>;</span> <span class="variable">@@v</span>; <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="constant">D</span>.new.my_method     <span class="comment"># =&gt; 1</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x4E0D;&#x5E78;&#x7684;&#x662F;&#xFF0C;&#x7C7B;&#x53D8;&#x91CF;&#x6709;&#x4E00;&#x4E2A;&#x5F88;&#x4E0D;&#x597D;&#x7684;&#x602A;&#x7656;&#x3002;&#x4E0B;&#x9762;&#x662F;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@@v</span> = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line">  <span class="variable">@@v</span> = <span class="number">2</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="variable">@@v</span>     <span class="comment"># =&gt; 2</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x7684;&#x642D;&#x914D;&#x8FD9;&#x6837;&#x7684;&#x7ED3;&#x679C;&#x662F;&#x56E0;&#x4E3A;&#x7C7B;&#x53D8;&#x91CF;&#x5E76;&#x4E0D;&#x771F;&#x6B63;&#x5C5E;&#x4E8E;&#x7C7B;-------&#x2013;&#x2014;&#x5B83;&#x4EEC;&#x5C5E;&#x4E8E;&#x7C7B;&#x4F53;&#x7CFB;&#x7ED3;&#x6784;&#x3002;&#x7531;&#x4E8E;
+<code>@@v</code> &#x5B9A;&#x4E49;&#x4E8E; <code>main</code> &#x7684;&#x4E0A;&#x4E0B;&#x6587;&#xFF0C;&#x5B83;&#x5C5E;&#x4E8E; <code>main</code> &#x7684;&#x7C7B; <code>Object=&#xFF0C;&#x6240;&#x4EE5;&#x4E5F;&#x5C5E;&#x4E8E;
+=Object</code> &#x7684;&#x6240;&#x6709;&#x540E;&#x53F0;&#x3002; <code>MyClass</code> &#x7EE7;&#x627F;&#x81EA;
+=Object=&#xFF0C;&#x56E0;&#x6B64;&#x5B83;&#x4E5F;&#x5171;&#x4EAB;&#x4E86;&#x8FD9;&#x4E2A;&#x7C7B;&#x53D8;&#x91CF;&#x3002;
+</p>
+
+<p>
+&#x4ECE;&#x6280;&#x672F;&#x4E0A;&#x8BB2;&#xFF0C;&#x5C3D;&#x7BA1;&#x8FD9;&#x79CD;&#x884C;&#x4E3A;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#xFF0C;&#x4F46;&#x5B83;&#x8FD8;&#x662F;&#x5F88;&#x5BB9;&#x6613;&#x628A;&#x4F60;&#x7ECA;&#x5012;&#xFF0C;&#x56E0;&#x4E3A;&#x53EF;&#x80FD;&#x4F1A;&#x9047;&#x5230;&#x4E0A;&#x9762;&#x6240;&#x793A;&#x7684;&#x610F;&#x5916;&#x4E8B;&#x4EF6;&#xFF0C;&#x73B0;&#x5728;&#x7EDD;&#x5927;&#x591A;&#x6570;
+Ruby &#x4E3B;&#x4E49;&#x8005;&#x90FD;&#x907F;&#x514D;&#x4F7F;&#x7528;&#x7C7B;&#x53D8;&#x91CF;&#xFF0C;&#x800C;&#x5C3D;&#x91CF;&#x4F7F;&#x7528;&#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x3002;
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9c93db3" class="outline-3">
+<h3 id="class.new">4.3 <code>Class.new</code></h3>
+<div class="outline-text-3" id="text-class.new">
+<p>
+<code>Class.new(super_class=Object) { |mod| &#x2026; }</code>
+</p>
+
+<p>
+Creates a new anonymous (unnamed) class with the given superclass (or
+Object if no parameter is given). You can give a class a name by
+assigning the class object to a constant. If a block is given, it is
+passed the class object, and the block is evaluated in the context of
+this class using class_eval.
+</p>
+
+<p>
+&#x793A;&#x4F8B;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="constant">Employee</span> = <span class="constant">Class</span>.new(<span class="constant">Person</span>) <span class="keyword">do</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">hello</span></span></span><br><span class="line">    ...</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">e = <span class="constant">Employee</span>.new</span><br><span class="line">e.hello</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org890d9da" class="outline-3">
+<h3 id="&#x7C7B;&#x65B9;&#x6CD5;&#x7684;&#x5199;&#x6CD5;">4.4 &#x7C7B;&#x65B9;&#x6CD5;&#x7684;&#x5199;&#x6CD5;</h3>
+<div class="outline-text-3" id="text-&#x7C7B;&#x65B9;&#x6CD5;&#x7684;&#x5199;&#x6CD5;">
+<ol class="org-ol">
+<li></li>
+</ol>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">MyClass</span>.<span class="title">my_method</span>;</span> <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<ol class="org-ol">
+<li></li>
+</ol>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">self</span>.<span class="title">my_method</span>;</span> <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<ol class="org-ol">
+<li></li>
+</ol>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="inheritance">&lt;</span><span class="inheritance">&lt; <span class="parent">self</span></span></span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">my_method</span>;</span> <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x5728;&#x65E5;&#x5E38;&#x7F16;&#x7A0B;&#x4E2D;&#x5E94;&#x8BE5;&#x4F7F;&#x7528;&#x54EA;&#x79CD;&#x8BED;&#x6CD5;&#xFF0C;&#x8FD9;&#x5728;&#x5F88;&#x5927;&#x7A0B;&#x5EA6;&#x4E0A;&#x53D6;&#x51B3;&#x4E8E;&#x4E2A;&#x4EBA;&#x559C;&#x597D;&#x3002;&#x5927;&#x591A;&#x6570;&#x4EBA;&#x8BA4;&#x4E3A;
+<code>self</code> &#x5F62;&#x5F0F;&#x7684;&#x8BED;&#x6CD5;&#x53EF;&#x8BFB;&#x6027;&#x66F4;&#x9AD8;&#xFF0C;&#x800C;&#x4E00;&#x4E9B;&#x4EBA;&#x5219;&#x660E;&#x786E;&#x6307;&#x51FA; <code>eigenclass</code>
+&#x624D;&#x662F;&#x65B9;&#x6CD5;&#x7684;&#x771F;&#x6B63;&#x6240;&#x7528;&#x4E4B;&#x5904;&#x3002;&#x4E13;&#x5BB6;&#x7EA7;&#x7684; Ruby
+&#x7A0B;&#x5E8F;&#x733F;&#x90FD;&#x4F1A;&#x4E0D;&#x5C51;&#x4E8E;&#x4F7F;&#x7528;&quot;&#x7C7B;&#x540D;&quot;&#x65B9;&#x6CD5;&#x7684;&#x8BED;&#x6CD5;&#xFF0C;&#x56E0;&#x4E3A;&#x8FD9;&#x79CD;&#x65B9;&#x5F0F;&#x91CD;&#x590D;&#x4E86;&#x7C7B;&#x7684;&#x540D;&#x5B57;&#xFF0C;&#x7ED9;&#x91CD;&#x6784;&#x5E26;&#x6765;&#x4E86;&#x4E0D;&#x4FBF;&#x3002;
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd5322b6" class="outline-3">
+<h3 id="&#x7C7B;&#x65B9;&#x6CD5;&#x548C;moduleinclude-&#x4EE5;&#x53CA;-objectextend">4.5 &#x7C7B;&#x65B9;&#x6CD5;&#x548C;=Module#include()= &#x4EE5;&#x53CA; <code>Object#extend()</code></h3>
+<div class="outline-text-3" id="text-&#x7C7B;&#x65B9;&#x6CD5;&#x548C;moduleinclude-&#x4EE5;&#x53CA;-objectextend">
+<p>
+&#x4F7F;&#x7528; <code>Module#inculde()</code>
+&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x6DF7;&#x5165;&#x4E00;&#x4E2A;&#x6A21;&#x5757;&#xFF0C;&#x4F7F;&#x5F97;&#x5728;&#x8BE5;&#x6A21;&#x5757;&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x65B9;&#x6CD5;&#x53D8;&#x4E3A;&#x8C03;&#x7528;&#x7C7B;&#x7684;&#x793A;&#x4F8B;&#x65B9;&#x6CD5;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">Hello</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">hello</span></span></span><br><span class="line">    <span class="string">&quot;hello world&quot;</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span></span><br><span class="line">  <span class="keyword">include</span> <span class="constant">Hello</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">p = <span class="constant">Person</span>.new</span><br><span class="line">p.hello     <span class="comment"># =&gt; &quot;hello world&quot;  </span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x7ED3;&#x5408; <code>eigenclass</code> &#x548C; <code>Module#include()</code>
+&#x53EF;&#x4EE5;&#x5C06;&#x6A21;&#x5757;&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x65B9;&#x6CD5;&#x53D8;&#x4E3A;&#x8C03;&#x7528;&#x7C7B;&#x7684;&#x7C7B;&#x65B9;&#x6CD5;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">Hello</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">hello</span></span></span><br><span class="line">    <span class="string">&quot;hello world&quot;</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span></span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="inheritance">&lt;</span><span class="inheritance">&lt; <span class="parent">self</span></span></span></span><br><span class="line">    <span class="keyword">include</span> <span class="constant">Hello</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="constant">Person</span>.hello      <span class="comment"># =&gt; &quot;hello world&quot;</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x4E3A;&#x4E86;&#x7B80;&#x5316;&#x4E0A;&#x9762;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;Ruby &#x63D0;&#x4F9B;&#x4E86; <code>Object#extend</code> &#x65B9;&#x6CD5;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">Hello</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">hello</span></span></span><br><span class="line">    <span class="string">&quot;hello world&quot;</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span>;</span> <span class="keyword">end</span></span><br><span class="line"><span class="constant">Person</span>.extend <span class="constant">Hello</span></span><br><span class="line"><span class="constant">Person</span>.hello      <span class="comment"># =&gt; &quot;hello world&quot;</span></span><br><span class="line"></span><br><span class="line">p = <span class="constant">Person</span>.new</span><br><span class="line">p.extend <span class="constant">Hello</span></span><br><span class="line">p.hello         <span class="comment"># =&gt; &quot;hello world&quot;</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6e1dd5e" class="outline-3">
+<h3 id="&#x73AF;&#x7ED5;&#x522B;&#x540D;">4.6 &#x73AF;&#x7ED5;&#x522B;&#x540D;</h3>
+<div class="outline-text-3" id="text-&#x73AF;&#x7ED5;&#x522B;&#x540D;">
+<p>
+&#x7F16;&#x5199;&#x73AF;&#x7ED5;&#x522B;&#x540D;&#x7684;&#x6B65;&#x9AA4;&#xFF1A;
+</p>
+
+<ol class="org-ol">
+<li>&#x7ED9;&#x65B9;&#x6CD5;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x522B;&#x540D;</li>
+<li>&#x91CD;&#x65B0;&#x5B9A;&#x4E49;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;</li>
+<li>&#x5728;&#x65B0;&#x7684;&#x65B9;&#x6CD5;&#x4E2D;&#x8C03;&#x7528;&#x8001;&#x7684;&#x65B9;&#x6CD5;</li>
+</ol>
+
+<p>
+&#x793A;&#x4F8B;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">String</span></span></span><br><span class="line">  <span class="keyword">alias</span> old_length length</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">length</span></span></span><br><span class="line">    <span class="keyword">if</span> old_length &gt; <span class="number">5</span></span><br><span class="line">      <span class="string">&quot;long&quot;</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      <span class="string">&quot;short&quot;</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span> </span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+<b>&#x8B66;&#x544A;&#xFF1A;</b> &#x6C38;&#x8FDC;&#x4E0D;&#x8981;&#x628A;&#x4E00;&#x4E2A;&#x73AF;&#x7ED5;&#x522B;&#x540D;&#x52A0;&#x8F7D;&#x4E24;&#x6B21;&#xFF01;
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org75c3f1b" class="outline-2">
+<h2 id="&#x7F16;&#x5199;&#x4EE3;&#x7801;&#x7684;&#x4EE3;&#x7801;">5. &#x7F16;&#x5199;&#x4EE3;&#x7801;&#x7684;&#x4EE3;&#x7801;</h2>
+<div class="outline-text-2" id="text-&#x7F16;&#x5199;&#x4EE3;&#x7801;&#x7684;&#x4EE3;&#x7801;">
+</div>
+
+<div id="outline-container-org820a71f" class="outline-3">
+<h3 id="binding-&#x5BF9;&#x8C61;">5.1 Binding &#x5BF9;&#x8C61;</h3>
+<div class="outline-text-3" id="text-binding-&#x5BF9;&#x8C61;">
+<p>
+Binding &#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x7528;&#x5BF9;&#x8C61;&#x8868;&#x793A;&#x7684;&#x5B8C;&#x6574;&#x4F5C;&#x7528;&#x57DF;&#x3002;&#x4F60;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x521B;&#x5EFA; Binding
+&#x5BF9;&#x8C61;&#x6765;&#x6355;&#x83B7;&#x5E76;&#x5E26;&#x8D70;&#x5F53;&#x524D;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x3002;&#x63A5;&#x4E0B;&#x6765;&#xFF0C;&#x4F60;&#x8FD8;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; <code>eval()</code>
+&#x65B9;&#x6CD5;&#x3001;=instance_eval()= &#x65B9;&#x6CD5;&#x6216; <code>class_eval()</code> &#x65B9;&#x6CD5;&#xFF0C;&#x5728; Binding
+&#x5BF9;&#x8C61;&#x6240;&#x643A;&#x5E26;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x4E2D;&#x6267;&#x884C;&#x4EE3;&#x7801;&#x3002;
+</p>
+
+<p>
+&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <code>Kernel#binding()</code> &#x65B9;&#x6CD5;&#x6765;&#x521B;&#x5EFA; Binding &#x5BF9;&#x8C61;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">my_method</span></span></span><br><span class="line">    <span class="variable">@x</span> = <span class="number">1</span></span><br><span class="line">    binding</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">b = <span class="constant">MyClass</span>.new.my_method</span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x5BF9; <code>*eval()</code> &#x65B9;&#x6CD5;&#x5BB6;&#x65CF;&#xFF0C;&#x53EF;&#x4EE5;&#x7ED9;&#x5B83;&#x4EEC;&#x4F20;&#x9012;&#x4E00;&#x4E2A; Binding
+&#x5BF9;&#x8C61;&#x4F5C;&#x4E3A;&#x989D;&#x5916;&#x7684;&#x53C2;&#x6570;&#xFF0C;&#x4EE3;&#x7801;&#x5C31;&#x53EF;&#x4EE5;&#x5728;&#x8FD9;&#x4E2A; Binding &#x5BF9;&#x8C61;&#x6240;&#x643A;&#x5E26;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x4E2D;&#x6267;&#x884C;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eval <span class="string">&quot;@x&quot;</span>, b      <span class="comment"># =&gt; 1</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+Ruby &#x8FD8;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A;&#x540D;&#x4E3A; <code>TOPLEVEL_BINDING</code>
+&#x7684;&#x9884;&#x5B9A;&#x4E49;&#x5E38;&#x91CF;&#xFF0C;&#x5B83;&#x8868;&#x793A;&#x9876;&#x7EA7;&#x4F5C;&#x7528;&#x57DF;&#x7684; Binding
+&#x5BF9;&#x8C61;&#x3002;&#x4F60;&#x53EF;&#x4EE5;&#x5728;&#x7A0B;&#x5E8F;&#x7684;&#x4EFB;&#x4F55;&#x5730;&#x65B9;&#x8BBF;&#x95EE;&#x8FD9;&#x4E2A;&#x9876;&#x7EA7;&#x4F5C;&#x7528;&#x57DF;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AnotherClass</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">my_method</span></span></span><br><span class="line">    eval <span class="string">&quot;self&quot;</span>, <span class="constant">TOPLEVEL_BINDING</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="constant">AnotherClass</span>.new.my_method      <span class="comment"># =&gt; main</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x4ECE;&#x67D0;&#x79CD;&#x610F;&#x4E49;&#x4E0A;&#x8BF4;&#xFF0C;&#x4F60;&#x53EF;&#x4EE5;&#x628A; Binding
+&#x5BF9;&#x8C61;&#x770B;&#x6210;&#x662F;&#x4E00;&#x4E2A;&#x6BD4;&#x5757;&#x66F4;&quot;&#x7EAF;&#x51C0;&quot;&#x7684;&#x95ED;&#x5305;&#xFF0C;&#x56E0;&#x4E3A;&#x5B83;&#x4EEC;&#x53EA;&#x5305;&#x542B;&#x4F5C;&#x7528;&#x57DF;&#x800C;&#x4E0D;&#x5305;&#x542B;&#x4EE3;&#x7801;&#x3002;
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0488ae3" class="outline-3">
+<h3 id="&#x4EE3;&#x7801;&#x5B57;&#x7B26;&#x4E32;">5.2 &#x4EE3;&#x7801;&#x5B57;&#x7B26;&#x4E32;</h3>
+<div class="outline-text-3" id="text-&#x4EE3;&#x7801;&#x5B57;&#x7B26;&#x4E32;">
+<p>
+&#x4EE3;&#x7801;&#x5B57;&#x7B26;&#x4E32;&#x53EF;&#x4EE5;&#x50CF;&#x5757;&#x4E00;&#x6837;&#x8BBF;&#x95EE;&#x5C40;&#x90E8;&#x53D8;&#x91CF;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">array = [<span class="string">&apos;a&apos;</span>, <span class="string">&apos;b&apos;</span>, <span class="string">&apos;c&apos;</span>]</span><br><span class="line">x = <span class="string">&apos;d&apos;</span></span><br><span class="line">array.instance_eval <span class="string">&quot;self[0] = x&quot;</span></span><br><span class="line"></span><br><span class="line">array   <span class="comment"># =&gt; [&apos;d&apos;, &apos;b&apos;, &apos;c&apos;]</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgec9fc5e" class="outline-3">
+<h3 id="kerneleval-&#x4E0E;-ruby-&#x5B89;&#x5168;&#x7EA7;&#x522B;">5.3 <code>Kernel#eval</code> &#x4E0E; Ruby &#x5B89;&#x5168;&#x7EA7;&#x522B;</h3>
+<div class="outline-text-3" id="text-kerneleval-&#x4E0E;-ruby-&#x5B89;&#x5168;&#x7EA7;&#x522B;">
+<p>
+&#x4F7F;&#x7528; <code>Kernel#eval()</code> &#x7684;&#x95EE;&#x9898;&#x5728;&#x4E8E;&#xFF0C;&#x8FD9;&#x5B58;&#x5728;&#x906D;&#x53D7;&#x4EE3;&#x7801;&#x6CE8;&#x5165;&#x653B;&#x51FB;&#x7684;&#x5371;&#x9669;&#x3002;
+</p>
+
+<p>
+Ruby
+&#x4F1A;&#x81EA;&#x52A8;&#x628A;&#x4E0D;&#x5B89;&#x5168;&#x7684;&#x5BF9;&#x8C61;-&#x2013;&#x2014;&#x5C24;&#x5176;&#x662F;&#x4ECE;&#x5916;&#x90E8;&#x4F20;&#x5165;&#x7684;&#x5BF9;&#x8C61;-&#x2013;&#x2014;&#x6807;&#x8BB0;&#x4E3A;&#x88AB;&#x6C61;&#x67D3;&#x7684;&#x3002;&#x6C61;&#x67D3;&#x5BF9;&#x8C61;&#x5305;&#x62EC;&#x7A0B;&#x5E8F;&#x4ECE;
+Web
+&#x8868;&#x5355;&#x3001;&#x6587;&#x4EF6;&#x548C;&#x547D;&#x4EE4;&#x884C;&#x8BFB;&#x5165;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x751A;&#x81F3;&#x5305;&#x62EC;&#x7CFB;&#x7EDF;&#x53D8;&#x91CF;&#x3002;&#x6BCF;&#x6B21;&#x4ECE;&#x6C61;&#x67D3;&#x5B57;&#x7B26;&#x4E32;&#x8FD0;&#x7B97;&#x800C;&#x6765;&#x7684;&#x65B0;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x4E5F;&#x662F;&#x88AB;&#x6C61;&#x67D3;&#x7684;&#x3002;&#x4E0B;&#x9762;&#x7684;&#x4F8B;&#x5B50;&#x901A;&#x8FC7;&#x8C03;&#x7528;
+<code>tainted?()</code> &#x65B9;&#x6CD5;&#x6765;&#x5224;&#x65AD;&#x7C7B;&#x662F;&#x4E0D;&#x662F;&#x88AB;&#x6C61;&#x67D3;&#x4E86;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">user_input = <span class="string">&quot;User input: <span class="subst">#{gets()}</span>&quot;</span></span><br><span class="line">puts user_input.tainted?</span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x6BCF;&#x6B21;&#x90FD;&#x8981;&#x68C0;&#x67E5;&#x5B57;&#x7B26;&#x4E32;&#x662F;&#x5426;&#x88AB;&#x6C61;&#x67D3;&#x5F88;&#x9EBB;&#x70E6;&#xFF0C;Ruby
+&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x79CD;&#x53EB;&#x505A;&#x5B89;&#x5168;&#x7EA7;&#x522B;&#x7684;&#x6982;&#x5FF5;&#xFF0C;&#x5B83;&#x80FD;&#x5F88;&#x597D;&#x5730;&#x5F25;&#x8865;&#x6C61;&#x67D3;&#x5BF9;&#x8C61;&#x7684;&#x4E0D;&#x8DB3;&#xFF0C;&#x5F53;&#x8BBE;&#x7F6E;&#x4E00;&#x4E2A;&#x5B89;&#x5168;&#x4F60;&#x7EA7;&#x522B;&#xFF08;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x7ED9;
+<code>$SAFE</code> &#x5168;&#x5C40;&#x53D8;&#x91CF;&#x8D4B;&#x503C;&#x6765;&#x5B9E;&#x73B0;&#xFF09;&#x65F6;&#xFF0C;&#x5C31;&#x7981;&#x6B62;&#x4E86;&#x67D0;&#x4E9B;&#x7279;&#x5B9A;&#x7684;&#x6F5C;&#x5728;&#x5371;&#x9669;&#x64CD;&#x4F5C;&#x3002;
+</p>
+
+<p>
+&#x6709;&#x4E94;&#x4E2A;&#x5B89;&#x5168;&#x7EA7;&#x522B;&#x53EF;&#x4F9B;&#x9009;&#x62E9;&#xFF0C;&#x4ECE;&#x9ED8;&#x8BA4;&#x7684;
+0&#xFF08;&#x8FD9;&#x91CC;&#x662F;&#x4E00;&#x4E2A;&quot;&#x5B09;&#x76AE;&#x58EB;&#x516C;&#x793E;&quot;&#xFF0C;&#x5728;&#x8FD9;&#x513F;&#x4F60;&#x53EF;&#x4EE5;&#x4E0D;&#x53D7;&#x7EA6;&#x675F;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x683C;&#x5F0F;&#x5316;&#x786C;&#x76D8;&#xFF09;&#x5230;
+4&#xFF08;&#x8FD9;&#x91CC;&#x662F;&quot;&#x519B;&#x4E8B;&#x7BA1;&#x8F96;&#x533A;&quot;&#xFF0C;&#x5728;&#x8FD9;&#x513F;&#x4F60;&#x751A;&#x81F3;&#x4E0D;&#x80FD;&#x81EA;&#x7531;&#x5730;&#x9000;&#x51FA;&#x7A0B;&#x5E8F;&#xFF09;&#x3002;&#x4F8B;&#x5982;&#xFF0C;&#x5728;&#x5B89;&#x5168;&#x7EA7;&#x522B;
+2 &#x4E0A;&#xFF0C;&#x4F1A;&#x7981;&#x6B62;&#x7EDD;&#x5927;&#x591A;&#x6570;&#x6587;&#x4EF6;&#x76F8;&#x5173;&#x5DE5;&#x4F5C;&#x3002;&#x503C;&#x5F97;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;&#x5728;&#x4EFB;&#x4F55;&#x5927;&#x4E8E; 0
+&#x7684;&#x5B89;&#x5168;&#x7EA7;&#x522B;&#x4E0A;&#xFF0C;Ruby &#x90FD;&#x4F1A;&#x62D2;&#x7EDD;&#x6267;&#x884C;&#x6C61;&#x67D3;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$SAFE</span> = <span class="number">1</span></span><br><span class="line">user_input = <span class="string">&quot;User input: <span class="subst">#{gets()}</span>&quot;</span></span><br><span class="line">eval user_input</span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x4E3A;&#x4E86;&#x8C03;&#x8282;&#x5B89;&#x5168;&#x6027;&#xFF0C;&#x53EF;&#x4EE5;&#x5728;&#x6267;&#x884C;&#x4EE3;&#x7801;&#x5B57;&#x7B26;&#x4E32;&#x4E4B;&#x524D;&#x663E;&#x5F0F;&#x53BB;&#x9664;&#x5B83;&#x7684;&#x6C61;&#x67D3;&#x5C0F;&#xFF08;&#x901A;&#x8FC7;&#x8C03;&#x7528;
+<code>Object#untaint()</code>
+&#x65B9;&#x6CD5;&#xFF09;&#xFF0C;&#x7136;&#x540E;&#x53EF;&#x4EE5;&#x4F9D;&#x8D56;&#x5B89;&#x5168;&#x7EA7;&#x522B;&#x6765;&#x7981;&#x6B62;&#x6CE8;&#x5165;&#x6587;&#x4EF6;&#x64CD;&#x4F5C;&#x8FD9;&#x6837;&#x7684;&#x5371;&#x9669;&#x52A8;&#x4F5C;&#x3002;
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgaf27058" class="outline-3">
+<h3 id="&#x7C7B;&#x6269;&#x5C55;&#x6DF7;&#x5165;class-extension-mixins">5.4 &#x7C7B;&#x6269;&#x5C55;&#x6DF7;&#x5165;&#xFF08;Class Extension Mixins&#xFF09;</h3>
+<div class="outline-text-3" id="text-&#x7C7B;&#x6269;&#x5C55;&#x6DF7;&#x5165;class-extension-mixins">
+<p>
+&#x7F16;&#x5199;&#x7C7B;&#x6DF7;&#x5165;&#x6269;&#x5C55;&#x7684;&#x6B65;&#x9AA4;&#xFF1A;
+</p>
+
+<ol class="org-ol">
+<li>&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x6A21;&#x5757;&#xFF0C;&#x59D1;&#x4E14;&#x53EB;&#x505A; <code>MyMixin</code></li>
+<li>&#x5728; <code>MyMixin</code> &#x4E2D;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x5185;&#x90E8;&#x6A21;&#x5757;&#xFF08;&#x901A;&#x5E38;&#x628A;&#x5B83;&#x53EB;&#x505A;
+=ClassMethods=&#xFF09;&#xFF0C;&#x5E76;&#x7ED9;&#x5B83;&#x5B9A;&#x4E49;&#x4E00;&#x4E9B;&#x65B9;&#x6CD5;&#x3002;&#x8FD9;&#x4E9B;&#x65B9;&#x6CD5;&#x6700;&#x7EC8;&#x4F1A;&#x6210;&#x4E3A;&#x7C7B;&#x65B9;&#x6CD5;&#x3002;</li>
+<li>&#x8986;&#x76D6; <code>MyMixin#included()</code> &#x65B9;&#x6CD5;&#x6765;&#x7528; <code>ClassMethods</code> &#x6269;&#x5C55;&#x5305;&#x542B;&#x8005;&#xFF08;&#x4F7F;&#x7528;
+<code>extend()</code> &#x65B9;&#x6CD5;&#xFF09;&#x3002;</li>
+</ol>
+
+<p>
+&#x793A;&#x4F8B;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">MyMixin</span></span></span><br><span class="line">  <span class="class"><span class="keyword">module</span> <span class="title">ClassMethods</span></span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hello</span></span></span><br><span class="line">      <span class="string">&quot;hello world&quot;</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">self</span>.<span class="title">included</span><span class="params">(base)</span></span></span><br><span class="line">    base.extend <span class="constant">ClassMethods</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span></span><br><span class="line">  <span class="keyword">include</span> <span class="constant">MyMixin</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="constant">Person</span>.hello      <span class="comment"># =&gt; &quot;hello world&quot;</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7504780" class="outline-3">
+<h3 id="checkedattributes">5.5 CheckedAttributes</h3>
+<div class="outline-text-3" id="text-checkedattributes">
+<div class="org-src-container">
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">CheckedAttributes</span></span></span><br><span class="line">  <span class="class"><span class="keyword">module</span> <span class="title">ClassMethods</span></span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">attr_checked</span> <span class="title">name</span>, <span class="title">&amp;</span><span class="title">block</span></span></span><br><span class="line">      define_method name <span class="keyword">do</span></span><br><span class="line">	instance_variable_get <span class="string">&quot;@<span class="subst">#{name}</span>&quot;</span></span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">      define_method <span class="string">&quot;<span class="subst">#{name}</span>=&quot;</span>, value <span class="keyword">do</span></span><br><span class="line">	raise <span class="string">&quot;Invalid Attribute Value&quot;</span> <span class="keyword">unless</span> block.call(value)</span><br><span class="line">	instance_variable_set <span class="string">&quot;@<span class="subst">#{name}</span>&quot;</span>, value</span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">self</span>.<span class="title">included</span><span class="params">(base)</span></span></span><br><span class="line">    base.extend <span class="constant">ClassMethods</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span></span><br><span class="line">  attr_checked <span class="symbol">:age</span> <span class="keyword">do</span> |age|</span><br><span class="line">    age &gt; <span class="number">18</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">p = <span class="constant">Person</span>.new</span><br><span class="line">p.name = <span class="number">20</span></span><br><span class="line">p.name        <span class="comment"># =&gt; 20</span></span><br><span class="line">p.name = <span class="number">10</span>     <span class="comment"># =&gt; raise &quot;Invalid Attribute Value&quot;</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Articles</a></li>
+         
+          <li><a href="https://github.com/lululau" target="_blank" rel="noopener">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x5BF9;&#x8C61;&#x6A21;&#x578B;"><span class="toc-number">1.</span> <span class="toc-text">1. &#x5BF9;&#x8C61;&#x6A21;&#x578B;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x6253;&#x5F00;&#x7C7B;"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 &#x6253;&#x5F00;&#x7C7B;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x51E0;&#x4E2A;-reflection-&#x65B9;&#x6CD5;"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 &#x51E0;&#x4E2A; Reflection &#x65B9;&#x6CD5;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#objectinstance_variables"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.2.1 Object#instance_variables()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#objectmethodsalltrue"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2.2 Object#methods(all=true)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#moduleinstance_methodsinclude_supertrue"><span class="toc-number">1.2.3.</span> <span class="toc-text">1.2.3 Module#instance_methods(include_super=true)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#moduleancesotrs"><span class="toc-number">1.2.4.</span> <span class="toc-text">1.2.4 Module#ancesotrs()</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5E38;&#x91CF;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x548C;&#x8DEF;&#x5F84;"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 &#x5E38;&#x91CF;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x548C;&#x8DEF;&#x5F84;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x51E0;&#x4E2A;&#x548C;&#x5E38;&#x91CF;&#x6709;&#x5173;&#x7684;&#x65B9;&#x6CD5;"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 &#x51E0;&#x4E2A;&#x548C;&#x5E38;&#x91CF;&#x6709;&#x5173;&#x7684;&#x65B9;&#x6CD5;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#moduleconstantsinherittrue"><span class="toc-number">1.4.1.</span> <span class="toc-text">1.4.1 Module#constants(inherit=true)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#module.constants-&#x548C;-module.constantsinherit"><span class="toc-number">1.4.2.</span> <span class="toc-text">1.4.2 Module.constants() &#x548C; Module.constants(inherit)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#module.nesting"><span class="toc-number">1.4.3.</span> <span class="toc-text">1.4.3 Module.nesting()</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4FEE;&#x526A;&#x5E38;&#x91CF;&#x6811;"><span class="toc-number">1.5.</span> <span class="toc-text">1.5 &#x4FEE;&#x526A;&#x5E38;&#x91CF;&#x6811;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5173;&#x4E8E;-kernel-&#x6A21;&#x5757;"><span class="toc-number">1.6.</span> <span class="toc-text">1.6 &#x5173;&#x4E8E; Kernel &#x6A21;&#x5757;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#private-&#x7A76;&#x7ADF;&#x610F;&#x5473;&#x7740;&#x4EC0;&#x4E48;"><span class="toc-number">1.7.</span> <span class="toc-text">1.7 private &#x7A76;&#x7ADF;&#x610F;&#x5473;&#x7740;&#x4EC0;&#x4E48;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x6DF7;&#x4E71;&#x7684;&#x6A21;&#x5757;"><span class="toc-number">1.8.</span> <span class="toc-text">1.8 &#x6DF7;&#x4E71;&#x7684;&#x6A21;&#x5757;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5B8C;&#x6574;&#x7684;&#x7C7B;&#x548C;&#x5BF9;&#x8C61;&#x6A21;&#x578B;&#x56FE;"><span class="toc-number">1.9.</span> <span class="toc-text">1.9 &#x5B8C;&#x6574;&#x7684;&#x7C7B;&#x548C;&#x5BF9;&#x8C61;&#x6A21;&#x578B;&#x56FE;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x65B9;&#x6CD5;"><span class="toc-number">2.</span> <span class="toc-text">2. &#x65B9;&#x6CD5;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x52A8;&#x6001;&#x65B9;&#x6CD5;"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 &#x52A8;&#x6001;&#x65B9;&#x6CD5;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x52A8;&#x6001;&#x65B9;&#x6CD5;&#x6240;&#x4F9D;&#x8D56;&#x7684;&#x57FA;&#x7840;"><span class="toc-number">2.1.1.</span> <span class="toc-text">2.1.1 &#x52A8;&#x6001;&#x65B9;&#x6CD5;&#x6240;&#x4F9D;&#x8D56;&#x7684;&#x57FA;&#x7840;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x793A;&#x4F8B;"><span class="toc-number">2.1.2.</span> <span class="toc-text">2.1.2 &#x793A;&#x4F8B;</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#method_missing-&#x5E7D;&#x7075;&#x65B9;&#x6CD5;ghost-method"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 method_missing &#x5E7D;&#x7075;&#x65B9;&#x6CD5;(Ghost Method)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#method_missingsymbol-args-&#x65B9;&#x6CD5;"><span class="toc-number">2.2.1.</span> <span class="toc-text">2.2.1 method_missing(symbol [, *args] ) &#x65B9;&#x6CD5;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x4F7F;&#x7528;-method_missing-&#x91CD;&#x6784;-computer.rb"><span class="toc-number">2.2.2.</span> <span class="toc-text">2.2.2 &#x4F7F;&#x7528; method_missing &#x91CD;&#x6784; computer.rb</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x8986;&#x76D6;-respond_to"><span class="toc-number">2.2.3.</span> <span class="toc-text">2.2.3 &#x8986;&#x76D6; respond_to?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x767D;&#x677F;&#x7C7B;blankslate"><span class="toc-number">2.2.4.</span> <span class="toc-text">2.2.4 &#x767D;&#x677F;&#x7C7B;(BlankSlate)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x4EE3;&#x7801;&#x5757;"><span class="toc-number">3.</span> <span class="toc-text">3. &#x4EE3;&#x7801;&#x5757;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5F53;&#x524D;&#x5757;"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 &#x5F53;&#x524D;&#x5757;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4F7F;&#x7528;-ruby-&#x5B9E;&#x73B0;-c-&#x7684;-using-&#x5173;&#x952E;&#x5B57;"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 &#x4F7F;&#x7528; Ruby &#x5B9E;&#x73B0; C# &#x7684; using &#x5173;&#x952E;&#x5B57;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x95ED;&#x5305;"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 &#x95ED;&#x5305;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x5757;&#x5C40;&#x90E8;&#x4F5C;&#x7528;&#x57DF;"><span class="toc-number">3.3.1.</span> <span class="toc-text">3.3.1 &#x5757;&#x5C40;&#x90E8;&#x4F5C;&#x7528;&#x57DF;</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4F5C;&#x7528;&#x57DF;&#x95E8;"><span class="toc-number">3.4.</span> <span class="toc-text">3.4 &#x4F5C;&#x7528;&#x57DF;&#x95E8;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x548C;&#x9876;&#x7EA7;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;"><span class="toc-number">3.5.</span> <span class="toc-text">3.5 &#x5168;&#x5C40;&#x53D8;&#x91CF;&#x548C;&#x9876;&#x7EA7;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x6241;&#x5E73;&#x5316;&#x4F5C;&#x7528;&#x57DF;"><span class="toc-number">3.6.</span> <span class="toc-text">3.6 &#x6241;&#x5E73;&#x5316;&#x4F5C;&#x7528;&#x57DF;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4E0A;&#x4E0B;&#x6587;&#x63A2;&#x9488;-objectinstant_eval"><span class="toc-number">3.7.</span> <span class="toc-text">3.7 &#x4E0A;&#x4E0B;&#x6587;&#x63A2;&#x9488; Object#instant_eval()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x53EF;&#x8C03;&#x7528;&#x5BF9;&#x8C61;"><span class="toc-number">3.8.</span> <span class="toc-text">3.8 &#x53EF;&#x8C03;&#x7528;&#x5BF9;&#x8C61;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#proc-&#x548C;-lambda-&#x7684;&#x533A;&#x522B;"><span class="toc-number">3.8.1.</span> <span class="toc-text">3.8.1 proc &#x548C; lambda &#x7684;&#x533A;&#x522B;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x65B9;&#x6CD5;-1"><span class="toc-number">3.8.2.</span> <span class="toc-text">3.8.2 &#x65B9;&#x6CD5;</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#redflag"><span class="toc-number">3.9.</span> <span class="toc-text">3.9 RedFlag</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x7C7B;&#x5B9A;&#x4E49;"><span class="toc-number">4.</span> <span class="toc-text">4. &#x7C7B;&#x5B9A;&#x4E49;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#moduleclass_eval-&#x65B9;&#x6CD5;"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 Module#class_eval() &#x65B9;&#x6CD5;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x548C;&#x7C7B;&#x53D8;&#x91CF;"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 &#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x548C;&#x7C7B;&#x53D8;&#x91CF;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;"><span class="toc-number">4.2.1.</span> <span class="toc-text">4.2.1 &#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x7C7B;&#x53D8;&#x91CF;"><span class="toc-number">4.2.2.</span> <span class="toc-text">4.2.2 &#x7C7B;&#x53D8;&#x91CF;</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#class.new"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 Class.new</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x7C7B;&#x65B9;&#x6CD5;&#x7684;&#x5199;&#x6CD5;"><span class="toc-number">4.4.</span> <span class="toc-text">4.4 &#x7C7B;&#x65B9;&#x6CD5;&#x7684;&#x5199;&#x6CD5;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x7C7B;&#x65B9;&#x6CD5;&#x548C;moduleinclude-&#x4EE5;&#x53CA;-objectextend"><span class="toc-number">4.5.</span> <span class="toc-text">4.5 &#x7C7B;&#x65B9;&#x6CD5;&#x548C;=Module#include()= &#x4EE5;&#x53CA; Object#extend()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x73AF;&#x7ED5;&#x522B;&#x540D;"><span class="toc-number">4.6.</span> <span class="toc-text">4.6 &#x73AF;&#x7ED5;&#x522B;&#x540D;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x7F16;&#x5199;&#x4EE3;&#x7801;&#x7684;&#x4EE3;&#x7801;"><span class="toc-number">5.</span> <span class="toc-text">5. &#x7F16;&#x5199;&#x4EE3;&#x7801;&#x7684;&#x4EE3;&#x7801;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#binding-&#x5BF9;&#x8C61;"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 Binding &#x5BF9;&#x8C61;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4EE3;&#x7801;&#x5B57;&#x7B26;&#x4E32;"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 &#x4EE3;&#x7801;&#x5B57;&#x7B26;&#x4E32;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#kerneleval-&#x4E0E;-ruby-&#x5B89;&#x5168;&#x7EA7;&#x522B;"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 Kernel#eval &#x4E0E; Ruby &#x5B89;&#x5168;&#x7EA7;&#x522B;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x7C7B;&#x6269;&#x5C55;&#x6DF7;&#x5165;class-extension-mixins"><span class="toc-number">5.4.</span> <span class="toc-text">5.4 &#x7C7B;&#x6269;&#x5C55;&#x6DF7;&#x5165;&#xFF08;Class Extension Mixins&#xFF09;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#checkedattributes"><span class="toc-number">5.5.</span> <span class="toc-text">5.5 CheckedAttributes</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2013/10/03/the-ruby-metaprogramming-in-the-dry/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2013/10/03/the-ruby-metaprogramming-in-the-dry/&text=Ruby 元编程中的那些干货" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2013/10/03/the-ruby-metaprogramming-in-the-dry/&title=Ruby 元编程中的那些干货" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2013/10/03/the-ruby-metaprogramming-in-the-dry/&is_video=false&description=Ruby 元编程中的那些干货" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Ruby 元编程中的那些干货&body=Check out this article: http://yoursite.com/2013/10/03/the-ruby-metaprogramming-in-the-dry/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2013/10/03/the-ruby-metaprogramming-in-the-dry/&title=Ruby 元编程中的那些干货" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2013/10/03/the-ruby-metaprogramming-in-the-dry/&title=Ruby 元编程中的那些干货" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2013/10/03/the-ruby-metaprogramming-in-the-dry/&title=Ruby 元编程中的那些干货" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2013/10/03/the-ruby-metaprogramming-in-the-dry/&title=Ruby 元编程中的那些干货" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2013/10/03/the-ruby-metaprogramming-in-the-dry/&name=Ruby 元编程中的那些干货&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://yoursite.com/2013/10/03/the-ruby-metaprogramming-in-the-dry/&t=Ruby 元编程中的那些干货" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 zxyho
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Articles</a></li>
+         
+          <li><a href="https://github.com/lululau" target="_blank" rel="noopener">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
