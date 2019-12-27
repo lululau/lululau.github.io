@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="(1). &amp;#x7B80;&amp;#x5355;&amp;#x914D;&amp;#x7F6E;    &amp;#x5982;&amp;#x679C;&amp;#x9700;&amp;#x8981;&amp;#x4F7F;&amp;#x7528; Pry &amp;#x4F5C;&amp;#x4E3A; Rails Console&amp;#xFF0C;&amp;#x53EA;&amp;#x9700;&amp;#x8981;&amp;#x7B80;&amp;#x5355;&amp;#x5730;&amp;#x4FEE;&amp;#x6539; &#x3D;">
+    <meta name="description" content="(1). &amp;#x7B80;&amp;#x5355;&amp;#x914D;&amp;#x7F6E;    &amp;#x5982;&amp;#x679C;&amp;#x9700;&amp;#x8981;&amp;#x4F7F;&amp;#x7528; Pry &amp;#x4F5C;&amp;#x4E3A; Rails Console&amp;#xFF0C;&amp;#x53EA;&amp;#x9700;&amp;#x8981;&amp;#x7B80;&amp;#x5355;&amp;#x5730;&amp;#x4FEE;&amp;#x6539; d">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 Pry 作为 Rails Console">
 <meta property="og:url" content="http://yoursite.com/2013/12/04/use-pry-as-the-rails-console/index.html">
 <meta property="og:site_name" content="Let&#39;s hack it!">
-<meta property="og:description" content="(1). &amp;#x7B80;&amp;#x5355;&amp;#x914D;&amp;#x7F6E;    &amp;#x5982;&amp;#x679C;&amp;#x9700;&amp;#x8981;&amp;#x4F7F;&amp;#x7528; Pry &amp;#x4F5C;&amp;#x4E3A; Rails Console&amp;#xFF0C;&amp;#x53EA;&amp;#x9700;&amp;#x8981;&amp;#x7B80;&amp;#x5355;&amp;#x5730;&amp;#x4FEE;&amp;#x6539; &#x3D;">
+<meta property="og:description" content="(1). &amp;#x7B80;&amp;#x5355;&amp;#x914D;&amp;#x7F6E;    &amp;#x5982;&amp;#x679C;&amp;#x9700;&amp;#x8981;&amp;#x4F7F;&amp;#x7528; Pry &amp;#x4F5C;&amp;#x4E3A; Rails Console&amp;#xFF0C;&amp;#x53EA;&amp;#x9700;&amp;#x8981;&amp;#x7B80;&amp;#x5355;&amp;#x5730;&amp;#x4FEE;&amp;#x6539; d">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2013-12-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2019-12-26T13:56:26.371Z">
+<meta property="article:modified_time" content="2019-12-27T06:06:08.639Z">
 <meta property="article:author" content="zxyho">
 <meta property="article:tag" content="Ruby">
 <meta name="twitter:card" content="summary">
@@ -75,7 +75,7 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2014/01/04/searching-evernote-notes-tips/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2014/01/18/ruby-19-character-encoding/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" href="/2013/12/03/has-xxx-and-belongs-to-foreign-key-default-values-for-options/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
@@ -156,8 +156,7 @@
 </p>
 
 <p>
-&#x5982;&#x679C;&#x9700;&#x8981;&#x4F7F;&#x7528; Pry &#x4F5C;&#x4E3A; Rails Console&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x7B80;&#x5355;&#x5730;&#x4FEE;&#x6539;
-=development.rb=&#xFF0C;&#x5728;&#x5176;&#x672B;&#x5C3E;&#x8FFD;&#x52A0;&#x4EE5;&#x4E0B;&#x4EE3;&#x7801;&#x5373;&#x53EF;&#xFF1A;
+&#x5982;&#x679C;&#x9700;&#x8981;&#x4F7F;&#x7528; Pry &#x4F5C;&#x4E3A; Rails Console&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x7B80;&#x5355;&#x5730;&#x4FEE;&#x6539; <code>development.rb</code> &#xFF0C;&#x5728;&#x5176;&#x672B;&#x5C3E;&#x8FFD;&#x52A0;&#x4EE5;&#x4E0B;&#x4EE3;&#x7801;&#x5373;&#x53EF;&#xFF1A;
 </p>
 
 <div class="org-src-container">
@@ -177,7 +176,7 @@ Console&#xFF0C;&#x90A3;&#x4E48;&#x8FD8;&#x9700;&#x8981;&#x505A;&#x5982;&#x4E0B;&
 </p>
 
 <p>
-&#x9996;&#x5148;&#xFF0C;&#x4FEE;&#x6539; Pry &#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6; =~/.pryrc=&#xFF0C;&#x589E;&#x52A0;&#x4EE5;&#x4E0B;&#x4EE3;&#x7801; :
+&#x9996;&#x5148;&#xFF0C;&#x4FEE;&#x6539; Pry &#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6; <code>~/.pryrc</code> &#xFF0C;&#x589E;&#x52A0;&#x4EE5;&#x4E0B;&#x4EE3;&#x7801; :
 </p>
 
 <div class="org-src-container">

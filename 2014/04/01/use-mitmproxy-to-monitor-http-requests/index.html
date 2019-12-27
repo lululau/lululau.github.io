@@ -18,7 +18,7 @@
 <meta property="og:image" content="http://yoursite.com/2014/04/01/use-mitmproxy-to-monitor-http-requests/3.png">
 <meta property="og:image" content="http://yoursite.com/2014/04/01/use-mitmproxy-to-monitor-http-requests/4.png">
 <meta property="article:published_time" content="2014-03-31T16:00:00.000Z">
-<meta property="article:modified_time" content="2019-12-26T14:12:59.725Z">
+<meta property="article:modified_time" content="2019-12-27T05:59:25.084Z">
 <meta property="article:author" content="zxyho">
 <meta property="article:tag" content="Ruby">
 <meta name="twitter:card" content="summary">
@@ -165,7 +165,7 @@ HTTP &#x8BF7;&#x6C42;&#x7684;&#x5DE5;&#x5177;&#x624D;&#x884C;&#x3002;&#x6700;&#x
 <code>mitmproxy</code> <a href="http://mitmproxy.org/index.html" target="_blank" rel="noopener">Home Page</a>&#x3002;
 </p>
 
-<div id="outline-container-org5e9262e" class="outline-2">
+<div id="outline-container-org0f0cfe3" class="outline-2">
 <h2 id="&#x4ECB;&#x7ECD;">1. &#x4ECB;&#x7ECD;</h2>
 <div class="outline-text-2" id="text-&#x4ECB;&#x7ECD;">
 <p>
@@ -183,7 +183,7 @@ proxy&#xFF09;&#xFF0C;&#x5B83;&#x53EF;&#x4EE5;&#x7528;&#x6765;&#x62E6;&#x622A;&#x
 </ul>
 
 <p>
-&#x672C;&#x6587;&#x53EA;&#x4ECB;&#x7ECD; =mitmproxy=&#x3002;
+&#x672C;&#x6587;&#x53EA;&#x4ECB;&#x7ECD; <code>mitmproxy</code> &#x3002;
 </p>
 
 <p>
@@ -191,10 +191,8 @@ mitmproxy &#x652F;&#x6301;&#x4E24;&#x79CD;&#x5DE5;&#x4F5C;&#x6A21;&#x5F0F;&#xFF1
 </p>
 
 <ul class="org-ul">
-<li>HTTP &#x4EE3;&#x7406;&#x6A21;&#x5F0F;&#xFF0C;&#x4E5F;&#x5C31;&#x662F; mitmproxy &#x4F5C;&#x4E3A;&#x4E00;&#x4E2A; HTTP &#x4EE3;&#x7406;&#x8FD0;&#x884C;&#xFF0C;&#x7C7B;&#x4F3C;&#x4E8E;
-HTTPSpy&#x3002;</li>
-<li>&#x900F;&#x660E;&#x6A21;&#x5F0F;&#xFF0C;mitmproxy &#x901A;&#x8FC7; iptables/pf &#x4F5C;&#x4E3A;&#x4E00;&#x4E2A; TCP
-&#x5C42;&#x4EE3;&#x7406;&#x8FD0;&#x884C;&#xFF0C;&#x597D;&#x5904;&#x662F;&#x4E0D;&#x9700;&#x8981;&#x4FEE;&#x6539; HTTP &#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x914D;&#x7F6E;&#x3002;</li>
+<li>HTTP &#x4EE3;&#x7406;&#x6A21;&#x5F0F;&#xFF0C;&#x4E5F;&#x5C31;&#x662F; mitmproxy &#x4F5C;&#x4E3A;&#x4E00;&#x4E2A; HTTP &#x4EE3;&#x7406;&#x8FD0;&#x884C;&#xFF0C;&#x7C7B;&#x4F3C;&#x4E8E;HTTPSpy&#x3002;</li>
+<li>&#x900F;&#x660E;&#x6A21;&#x5F0F;&#xFF0C;mitmproxy &#x901A;&#x8FC7; iptables/pf &#x4F5C;&#x4E3A;&#x4E00;&#x4E2A; TCP&#x5C42;&#x4EE3;&#x7406;&#x8FD0;&#x884C;&#xFF0C;&#x597D;&#x5904;&#x662F;&#x4E0D;&#x9700;&#x8981;&#x4FEE;&#x6539; HTTP &#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x914D;&#x7F6E;&#x3002;</li>
 </ul>
 
 <p>
@@ -203,7 +201,7 @@ HTTPSpy&#x3002;</li>
 </div>
 </div>
 
-<div id="outline-container-orgafa61e6" class="outline-2">
+<div id="outline-container-org0b76719" class="outline-2">
 <h2 id="&#x5B89;&#x88C5;">2. &#x5B89;&#x88C5;</h2>
 <div class="outline-text-2" id="text-&#x5B89;&#x88C5;">
 <p>
@@ -224,8 +222,7 @@ HTTPSpy&#x3002;</li>
 </div>
 
 <p>
-&#x6211;&#x5728; OS X Mavericks &#x4E0A;&#x5B89;&#x88C5;&#x8FD8;&#x4F1A;&#x9047;&#x5230;&#x4E00;&#x4E2A;&#x7F16;&#x8BD1;&#x9519;&#x8BEF;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x6DFB;&#x52A0; <code>ARCHFALGS</code>
-&#x73AF;&#x5883;&#x6765;&#x5FFD;&#x7565;&#x6B64;&#x9519;&#x8BEF;&#xFF1A;
+&#x6211;&#x5728; OS X Mavericks &#x4E0A;&#x5B89;&#x88C5;&#x8FD8;&#x4F1A;&#x9047;&#x5230;&#x4E00;&#x4E2A;&#x7F16;&#x8BD1;&#x9519;&#x8BEF;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x6DFB;&#x52A0; =ARCHFALGS=&#x73AF;&#x5883;&#x6765;&#x5FFD;&#x7565;&#x6B64;&#x9519;&#x8BEF;&#xFF1A;
 </p>
 
 <div class="org-src-container">
@@ -234,12 +231,11 @@ HTTPSpy&#x3002;</li>
 </div>
 </div>
 
-<div id="outline-container-org2903aa0" class="outline-2">
+<div id="outline-container-orgbc2cb6a" class="outline-2">
 <h2 id="http-&#x5BA2;&#x6237;&#x7AEF;&#x914D;&#x7F6E;">3. HTTP &#x5BA2;&#x6237;&#x7AEF;&#x914D;&#x7F6E;</h2>
 <div class="outline-text-2" id="text-http-&#x5BA2;&#x6237;&#x7AEF;&#x914D;&#x7F6E;">
 <p>
-mitmproxy &#x5B89;&#x88C5;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#xFF0C;&#x9ED8;&#x8BA4;&#x4EE5; HTTP &#x4EE3;&#x7406;&#x6A21;&#x5F0F;&#x5DE5;&#x4F5C;&#xFF0C;&#x5C31;&#x9700;&#x8981; HTTP
-&#x5BA2;&#x6237;&#x7AEF;&#x5C06;&#x4EE3;&#x7406;&#x914D;&#x7F6E;&#x4FEE;&#x6539;&#x4E3A; mitmproxy &#x7684;&#x5730;&#x5740;&#x3002;
+mitmproxy &#x5B89;&#x88C5;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#xFF0C;&#x9ED8;&#x8BA4;&#x4EE5; HTTP &#x4EE3;&#x7406;&#x6A21;&#x5F0F;&#x5DE5;&#x4F5C;&#xFF0C;&#x5C31;&#x9700;&#x8981; HTTP&#x5BA2;&#x6237;&#x7AEF;&#x5C06;&#x4EE3;&#x7406;&#x914D;&#x7F6E;&#x4FEE;&#x6539;&#x4E3A; mitmproxy &#x7684;&#x5730;&#x5740;&#x3002;
 </p>
 
 <div class="org-src-container">
@@ -254,12 +250,12 @@ mitmproxy &#x5B89;&#x88C5;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#xFF0C;&#x9ED8;&#x8BA
 <div class="figure">
 <p><img src="1.png">
 </p>
-<p><span class="figure-number">Figure 1: </span>Snip20140402<sub>13.png</sub></p>
+<p><span class="figure-number">Figure 1: </span>Snip20140402_13.png</p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgff5000b" class="outline-2">
+<div id="outline-container-org32902d1" class="outline-2">
 <h2 id="&#x8BF7;&#x6C42;&#x5217;&#x8868;">4. &#x8BF7;&#x6C42;&#x5217;&#x8868;</h2>
 <div class="outline-text-2" id="text-&#x8BF7;&#x6C42;&#x5217;&#x8868;">
 <p>
@@ -270,7 +266,7 @@ mitmproxy &#x5B89;&#x88C5;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#xFF0C;&#x9ED8;&#x8BA
 <div class="figure">
 <p><img src="2.png">
 </p>
-<p><span class="figure-number">Figure 2: </span>Snip20140402<sub>14.png</sub></p>
+<p><span class="figure-number">Figure 2: </span>Snip20140402_14.png</p>
 </div>
 
 <p>
@@ -281,27 +277,25 @@ mitmproxy &#x5B89;&#x88C5;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#xFF0C;&#x9ED8;&#x8BA
 <div class="figure">
 <p><img src="3.png">
 </p>
-<p><span class="figure-number">Figure 3: </span>Snip20140402<sub>15.png</sub></p>
+<p><span class="figure-number">Figure 3: </span>Snip20140402_15.png</p>
 </div>
 
 <p>
-&#x5728; mitmproxy &#x4E2D;&#x53EF;&#x4EE5;&#x6309; <code>?</code> &#x8FDB;&#x5165;&#x5230;&#x5E2E;&#x52A9;&#x4FE1;&#x606F;&#x754C;&#x9762;&#xFF0C;&#x5982;&#x9700;&#x8FD4;&#x56DE;&#x5230;&#x8BF7;&#x6C42;&#x5217;&#x8868;&#x754C;&#x9762;&#x5219;&#x6309;
-=q=&#x3002;
+&#x5728; mitmproxy &#x4E2D;&#x53EF;&#x4EE5;&#x6309; <code>?</code> &#x8FDB;&#x5165;&#x5230;&#x5E2E;&#x52A9;&#x4FE1;&#x606F;&#x754C;&#x9762;&#xFF0C;&#x5982;&#x9700;&#x8FD4;&#x56DE;&#x5230;&#x8BF7;&#x6C42;&#x5217;&#x8868;&#x754C;&#x9762;&#x5219;&#x6309; <code>q</code> &#x3002;
 </p>
 
 <p>
-&#x5728;&#x8BF7;&#x6C42;&#x5217;&#x8868;&#x754C;&#x9762;&#xFF0C;&#x9EC4;&#x8272;&#x7684;&#x7BAD;&#x5934; <code>&gt;&gt;</code> &#x6307;&#x793A;&#x5F53;&#x524D;&#x9009;&#x62E9;&#x7684;&#x8BF7;&#x6C42;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; vi &#x7684;&#x5FEB;&#x6377;&#x952E;
-<code>k</code>, <code>j</code> &#x6765;&#x79FB;&#x52A8;&#x7BAD;&#x5934;&#xFF0C;=PgUp=&#x3001;=PgDown=
-&#x4E3A;&#x4E0A;&#x4E0B;&#x7FFB;&#x9875;&#xFF0C;&#x6B64;&#x5916;&#x7A7A;&#x683C;&#x952E;&#x4E5F;&#x53EF;&#x7528;&#x6765;&#x5411;&#x4E0B;&#x7FFB;&#x9875;&#x3002;
+&#x5728;&#x8BF7;&#x6C42;&#x5217;&#x8868;&#x754C;&#x9762;&#xFF0C;&#x9EC4;&#x8272;&#x7684;&#x7BAD;&#x5934; <code>&gt;&gt;</code> &#x6307;&#x793A;&#x5F53;&#x524D;&#x9009;&#x62E9;&#x7684;&#x8BF7;&#x6C42;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; vi &#x7684;&#x5FEB;&#x6377;&#x952E; <code>k</code> , <code>j</code> &#x6765;&#x79FB;&#x52A8;&#x7BAD;&#x5934;&#xFF0C; <code>PgUp</code> &#x3001; <code>PgDown</code> &#x4E3A;
+&#x4E0A;&#x4E0B;&#x7FFB;&#x9875;&#xFF0C;&#x6B64;&#x5916;&#x7A7A;&#x683C;&#x952E;&#x4E5F;&#x53EF;&#x7528;&#x6765;&#x5411;&#x4E0B;&#x7FFB;&#x9875;&#x3002;
 </p>
 
 <p>
-&#x5982;&#x8981;&#x6E05;&#x7A7A;&#x5217;&#x8868;&#xFF0C;&#x5219;&#x6309;&#x5927;&#x5199;&#x7684; =C=&#x3002;
+&#x5982;&#x8981;&#x6E05;&#x7A7A;&#x5217;&#x8868;&#xFF0C;&#x5219;&#x6309;&#x5927;&#x5199;&#x7684;  <code>C</code> &#x3002;
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgb9e8233" class="outline-2">
+<div id="outline-container-orgcf6b741" class="outline-2">
 <h2 id="&#x8FC7;&#x6EE4;&#x8BF7;&#x6C42;&#x5217;&#x8868;">5. &#x8FC7;&#x6EE4;&#x8BF7;&#x6C42;&#x5217;&#x8868;</h2>
 <div class="outline-text-2" id="text-&#x8FC7;&#x6EE4;&#x8BF7;&#x6C42;&#x5217;&#x8868;">
 <p>
@@ -309,23 +303,21 @@ mitmproxy &#x5B89;&#x88C5;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#xFF0C;&#x9ED8;&#x8BA
 </p>
 
 <p>
-&#x5728;&#x8BF7;&#x6C42;&#x5217;&#x8868;&#x754C;&#x9762;&#x6309; =l=&#xFF0C;&#x6B64;&#x65F6;&#x5217;&#x8868;&#x754C;&#x9762;&#x7684;&#x5DE6;&#x4E0B;&#x65B9;&#x4F1A;&#x63D0;&#x793A;
-<code>Limit:=&#xFF0C;&#x9700;&#x8981;&#x5728;&#x6B64;&#x8F93;&#x51FA;&#x8FC7;&#x6EE4;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;&#x8FC7;&#x6EE4;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x8BED;&#x6CD5;&#x5217;&#x5728;&#x5E2E;&#x52A9;&#x4FE1;&#x606F;&#x754C;&#x9762;&#xFF0C;&#x53EF;&#x4EE5;&#x6309;
-=?</code> &#x8FDB;&#x884C;&#x67E5;&#x770B;&#x3002;
+&#x5728;&#x8BF7;&#x6C42;&#x5217;&#x8868;&#x754C;&#x9762;&#x6309; <code>l</code> &#xFF0C;&#x6B64;&#x65F6;&#x5217;&#x8868;&#x754C;&#x9762;&#x7684;&#x5DE6;&#x4E0B;&#x65B9;&#x4F1A;&#x63D0;&#x793A; <code>Limit:</code> &#xFF0C;&#x9700;&#x8981;&#x5728;&#x6B64;&#x8F93;&#x51FA;&#x8FC7;&#x6EE4;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;&#x8FC7;&#x6EE4;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x8BED;&#x6CD5;&#x5217;&#x5728;&#x5E2E;&#x52A9;&#x4FE1;&#x606F;&#x754C;&#x9762;&#xFF0C;
+&#x53EF;&#x4EE5;&#x6309; <code>?</code> &#x8FDB;&#x884C;&#x67E5;&#x770B;&#x3002;
 </p>
 
 <p>
-&#x4F8B;&#x5982;&#xFF0C;&#x53EA;&#x663E;&#x793A;&#x6240;&#x6709;&#x7684; JS &#x6587;&#x4EF6;&#x7684;&#x8BF7;&#x6C42;&#xFF0C;&#x5373;&#x8BF7;&#x6C42;&#x7684; URL &#x5339;&#x914D; <code>\.js</code>
-&#x7684;&#x8BF7;&#x6C42;&#xFF0C;&#x5219;&#x6B64;&#x5904;&#x5E94;&#x8BE5;&#x8F93;&#x5165;&#xFF1A;=~u \.js=
+&#x4F8B;&#x5982;&#xFF0C;&#x53EA;&#x663E;&#x793A;&#x6240;&#x6709;&#x7684; JS &#x6587;&#x4EF6;&#x7684;&#x8BF7;&#x6C42;&#xFF0C;&#x5373;&#x8BF7;&#x6C42;&#x7684; URL &#x5339;&#x914D; <code>\.js</code> &#x7684;&#x8BF7;&#x6C42;&#xFF0C;&#x5219;&#x6B64;&#x5904;&#x5E94;&#x8BE5;&#x8F93;&#x5165;&#xFF1A; <code>~u \.js</code>
 </p>
 
 <p>
-&#x5982;&#x9700;&#x6E05;&#x9664;&#x8FC7;&#x6EE4;&#xFF0C;&#x5219;&#x540C;&#x6837;&#x6309; =l=&#xFF0C;&#x7136;&#x540E;&#x5220;&#x9664;&#x8FC7;&#x6EE4;&#x8868;&#x8FBE;&#x5F0F;&#x5373;&#x53EF;&#x3002;
+&#x5982;&#x9700;&#x6E05;&#x9664;&#x8FC7;&#x6EE4;&#xFF0C;&#x5219;&#x540C;&#x6837;&#x6309; <code>l</code> &#xFF0C;&#x7136;&#x540E;&#x5220;&#x9664;&#x8FC7;&#x6EE4;&#x8868;&#x8FBE;&#x5F0F;&#x5373;&#x53EF;&#x3002;
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgc5242c8" class="outline-2">
+<div id="outline-container-orgbc50747" class="outline-2">
 <h2 id="&#x67E5;&#x770B;&#x8BF7;&#x6C42;&#x7684;&#x5177;&#x4F53;&#x4FE1;&#x606F;">6. &#x67E5;&#x770B;&#x8BF7;&#x6C42;&#x7684;&#x5177;&#x4F53;&#x4FE1;&#x606F;</h2>
 <div class="outline-text-2" id="text-&#x67E5;&#x770B;&#x8BF7;&#x6C42;&#x7684;&#x5177;&#x4F53;&#x4FE1;&#x606F;">
 <p>
@@ -336,12 +328,11 @@ mitmproxy &#x5B89;&#x88C5;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#xFF0C;&#x9ED8;&#x8BA
 <div class="figure">
 <p><img src="4.png">
 </p>
-<p><span class="figure-number">Figure 4: </span>Snip20140402<sub>16.png</sub></p>
+<p><span class="figure-number">Figure 4: </span>Snip20140402_16.png</p>
 </div>
 
 <p>
-&#x8BE6;&#x7EC6;&#x4FE1;&#x606F;&#x754C;&#x9762;&#x5305;&#x62EC;&#x4E86; <code>Request</code> &#x548C; <code>Response</code> &#x4E24;&#x4E2A; Tab&#xFF0C;&#x53EF;&#x4EE5;&#x6309; <code>tab</code>
-&#x952E;&#x5207;&#x6362;&#xFF0C;&#x5206;&#x522B;&#x67E5;&#x770B; Request &#x548C; Response &#x7684;&#x8BE6;&#x7EC6;&#x4FE1;&#x606F;&#x3002;
+&#x8BE6;&#x7EC6;&#x4FE1;&#x606F;&#x754C;&#x9762;&#x5305;&#x62EC;&#x4E86; <code>Request</code> &#x548C; <code>Response</code> &#x4E24;&#x4E2A; Tab&#xFF0C;&#x53EF;&#x4EE5;&#x6309; =tab=&#x952E;&#x5207;&#x6362;&#xFF0C;&#x5206;&#x522B;&#x67E5;&#x770B; Request &#x548C; Response &#x7684;&#x8BE6;&#x7EC6;&#x4FE1;&#x606F;&#x3002;
 </p>
 
 <p>
@@ -349,11 +340,9 @@ mitmproxy &#x5B89;&#x88C5;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#xFF0C;&#x9ED8;&#x8BA
 </p>
 
 <p>
-mitmproxy &#x4F1A;&#x4F7F;&#x7528;&#x5408;&#x9002;&#x7684;&#x65B9;&#x5F0F;&#x663E;&#x793A;Request &#x548C; Response &#x7684; body
-&#x90E8;&#x5206;&#xFF0C;&#x4F8B;&#x5982;&#x5BF9;&#x4E8E;&#x538B;&#x7F29;&#x8FC7;&#x7684; JS &#xFF0C;mitmproxy
-&#x4F1A;&#x89E3;&#x538B;&#x7F29;&#x540E;&#x663E;&#x793A;&#x3002;&#x5982;&#x9700;&#x8981;&#x5207;&#x6362;&#x663E;&#x793A;&#x65B9;&#x5F0F;&#xFF0C;&#x53EF;&#x4EE5;&#x5728;&#x6B64;&#x754C;&#x9762;&#x6309; <code>m</code>
-&#x6765;&#x9009;&#x62E9;&#x4E0D;&#x540C;&#x7684;&#x663E;&#x793A;&#x65B9;&#x5F0F;&#x3002;&#x4F8B;&#x5982;&#xFF0C;&#x5BF9;&#x4E8E;&#x5305;&#x542B;&#x4E86;&#x4E2D;&#x6587;&#x7684; HTML
-&#x9875;&#x9762;&#xFF0C;&#x5982;&#x9700;&#x8981;&#x663E;&#x793A;&#x4E2D;&#x6587;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <code>urlencoded</code> &#x6A21;&#x5F0F;&#x3002;
+mitmproxy &#x4F1A;&#x4F7F;&#x7528;&#x5408;&#x9002;&#x7684;&#x65B9;&#x5F0F;&#x663E;&#x793A;Request &#x548C; Response &#x7684; body&#x90E8;&#x5206;&#xFF0C;&#x4F8B;&#x5982;&#x5BF9;&#x4E8E;&#x538B;&#x7F29;&#x8FC7;&#x7684; JS &#xFF0C;mitmproxy &#x4F1A;&#x89E3;&#x538B;&#x7F29;&#x540E;&#x663E;&#x793A;&#x3002;&#x5982;&#x9700;&#x8981;
+&#x5207;&#x6362;&#x663E;&#x793A;&#x65B9;&#x5F0F;&#xFF0C;&#x53EF;&#x4EE5;&#x5728;&#x6B64;&#x754C;&#x9762;&#x6309; <code>m</code> &#x6765;&#x9009;&#x62E9;&#x4E0D;&#x540C;&#x7684;&#x663E;&#x793A;&#x65B9;&#x5F0F;&#x3002;&#x4F8B;&#x5982;&#xFF0C;&#x5BF9;&#x4E8E;&#x5305;&#x542B;&#x4E86;&#x4E2D;&#x6587;&#x7684; HTML&#x9875;&#x9762;&#xFF0C;&#x5982;&#x9700;&#x8981;&#x663E;&#x793A;&#x4E2D;&#x6587;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;
+<code>urlencoded</code> &#x6A21;&#x5F0F;&#x3002;
 </p>
 
 <p>
@@ -362,41 +351,35 @@ mitmproxy &#x4F1A;&#x4F7F;&#x7528;&#x5408;&#x9002;&#x7684;&#x65B9;&#x5F0F;&#x663
 </div>
 </div>
 
-<div id="outline-container-orgcbe1b92" class="outline-2">
+<div id="outline-container-org0ad7845" class="outline-2">
 <h2 id="&#x62E6;&#x622A;&#x8BF7;&#x6C42;">7. &#x62E6;&#x622A;&#x8BF7;&#x6C42;</h2>
 <div class="outline-text-2" id="text-&#x62E6;&#x622A;&#x8BF7;&#x6C42;">
 <p>
-mitmproxy &#x652F;&#x6301;&#x5BF9;&#x8BF7;&#x6C42;&#x8FDB;&#x884C;&#x62E6;&#x622A;&#xFF0C;&#x62E6;&#x622A;&#x540E;&#x8FD8;&#x53EF;&#x4EE5;&#x4FEE;&#x6539; Request &#x6216; Response
-&#x7684;&#x5185;&#x5BB9;&#x3002;
+mitmproxy &#x652F;&#x6301;&#x5BF9;&#x8BF7;&#x6C42;&#x8FDB;&#x884C;&#x62E6;&#x622A;&#xFF0C;&#x62E6;&#x622A;&#x540E;&#x8FD8;&#x53EF;&#x4EE5;&#x4FEE;&#x6539; Request &#x6216; Response&#x7684;&#x5185;&#x5BB9;&#x3002;
 </p>
 
 <p>
-&#x5728;&#x8BF7;&#x6C42;&#x5217;&#x8868;&#x754C;&#x9762;&#x6309; =i=&#xFF0C;&#x5728;&#x5DE6;&#x4E0B;&#x89D2;&#x4F1A;&#x663E;&#x793A;
-=Intercept filter:=&#xFF0C;&#x8981;&#x6C42;&#x8F93;&#x5165;&#x8FC7;&#x6EE4;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;&#x7528;&#x4E8E;&#x6307;&#x793A;&#x62E6;&#x622A;&#x54EA;&#x4E9B;&#x8BF7;&#x6C42;&#xFF0C;&#x6B64;&#x5904;&#x7684;&#x8FC7;&#x6EE4;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x8BED;&#x6CD5;&#x540C;&#x8BF7;&#x6C42;&#x5217;&#x8868;&#x8FC7;&#x6EE4;&#x8868;&#x8FBE;&#x5F0F;&#x76F8;&#x540C;&#x3002;
+&#x5728;&#x8BF7;&#x6C42;&#x5217;&#x8868;&#x754C;&#x9762;&#x6309; <code>i</code> &#xFF0C;&#x5728;&#x5DE6;&#x4E0B;&#x89D2;&#x4F1A;&#x663E;&#x793A; <code>Intercept filter:</code> &#xFF0C;&#x8981;&#x6C42;&#x8F93;&#x5165;&#x8FC7;&#x6EE4;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;&#x7528;&#x4E8E;&#x6307;&#x793A;&#x62E6;&#x622A;&#x54EA;&#x4E9B;&#x8BF7;&#x6C42;&#xFF0C;&#x6B64;&#x5904;&#x7684;&#x8FC7;&#x6EE4;&#x8868;&#x8FBE;&#x5F0F;
+&#x7684;&#x8BED;&#x6CD5;&#x540C;&#x8BF7;&#x6C42;&#x5217;&#x8868;&#x8FC7;&#x6EE4;&#x8868;&#x8FBE;&#x5F0F;&#x76F8;&#x540C;&#x3002;
 </p>
 
 <p>
-&#x4F8B;&#x5982;&#xFF0C;&#x5982;&#x8981;&#x62E6;&#x622A;&#x6240;&#x6709;&#x7684; JS &#x6587;&#x4EF6;&#x7684;&#x8BF7;&#x6C42;&#xFF0C;&#x5219;&#x5728;&#x6B64;&#x5904;&#x8F93;&#x5165; =~u \.js=&#x3002;
+&#x4F8B;&#x5982;&#xFF0C;&#x5982;&#x8981;&#x62E6;&#x622A;&#x6240;&#x6709;&#x7684; JS &#x6587;&#x4EF6;&#x7684;&#x8BF7;&#x6C42;&#xFF0C;&#x5219;&#x5728;&#x6B64;&#x5904;&#x8F93;&#x5165; <code>~u \.js</code> &#x3002;
 </p>
 
 <p>
-&#x518D;&#x6B21;&#x8BBF;&#x95EE; <a href="http://ruby-china.org/topics" target="_blank" rel="noopener">http://ruby-china.org/topics</a> &#x9875;&#x9762;&#xFF0C;&#x5728; mitmproxy
-&#x7684;&#x8BF7;&#x6C42;&#x5217;&#x8868;&#x754C;&#x9762;&#x4E2D;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5BF9; JS &#x7684;&#x8BF7;&#x6C42;&#x90FD;&#x663E;&#x793A;&#x4E3A;&#x6A59;&#x8272;&#xFF0C;&#x8868;&#x793A;&#x8FD9;&#x4E9B;&#x8BF7;&#x6C42;&#x88AB;&#x62E6;&#x622A;&#x4E86;&#x3002;
+&#x518D;&#x6B21;&#x8BBF;&#x95EE; <a href="http://ruby-china.org/topics" target="_blank" rel="noopener">http://ruby-china.org/topics</a> &#x9875;&#x9762;&#xFF0C;&#x5728; mitmproxy&#x7684;&#x8BF7;&#x6C42;&#x5217;&#x8868;&#x754C;&#x9762;&#x4E2D;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5BF9; JS &#x7684;&#x8BF7;&#x6C42;&#x90FD;&#x663E;&#x793A;&#x4E3A;&#x6A59;&#x8272;&#xFF0C;&#x8868;&#x793A;&#x8FD9;&#x4E9B;&#x8BF7;&#x6C42;
+&#x88AB;&#x62E6;&#x622A;&#x4E86;&#x3002;
 </p>
 
 <p>
-&#x8BF7;&#x6C42;&#x88AB;&#x62E6;&#x622A;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x8FDB;&#x5165;&#x5230;&#x8BE5;&#x8BF7;&#x6C42;&#x7684;&#x8BE6;&#x7EC6;&#x4FE1;&#x606F;&#x754C;&#x9762;&#xFF0C;&#x7136;&#x540E;&#x6309;
-<code>e=&#xFF0C;&#x5BF9;&#x8BF7;&#x6C42;&#x8FDB;&#x5165;&#x7F16;&#x8F91;&#xFF0C;&#x7F16;&#x8F91;&#x5B8C;&#x6210;&#x540E;&#x6309; =ESC</code> &#x9000;&#x51FA;&#x7F16;&#x8F91;&#x754C;&#x9762;&#x3002;&#x6309; <code>a</code>
-&#x653E;&#x884C;&#x8BE5;&#x8BF7;&#x6C42;&#xFF08;&#x4E5F;&#x53EF;&#x4EE5;&#x6309;&#x5927;&#x5199;&#x7684;
-=A=&#x6765;&#x653E;&#x884C;&#x6240;&#x6709;&#x88AB;&#x62E6;&#x622A;&#x7684;&#x8BF7;&#x6C42;&#xFF09;&#xFF0C;&#x8BF7;&#x6C42;&#x88AB;&#x653E;&#x884C;&#x540E;&#xFF0C;Server &#x6536;&#x5230;&#x7684;&#x5C06;&#x662F;&#x88AB;&#x7F16;&#x8F91;&#x8FC7;&#x7684;
-Request&#x3002;
+&#x8BF7;&#x6C42;&#x88AB;&#x62E6;&#x622A;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x8FDB;&#x5165;&#x5230;&#x8BE5;&#x8BF7;&#x6C42;&#x7684;&#x8BE6;&#x7EC6;&#x4FE1;&#x606F;&#x754C;&#x9762;&#xFF0C;&#x7136;&#x540E;&#x6309; <code>e</code> &#xFF0C;&#x5BF9;&#x8BF7;&#x6C42;&#x8FDB;&#x5165;&#x7F16;&#x8F91;&#xFF0C;&#x7F16;&#x8F91;&#x5B8C;&#x6210;&#x540E;&#x6309; <code>ESC</code> &#x9000;&#x51FA;&#x7F16;&#x8F91;&#x754C;&#x9762;&#x3002;&#x6309; <code>a</code> &#x653E;
+&#x884C;&#x8BE5;&#x8BF7;&#x6C42;&#xFF08;&#x4E5F;&#x53EF;&#x4EE5;&#x6309;&#x5927;&#x5199;&#x7684; <code>A</code> &#x6765;&#x653E;&#x884C;&#x6240;&#x6709;&#x88AB;&#x62E6;&#x622A;&#x7684;&#x8BF7;&#x6C42;&#xFF09;&#xFF0C;&#x8BF7;&#x6C42;&#x88AB;&#x653E;&#x884C;&#x540E;&#xFF0C;Server &#x6536;&#x5230;&#x7684;&#x5C06;&#x662F;&#x88AB;&#x7F16;&#x8F91;&#x8FC7;&#x7684;Request&#x3002;
 </p>
 
 <p>
-&#x5F53; Server &#x7684; Response &#x8FD4;&#x56DE;&#x5230; mitmproxy
-&#x65F6;&#xFF0C;&#x5C06;&#x518D;&#x6B21;&#x88AB;&#x62E6;&#x622A;&#xFF0C;&#x6B64;&#x65F6;&#x5728;&#x8BE6;&#x7EC6;&#x4FE1;&#x606F;&#x754C;&#x9762;&#x6309; <code>e</code> &#x53EF;&#x4EE5;&#x5BF9; Response
-&#x8FDB;&#x884C;&#x7F16;&#x8F91;&#xFF0C;&#x7F16;&#x8F91;&#x5B8C;&#x6210;&#x540E;&#xFF0C;&#x540C;&#x6837;&#x6309; <code>ESC</code> &#x9000;&#x51FA;&#x7F16;&#x8F91;&#xFF0C;&#x540C;&#x6837;&#x6309; <code>a</code> &#x6216; <code>A</code> &#x653E;&#x884C;
-Response&#xFF0C;&#x5BA2;&#x6237;&#x7AEF;&#x6536;&#x5230;&#x7684; Response &#x5C06;&#x662F;&#x88AB;&#x7F16;&#x8F91;&#x8FC7;&#x7684; Response&#x3002;
+&#x5F53; Server &#x7684; Response &#x8FD4;&#x56DE;&#x5230; mitmproxy&#x65F6;&#xFF0C;&#x5C06;&#x518D;&#x6B21;&#x88AB;&#x62E6;&#x622A;&#xFF0C;&#x6B64;&#x65F6;&#x5728;&#x8BE6;&#x7EC6;&#x4FE1;&#x606F;&#x754C;&#x9762;&#x6309; <code>e</code> &#x53EF;&#x4EE5;&#x5BF9; Response&#x8FDB;&#x884C;&#x7F16;&#x8F91;&#xFF0C;&#x7F16;&#x8F91;&#x5B8C;&#x6210;&#x540E;&#xFF0C;
+&#x540C;&#x6837;&#x6309; <code>ESC</code> &#x9000;&#x51FA;&#x7F16;&#x8F91;&#xFF0C;&#x540C;&#x6837;&#x6309; <code>a</code> &#x6216; <code>A</code> &#x653E;&#x884C;Response&#xFF0C;&#x5BA2;&#x6237;&#x7AEF;&#x6536;&#x5230;&#x7684; Response &#x5C06;&#x662F;&#x88AB;&#x7F16;&#x8F91;&#x8FC7;&#x7684; Response&#x3002;
 </p>
 
 <p>

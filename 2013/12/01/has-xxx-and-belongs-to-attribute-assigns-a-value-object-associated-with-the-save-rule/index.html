@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="1. When are objects saved when assigning an object to a   belongs_to association   :CUSTOMID: when-are-objects-saved-when-assigning-an-object-to-a-belongsto-association    &amp;#x5C06;&amp;#x4E00;&amp;#x4E2A;&amp;">
+    <meta name="description" content="1. When are objects saved when assigning an object to a belongs_to association   &amp;#x5C06;&amp;#x4E00;&amp;#x4E2A;&amp;#x5BF9;&amp;#x8C61;&amp;#x8D4B;&amp;#x503C;&amp;#x7ED9;&amp;#x4E00;&amp;#x4E2A; belongs_to &amp;#x5173;&amp;#x8054;&amp;#x5C5E;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="给 belongs_to 和 has_xxx 关联属性赋值时对象的保存规则">
 <meta property="og:url" content="http://yoursite.com/2013/12/01/has-xxx-and-belongs-to-attribute-assigns-a-value-object-associated-with-the-save-rule/index.html">
 <meta property="og:site_name" content="Let&#39;s hack it!">
-<meta property="og:description" content="1. When are objects saved when assigning an object to a   belongs_to association   :CUSTOMID: when-are-objects-saved-when-assigning-an-object-to-a-belongsto-association    &amp;#x5C06;&amp;#x4E00;&amp;#x4E2A;&amp;">
+<meta property="og:description" content="1. When are objects saved when assigning an object to a belongs_to association   &amp;#x5C06;&amp;#x4E00;&amp;#x4E2A;&amp;#x5BF9;&amp;#x8C61;&amp;#x8D4B;&amp;#x503C;&amp;#x7ED9;&amp;#x4E00;&amp;#x4E2A; belongs_to &amp;#x5173;&amp;#x8054;&amp;#x5C5E;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2013-11-30T16:00:00.000Z">
-<meta property="article:modified_time" content="2019-12-26T13:53:02.289Z">
+<meta property="article:modified_time" content="2019-12-27T06:08:41.454Z">
 <meta property="article:author" content="zxyho">
 <meta property="article:tag" content="Ruby">
 <meta property="article:tag" content="Rails">
@@ -107,7 +107,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#org902b61a"><span class="toc-number">1.</span> <span class="toc-text">1. When are objects saved when assigning an object to a</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#org07c926d"><span class="toc-number">2.</span> <span class="toc-text">2. When are objects saved when assigning objects to has_xxx</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#org9c0b096"><span class="toc-number">1.</span> <span class="toc-text">1. When are objects saved when assigning an object to a belongs_to association</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#orgf552db2"><span class="toc-number">2.</span> <span class="toc-text">2. When are objects saved when assigning objects to has_xxx association</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -153,16 +153,9 @@
   <div class="content" itemprop="articleBody">
     <div id="content">
 
-<div id="outline-container-org902b61a" class="outline-2">
-<h2 id="org902b61a">1. When are objects saved when assigning an object to a</h2>
-<div class="outline-text-2" id="text-org902b61a">
-<p>
-<code>belongs_to</code> association
-</p>
-<p>
-:CUSTOM<sub>ID</sub>: when-are-objects-saved-when-assigning-an-object-to-a-belongs<sub>to</sub>-association
-</p>
-
+<div id="outline-container-org9c0b096" class="outline-2">
+<h2 id="org9c0b096">1. When are objects saved when assigning an object to a <code>belongs_to</code> association</h2>
+<div class="outline-text-2" id="text-org9c0b096">
 <p>
 &#x5C06;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x8D4B;&#x503C;&#x7ED9;&#x4E00;&#x4E2A; <code>belongs_to</code>
 &#x5173;&#x8054;&#x5C5E;&#x6027;&#x65F6;&#xFF0C;&#x8FD9;&#x4E2A;&#x5BF9;&#x8C61;&#x5E76;&#x4E0D;&#x4F1A;&#x88AB;&#x81EA;&#x52A8;&#x4FDD;&#x5B58;&#xFF0C;&#x8D4B;&#x503C;&#x7684;&#x5DE6;&#x503C;&#x5C5E;&#x6027;&#x6240;&#x5C5E;&#x7684;&#x5BF9;&#x8C61;&#x4E5F;&#x4E0D;&#x4F1A;&#x88AB;&#x4FDD;&#x5B58;&#x3002;
@@ -170,35 +163,23 @@
 </div>
 </div>
 
-<div id="outline-container-org07c926d" class="outline-2">
-<h2 id="org07c926d">2. When are objects saved when assigning objects to <code>has_xxx</code></h2>
-<div class="outline-text-2" id="text-org07c926d">
+<div id="outline-container-orgf552db2" class="outline-2">
+<h2 id="orgf552db2">2. When are objects saved when assigning objects to <code>has_xxx</code> association</h2>
+<div class="outline-text-2" id="text-orgf552db2">
 <p>
-association
-</p>
-<p>
-:CUSTOM<sub>ID</sub>: when-are-objects-saved-when-assigning-objects-to-has<sub>xxx</sub>-association
-</p>
-
-<p>
-&#x5F53;&#x5C06;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A;&#x5BF9;&#x8C61;&#x8D4B;&#x503C;&#x7ED9;&#x4E00;&#x4E2A; <code>has_one=&#x3001;=has_many</code> &#x6216;&#x8005;
-<code>has_and_belongs_to_many</code>
-&#x5173;&#x8054;&#x5C5E;&#x6027;&#x65F6;&#xFF0C;&#x8FD9;&#x4E2A;&#xFF08;&#x4E9B;&#xFF09;&#x5BF9;&#x8C61;&#x5C06;&#x88AB;&#x81EA;&#x52A8;&#x4FDD;&#x5B58;&#xFF08;&#x56E0;&#x4E3A;&#x9700;&#x8981;&#x66F4;&#x65B0;&#x8FD9;&#x4E9B;&#x5BF9;&#x8C61;&#x6240;&#x5BF9;&#x5E94;&#x7684;&#x6570;&#x636E;&#x5E93;&#x8BB0;&#x5F55;&#x7684;
-foreign
-key&#xFF09;&#x3002;&#x53E6;&#x5916;&#x4EFB;&#x4F55;&#x4ECE;&#x8BE5;&#x5173;&#x8054;&#x5173;&#x7CFB;&#x4E2D;&#x5254;&#x9664;&#x7684;&#x5BF9;&#x8C61;&#x4E5F;&#x4F1A;&#x88AB;&#x81EA;&#x52A8;&#x4FDD;&#x5B58;&#xFF0C;&#x56E0;&#x4E3A;&#x4ED6;&#x4EEC;&#x7684;
-foreign key &#x4E5F;&#x9700;&#x8981;&#x66F4;&#x65B0;&#x3002;
+&#x5F53;&#x5C06;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A;&#x5BF9;&#x8C61;&#x8D4B;&#x503C;&#x7ED9;&#x4E00;&#x4E2A; <code>has_one</code> &#x3001; <code>has_many</code> &#x6216;&#x8005; <code>has_and_belongs_to_many</code> &#x5173;&#x8054;&#x5C5E;&#x6027;&#x65F6;&#xFF0C;&#x8FD9;&#x4E2A;&#xFF08;&#x4E9B;&#xFF09;&#x5BF9;&#x8C61;&#x5C06;&#x88AB;&#x81EA;&#x52A8;
+&#x4FDD;&#x5B58;&#xFF08;&#x56E0;&#x4E3A;&#x9700;&#x8981;&#x66F4;&#x65B0;&#x8FD9;&#x4E9B;&#x5BF9;&#x8C61;&#x6240;&#x5BF9;&#x5E94;&#x7684;&#x6570;&#x636E;&#x5E93;&#x8BB0;&#x5F55;&#x7684;foreign key&#xFF09;&#x3002;&#x53E6;&#x5916;&#x4EFB;&#x4F55;&#x4ECE;&#x8BE5;&#x5173;&#x8054;&#x5173;&#x7CFB;&#x4E2D;&#x5254;&#x9664;&#x7684;&#x5BF9;&#x8C61;&#x4E5F;&#x4F1A;&#x88AB;&#x81EA;&#x52A8;&#x4FDD;&#x5B58;&#xFF0C;&#x56E0;&#x4E3A;&#x4ED6;&#x4EEC;
+&#x7684;foreign key &#x4E5F;&#x9700;&#x8981;&#x66F4;&#x65B0;&#x3002;
 </p>
 
 <p>
 &#x5982;&#x679C;&#x5728;&#x4E0A;&#x8FF0;&#x63D0;&#x53CA;&#x8FD9;&#x4E9B;&#x5BF9;&#x8C61;&#x7684;&#x81EA;&#x52A8;&#x4FDD;&#x5B58;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x7531;&#x4E8E; validation
-&#x51FA;&#x9519;&#x800C;&#x4FDD;&#x5B58;&#x5931;&#x8D25;&#xFF0C;&#x90A3;&#x4E48;&#x8D4B;&#x503C;&#x8BED;&#x53E5;&#x4F1A;&#x8FD4;&#x56DE; =false=&#xFF0C;&#x5E76;&#x6B64;&#x8D4B;&#x503C;&#x64CD;&#x4F5C;&#x5C06;&#x88AB;&#x53D6;&#x6D88;&#x3002;
+&#x51FA;&#x9519;&#x800C;&#x4FDD;&#x5B58;&#x5931;&#x8D25;&#xFF0C;&#x90A3;&#x4E48;&#x8D4B;&#x503C;&#x8BED;&#x53E5;&#x4F1A;&#x8FD4;&#x56DE;  <code>false</code> &#xFF0C;&#x5E76;&#x6B64;&#x8D4B;&#x503C;&#x64CD;&#x4F5C;&#x5C06;&#x88AB;&#x53D6;&#x6D88;&#x3002;
 </p>
 
 <p>
-&#x53E6;&#x5916;&#xFF0C;&#x5982;&#x679C;&#x7236;&#x5BF9;&#x8C61;&#xFF08;&#x58F0;&#x660E;
-<code>has_one=&#x3001;=has_many=&#x3001;=has_and_belongs_to_many=&#x7684;&#x90A3;&#x4E00;&#x65B9;&#xFF09;&#x5C1A;&#x672A;&#x4FDD;&#x5B58;&#xFF08;&#x5C31;&#x662F;&#x8BF4;&#x5728;&#x6B64;&#x5BF9;&#x8C61;&#x4E0A;&#x8C03;&#x7528;
-=new_record?</code> &#x5C06;&#x8FD4;&#x56DE;
-=true=&#xFF09;&#xFF0C;&#x90A3;&#x4E48;&#x8FD9;&#x4E9B;&#x5B69;&#x5B50;&#x5BF9;&#x8C61;&#x4E5F;&#x4E0D;&#x4F1A;&#x88AB;&#x4FDD;&#x5B58;&#xFF0C;&#x5B69;&#x5B50;&#x5BF9;&#x8C61;&#x5C06;&#x4F1A;&#x5728;&#x7236;&#x5BF9;&#x8C61;&#x88AB;&#x4FDD;&#x5B58;&#x65F6;&#x88AB;&#x81EA;&#x52A8;&#x4FDD;&#x5B58;&#x3002;
+&#x53E6;&#x5916;&#xFF0C;&#x5982;&#x679C;&#x7236;&#x5BF9;&#x8C61;&#xFF08;&#x58F0;&#x660E; <code>has_one</code> &#x3001; <code>has_many</code> &#x3001; <code>has_and_belongs_to_many</code> &#x7684;&#x90A3;&#x4E00;&#x65B9;&#xFF09;&#x5C1A;&#x672A;&#x4FDD;&#x5B58;&#xFF08;&#x5C31;&#x662F;&#x8BF4;&#x5728;&#x6B64;&#x5BF9;&#x8C61;&#x4E0A;&#x8C03;&#x7528;
+ <code>new_record?</code> &#x5C06;&#x8FD4;&#x56DE; <code>true</code> &#xFF09;&#xFF0C;&#x90A3;&#x4E48;&#x8FD9;&#x4E9B;&#x5B69;&#x5B50;&#x5BF9;&#x8C61;&#x4E5F;&#x4E0D;&#x4F1A;&#x88AB;&#x4FDD;&#x5B58;&#xFF0C;&#x5B69;&#x5B50;&#x5BF9;&#x8C61;&#x5C06;&#x4F1A;&#x5728;&#x7236;&#x5BF9;&#x8C61;&#x88AB;&#x4FDD;&#x5B58;&#x65F6;&#x88AB;&#x81EA;&#x52A8;&#x4FDD;&#x5B58;&#x3002;
 </p>
 </div>
 </div>
@@ -226,7 +207,7 @@ foreign key &#x4E5F;&#x9700;&#x8981;&#x66F4;&#x65B0;&#x3002;
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#org902b61a"><span class="toc-number">1.</span> <span class="toc-text">1. When are objects saved when assigning an object to a</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#org07c926d"><span class="toc-number">2.</span> <span class="toc-text">2. When are objects saved when assigning objects to has_xxx</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#org9c0b096"><span class="toc-number">1.</span> <span class="toc-text">1. When are objects saved when assigning an object to a belongs_to association</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#orgf552db2"><span class="toc-number">2.</span> <span class="toc-text">2. When are objects saved when assigning objects to has_xxx association</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
