@@ -14,9 +14,10 @@
 <meta property="og:description" content="1. MULTILINE &amp;#x6807;&amp;#x8BC6;   &amp;#x5728; Perl 5 &amp;#x6B63;&amp;#x5219;&amp;#x4E2D;&amp;#xFF0C;&amp;#x7528;&amp;#x4E8E;&amp;#x8868;&amp;#x793A;&amp;#x5B57;&amp;#x7B26;&amp;#x4E32;&amp;#x5F00;&amp;#x5934;&amp;#x548C;&amp;#x5B57;&amp;#x7B26;&amp;#x4E32;&amp;#x7ED3;&amp;#x5C">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2014-03-09T16:00:00.000Z">
-<meta property="article:modified_time" content="2019-12-27T06:01:18.665Z">
+<meta property="article:modified_time" content="2021-12-31T04:57:33.592Z">
 <meta property="article:author" content="zxyho">
 <meta property="article:tag" content="Ruby">
+<meta property="article:tag" content="Regexp">
 <meta name="twitter:card" content="summary">
     
     
@@ -106,7 +107,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#multiline-&#x6807;&#x8BC6;"><span class="toc-number">1.</span> <span class="toc-text">1. MULTILINE &#x6807;&#x8BC6;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dotall-&#x6807;&#x8BB0;"><span class="toc-number">2.</span> <span class="toc-text">2. DOTALL &#x6807;&#x8BB0;</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#org0ce6f1e"><span class="toc-number">1.</span> <span class="toc-text">1. MULTILINE &#x6807;&#x8BC6;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#org329a991"><span class="toc-number">2.</span> <span class="toc-text">2. DOTALL &#x6807;&#x8BB0;</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -141,7 +142,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Ruby/" rel="tag">Ruby</a>
+        <a class="tag-link" href="/tags/Regexp/" rel="tag">Regexp</a>, <a class="tag-link" href="/tags/Ruby/" rel="tag">Ruby</a>
     </div>
 
 
@@ -152,9 +153,9 @@
   <div class="content" itemprop="articleBody">
     <div id="content">
 
-<div id="outline-container-org344ec65" class="outline-2">
-<h2 id="multiline-&#x6807;&#x8BC6;">1. <code>MULTILINE</code> &#x6807;&#x8BC6;</h2>
-<div class="outline-text-2" id="text-multiline-&#x6807;&#x8BC6;">
+<div id="outline-container-org0ce6f1e" class="outline-2">
+<h2 id="org0ce6f1e">1. <code>MULTILINE</code> &#x6807;&#x8BC6;</h2>
+<div class="outline-text-2" id="text-org0ce6f1e">
 <p>
 &#x5728; Perl 5 &#x6B63;&#x5219;&#x4E2D;&#xFF0C;&#x7528;&#x4E8E;&#x8868;&#x793A;&#x5B57;&#x7B26;&#x4E32;&#x5F00;&#x5934;&#x548C;&#x5B57;&#x7B26;&#x4E32;&#x7ED3;&#x5C3E;&#x7684;&#x4E24;&#x4E2A;&#x8868;&#x793A;&#x8FB9;&#x754C;&#x7684;&#x5143;&#x5B57;&#x7B26; <code>^</code> &#x548C; <code>&amp;</code>,&#x9ED8;&#x8BA4;&#x5206;&#x522B;&#x53EA;&#x5339;&#x914D;&#x6574;&#x4E2A;&#x5B57;&#x7B26;&#x4E32;&#x7684;&#x5F00;&#x5934;&#x548C;&#x7ED3;&#x5C3E;&#x3002;
 &#x4E3E;&#x4F8B;&#x6765;&#x8BF4;&#xFF0C;&#x5BF9;&#x4E8E;&#x5B57;&#x7B26;&#x5B57;&#x7B26;&#x4E32; <code>hello\nwordl\n</code> &#x6765;&#x8BF4;&#xFF0C;&#x867D;&#x7136;&#x6574;&#x4E2A;&#x5B57;&#x7B26;&#x4E32;&#x5B9E;&#x9645;&#x4E0A;&#x5305;&#x542B;&#x4E86;&#x4E24;&#x884C;&#x6587;&#x672C;&#xFF0C;&#x4F46;&#x662F;&#x4F7F;&#x7528;&#x6B63;&#x5219; <code>/^./g</code> &#x53EA;&#x4F1A;&#x5339;&#x914D;&#x5230;&#x5B57;
@@ -196,9 +197,9 @@ Ruby &#x7684;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x5F15;&#x64CE;&#x9ED8;&#x
 </div>
 </div>
 
-<div id="outline-container-orgf937340" class="outline-2">
-<h2 id="dotall-&#x6807;&#x8BB0;">2. <code>DOTALL</code> &#x6807;&#x8BB0;</h2>
-<div class="outline-text-2" id="text-dotall-&#x6807;&#x8BB0;">
+<div id="outline-container-org329a991" class="outline-2">
+<h2 id="org329a991">2. <code>DOTALL</code> &#x6807;&#x8BB0;</h2>
+<div class="outline-text-2" id="text-org329a991">
 <p>
 &#x5728; Perl 5 &#x6B63;&#x5219;&#x4E2D;&#xFF0C;&#x5143;&#x5B57;&#x7B26; <code>.</code> &#x867D;&#x7136;&#x88AB;&#x8BA4;&#x4E3A;&#x53EF;&#x4EE5;&#x5339;&#x914D;&#x4EFB;&#x4F55;&#x5B57;&#x7B26;&#xFF0C;&#x4F46;&#x5B9E;&#x9645;&#x4E0A;&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B; <code>.</code> &#x5E76;&#x4E0D;&#x5339;&#x914D;&#x6362;&#x884C;&#x7B26;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;
 </p>
@@ -276,7 +277,7 @@ Ruby &#x7684;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x5F15;&#x64CE;&#x9ED8;&#x
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#multiline-&#x6807;&#x8BC6;"><span class="toc-number">1.</span> <span class="toc-text">1. MULTILINE &#x6807;&#x8BC6;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dotall-&#x6807;&#x8BB0;"><span class="toc-number">2.</span> <span class="toc-text">2. DOTALL &#x6807;&#x8BB0;</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#org0ce6f1e"><span class="toc-number">1.</span> <span class="toc-text">1. MULTILINE &#x6807;&#x8BC6;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#org329a991"><span class="toc-number">2.</span> <span class="toc-text">2. DOTALL &#x6807;&#x8BB0;</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">

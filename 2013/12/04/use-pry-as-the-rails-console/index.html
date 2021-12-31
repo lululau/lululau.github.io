@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="(1). &amp;#x7B80;&amp;#x5355;&amp;#x914D;&amp;#x7F6E;    &amp;#x5982;&amp;#x679C;&amp;#x9700;&amp;#x8981;&amp;#x4F7F;&amp;#x7528; Pry &amp;#x4F5C;&amp;#x4E3A; Rails Console&amp;#xFF0C;&amp;#x53EA;&amp;#x9700;&amp;#x8981;&amp;#x7B80;&amp;#x5355;&amp;#x5730;&amp;#x4FEE;&amp;#x6539; d">
+    <meta name="description" content="1. &amp;#x7B80;&amp;#x5355;&amp;#x914D;&amp;#x7F6E;   &amp;#x5982;&amp;#x679C;&amp;#x9700;&amp;#x8981;&amp;#x4F7F;&amp;#x7528; Pry &amp;#x4F5C;&amp;#x4E3A; Rails Console&amp;#xFF0C;&amp;#x53EA;&amp;#x9700;&amp;#x8981;&amp;#x7B80;&amp;#x5355;&amp;#x5730;&amp;#x4FEE;&amp;#x6539; de">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 Pry 作为 Rails Console">
 <meta property="og:url" content="http://yoursite.com/2013/12/04/use-pry-as-the-rails-console/index.html">
 <meta property="og:site_name" content="Let&#39;s hack it!">
-<meta property="og:description" content="(1). &amp;#x7B80;&amp;#x5355;&amp;#x914D;&amp;#x7F6E;    &amp;#x5982;&amp;#x679C;&amp;#x9700;&amp;#x8981;&amp;#x4F7F;&amp;#x7528; Pry &amp;#x4F5C;&amp;#x4E3A; Rails Console&amp;#xFF0C;&amp;#x53EA;&amp;#x9700;&amp;#x8981;&amp;#x7B80;&amp;#x5355;&amp;#x5730;&amp;#x4FEE;&amp;#x6539; d">
+<meta property="og:description" content="1. &amp;#x7B80;&amp;#x5355;&amp;#x914D;&amp;#x7F6E;   &amp;#x5982;&amp;#x679C;&amp;#x9700;&amp;#x8981;&amp;#x4F7F;&amp;#x7528; Pry &amp;#x4F5C;&amp;#x4E3A; Rails Console&amp;#xFF0C;&amp;#x53EA;&amp;#x9700;&amp;#x8981;&amp;#x7B80;&amp;#x5355;&amp;#x5730;&amp;#x4FEE;&amp;#x6539; de">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2013-12-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2019-12-27T06:06:08.639Z">
+<meta property="article:modified_time" content="2021-12-31T04:59:56.668Z">
 <meta property="article:author" content="zxyho">
 <meta property="article:tag" content="Ruby">
 <meta name="twitter:card" content="summary">
@@ -106,7 +106,7 @@
 
     </div>
     <div id="toc">
-      
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#org02fd642"><span class="toc-number">1.</span> <span class="toc-text">1. &#x7B80;&#x5355;&#x914D;&#x7F6E;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#org944e744"><span class="toc-number">2.</span> <span class="toc-text">2. &#x52A8;&#x6001;&#x52A0;&#x8F7D; Rails &#x7EC4;&#x4EF6;&#x7684;&#x53D8;&#x5316;</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -151,10 +151,11 @@
 
   <div class="content" itemprop="articleBody">
     <div id="content">
-<p>
-(1). &#x7B80;&#x5355;&#x914D;&#x7F6E;
-</p>
 
+
+<div id="outline-container-org02fd642" class="outline-2">
+<h2 id="org02fd642">1. &#x7B80;&#x5355;&#x914D;&#x7F6E;</h2>
+<div class="outline-text-2" id="text-org02fd642">
 <p>
 &#x5982;&#x679C;&#x9700;&#x8981;&#x4F7F;&#x7528; Pry &#x4F5C;&#x4E3A; Rails Console&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x7B80;&#x5355;&#x5730;&#x4FEE;&#x6539; <code>development.rb</code> &#xFF0C;&#x5728;&#x5176;&#x672B;&#x5C3E;&#x8FFD;&#x52A0;&#x4EE5;&#x4E0B;&#x4EE3;&#x7801;&#x5373;&#x53EF;&#xFF1A;
 </p>
@@ -162,11 +163,12 @@
 <div class="org-src-container">
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">silence_warnings <span class="keyword">do</span></span><br><span class="line">  <span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">require</span> <span class="string">&apos;pry&apos;</span></span><br><span class="line">    <span class="constant">IRB</span> = <span class="constant">Pry</span></span><br><span class="line">  <span class="keyword">rescue</span> <span class="constant">LoadError</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 </div>
+</div>
+</div>
 
-<p>
-(2). &#x52A8;&#x6001;&#x52A0;&#x8F7D; Rails &#x7EC4;&#x4EF6;&#x7684;&#x53D8;&#x5316;
-</p>
-
+<div id="outline-container-org944e744" class="outline-2">
+<h2 id="org944e744">2. &#x52A8;&#x6001;&#x52A0;&#x8F7D; Rails &#x7EC4;&#x4EF6;&#x7684;&#x53D8;&#x5316;</h2>
+<div class="outline-text-2" id="text-org944e744">
 <p>
 &#x5F53; Rails
 &#x7684;&#x67D0;&#x4E9B;&#x7EC4;&#x4EF6;&#x53D1;&#x751F;&#x6539;&#x53D8;&#x65F6;&#xFF0C;&#x4F8B;&#x5982;&#x6211;&#x4EEC;&#x5411;&#x67D0;&#x4E2A;&#x6A21;&#x578B;&#x7C7B;&#x6DFB;&#x52A0;&#x4E86;&#x4E00;&#x4E2A;&#x5173;&#x8054;&#x5173;&#x7CFB;&#xFF0C;&#x90A3;&#x4E48;&#x5728;
@@ -189,6 +191,8 @@ Console&#xFF0C;&#x90A3;&#x4E48;&#x8FD8;&#x9700;&#x8981;&#x505A;&#x5982;&#x4E0B;&
 
 <div class="org-src-container">
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">silence_warnings <span class="keyword">do</span></span><br><span class="line">  <span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">require</span> <span class="string">&apos;pry&apos;</span></span><br><span class="line">    <span class="constant">IRB</span> = <span class="constant">Pry</span></span><br><span class="line">    <span class="class"><span class="keyword">module</span> <span class="title">Pry::RailsCommands</span> ;</span><span class="keyword">end</span></span><br><span class="line">    <span class="constant">IRB::ExtendCommandBundle</span> = <span class="constant">Pry::RailsCommands</span></span><br><span class="line">  <span class="keyword">rescue</span> <span class="constant">LoadError</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
 </div>
 </div>
 
@@ -226,7 +230,7 @@ Console&#xFF0C;&#x90A3;&#x4E48;&#x8FD8;&#x9700;&#x8981;&#x505A;&#x5982;&#x4E0B;&
     </div>
 
     <div id="toc-footer" style="display: none">
-      
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#org02fd642"><span class="toc-number">1.</span> <span class="toc-text">1. &#x7B80;&#x5355;&#x914D;&#x7F6E;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#org944e744"><span class="toc-number">2.</span> <span class="toc-text">2. &#x52A8;&#x6001;&#x52A0;&#x8F7D; Rails &#x7EC4;&#x4EF6;&#x7684;&#x53D8;&#x5316;</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
