@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="&amp;#x4E3A;&amp;#x4E86;&amp;#x52A0;&amp;#x5FEB; Rails app &amp;#x4E2D; bundle install &amp;#x7684;&amp;#x901F;&amp;#x5EA6;&amp;#x53EF;&amp;#x4EE5;&amp;#x5C06;&amp;#x6DD8;&amp;#x5B9D;&amp;#x7684; https:&#x2F;&#x2F;ruby.taobao.org &amp;#x8BBE;&amp;#x7F6E;&amp;#x4E3A; Gemfile &amp;">
+    <meta name="description" content="&amp;#x4E3A;&amp;#x4E86;&amp;#x52A0;&amp;#x5FEB; Rails app &amp;#x4E2D; bundle install &amp;#x7684;&amp;#x901F;&amp;#x5EA6;&amp;#x53EF;&amp;#x4EE5;&amp;#x5C06;&amp;#x6DD8;&amp;#x5B9D;&amp;#x7684; https:&#x2F;&#x2F;gems.ruby-china.com &amp;#x8BBE;&amp;#x7F6E;&amp;#x4E3A; Gemfi">
 <meta property="og:type" content="article">
-<meta property="og:title" content="将 Rails App 的 Gem Source 设置为 淘宝源">
+<meta property="og:title" content="将 Rails App 的 Gem Source 设置为 Ruby China 源">
 <meta property="og:url" content="http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/index.html">
 <meta property="og:site_name" content="Let&#39;s hack it!">
-<meta property="og:description" content="&amp;#x4E3A;&amp;#x4E86;&amp;#x52A0;&amp;#x5FEB; Rails app &amp;#x4E2D; bundle install &amp;#x7684;&amp;#x901F;&amp;#x5EA6;&amp;#x53EF;&amp;#x4EE5;&amp;#x5C06;&amp;#x6DD8;&amp;#x5B9D;&amp;#x7684; https:&#x2F;&#x2F;ruby.taobao.org &amp;#x8BBE;&amp;#x7F6E;&amp;#x4E3A; Gemfile &amp;">
+<meta property="og:description" content="&amp;#x4E3A;&amp;#x4E86;&amp;#x52A0;&amp;#x5FEB; Rails app &amp;#x4E2D; bundle install &amp;#x7684;&amp;#x901F;&amp;#x5EA6;&amp;#x53EF;&amp;#x4EE5;&amp;#x5C06;&amp;#x6DD8;&amp;#x5B9D;&amp;#x7684; https:&#x2F;&#x2F;gems.ruby-china.com &amp;#x8BBE;&amp;#x7F6E;&amp;#x4E3A; Gemfi">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2015-04-14T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-12-31T04:50:20.518Z">
+<meta property="article:modified_time" content="2021-12-31T05:12:02.570Z">
 <meta property="article:author" content="zxyho">
 <meta property="article:tag" content="Rails">
 <meta name="twitter:card" content="summary">
@@ -37,7 +37,7 @@
         
     
     <!-- title -->
-    <title>将 Rails App 的 Gem Source 设置为 淘宝源</title>
+    <title>将 Rails App 的 Gem Source 设置为 Ruby China 源</title>
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -90,16 +90,16 @@
     <div id="share" style="display: none">
       <ul>
   <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&text=将 Rails App 的 Gem Source 设置为 淘宝源" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&title=将 Rails App 的 Gem Source 设置为 淘宝源" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&is_video=false&description=将 Rails App 的 Gem Source 设置为 淘宝源" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=将 Rails App 的 Gem Source 设置为 淘宝源&body=Check out this article: http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&title=将 Rails App 的 Gem Source 设置为 淘宝源" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&title=将 Rails App 的 Gem Source 设置为 淘宝源" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&title=将 Rails App 的 Gem Source 设置为 淘宝源" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&title=将 Rails App 的 Gem Source 设置为 淘宝源" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&name=将 Rails App 的 Gem Source 设置为 淘宝源&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&t=将 Rails App 的 Gem Source 设置为 淘宝源" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&text=将 Rails App 的 Gem Source 设置为 Ruby China 源" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&title=将 Rails App 的 Gem Source 设置为 Ruby China 源" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&is_video=false&description=将 Rails App 的 Gem Source 设置为 Ruby China 源" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=将 Rails App 的 Gem Source 设置为 Ruby China 源&body=Check out this article: http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&title=将 Rails App 的 Gem Source 设置为 Ruby China 源" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&title=将 Rails App 的 Gem Source 设置为 Ruby China 源" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&title=将 Rails App 的 Gem Source 设置为 Ruby China 源" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&title=将 Rails App 的 Gem Source 设置为 Ruby China 源" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&name=将 Rails App 的 Gem Source 设置为 Ruby China 源&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&t=将 Rails App 的 Gem Source 设置为 Ruby China 源" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -116,7 +116,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        将 Rails App 的 Gem Source 设置为 淘宝源
+        将 Rails App 的 Gem Source 设置为 Ruby China 源
     </h1>
 
 
@@ -150,20 +150,20 @@
   <div class="content" itemprop="articleBody">
     <div id="content">
 <p>
-&#x4E3A;&#x4E86;&#x52A0;&#x5FEB; Rails app &#x4E2D; <code>bundle install</code> &#x7684;&#x901F;&#x5EA6;&#x53EF;&#x4EE5;&#x5C06;&#x6DD8;&#x5B9D;&#x7684; <code>https://ruby.taobao.org</code> &#x8BBE;&#x7F6E;&#x4E3A; Gemfile &#x7684; source &#xFF1A;
+&#x4E3A;&#x4E86;&#x52A0;&#x5FEB; Rails app &#x4E2D; <code>bundle install</code> &#x7684;&#x901F;&#x5EA6;&#x53EF;&#x4EE5;&#x5C06;&#x6DD8;&#x5B9D;&#x7684; <code>https://gems.ruby-china.com</code> &#x8BBE;&#x7F6E;&#x4E3A; Gemfile &#x7684; source &#xFF1A;
 </p>
 
 <div class="org-src-container">
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source <span class="string">&apos;https://ruby.taobao.org&apos;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source <span class="string">&apos;https://gems.ruby-china.com&apos;</span></span><br></pre></td></tr></table></figure>
 </div>
 
 <p>
-&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4EE5;&#x4E0B;&#x65B9;&#x6CD5;&#x5728; <code>rails new</code> &#x521B;&#x5EFA;&#x65B0; App &#x65F6;&#xFF0C;&#x81EA;&#x52A8;&#x5C06; Rails &#x9ED8;&#x8BA4;&#x751F;&#x6210;&#x7684;
-<code>https://rubygems.org</code> &#x66FF;&#x6362;&#x4E3A; <code>https://ruby.taobao.org</code> :
+&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4EE5;&#x4E0B;&#x65B9;&#x6CD5;&#x5728; <code>rails new</code> &#x521B;&#x5EFA;&#x65B0; App &#x65F6;&#xFF0C;&#x81EA;&#x52A8;&#x5C06; Rails &#x9ED8;&#x8BA4;&#x751F;&#x6210;&#x7684; <code>https://rubygems.org</code> &#x66FF;&#x6362;&#x4E3A;
+<code>https://gems.ruby-china.com</code> :
 </p>
 
 <div class="org-src-container">
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&apos;gsub_file &quot;Gemfile&quot;, &quot;https://rubygems.org&quot;, &quot;https://ruby.taobao.org&quot;&apos;</span> &gt; ~/.rails.template</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&apos;-m ~/.rails.template&apos;</span> &gt; ~/.railsrc</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&apos;gsub_file &quot;Gemfile&quot;, &quot;https://rubygems.org&quot;, &quot;https://gems.ruby-china.com&quot;&apos;</span> &gt; ~/.rails.template</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&apos;-m ~/.rails.template&apos;</span> &gt; ~/.railsrc</span><br></pre></td></tr></table></figure>
 </div>
 
 <p>
@@ -189,7 +189,7 @@
 </div>
 
 <p>
-&#x5982;&#x679C;&#x662F;&#x5728; OS X &#x4E0B;&#x7528; vim &#x8FDB;&#x884C; Rails App &#x7684;&#x5F00;&#x53D1;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x5C06; OS X/vim &#x7684;&#x4E00;&#x4E9B;meta/temp &#x6587;&#x4EF6;&#x52A0;&#x5165;&#x5230; <code>.gitignore</code> &#x6587;&#x4EF6;&#x4E2D;&#xFF1A;
+&#x5982;&#x679C;&#x662F;&#x5728; OS X &#x4E0B;&#x7528; vim &#x8FDB;&#x884C; Rails App &#x7684;&#x5F00;&#x53D1;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x5C06; OS X / vim &#x7684;&#x4E00;&#x4E9B;meta/temp &#x6587;&#x4EF6;&#x52A0;&#x5165;&#x5230; <code>.gitignore</code> &#x6587;&#x4EF6;&#x4E2D;&#xFF1A;
 </p>
 
 <div class="org-src-container">
@@ -201,7 +201,7 @@
 </p>
 
 <div class="org-src-container">
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">gsub_file <span class="string">&apos;Gemfile&apos;</span>, <span class="string">&apos;https://rubygems.org&apos;</span>, <span class="string">&apos;https://ruby.taobao.org&apos;</span></span><br><span class="line"></span><br><span class="line">copy_file <span class="string">&apos;~/.rails.gitignore&apos;</span>, <span class="string">&apos;.gitignore&apos;</span></span><br><span class="line">git <span class="symbol">:init</span></span><br><span class="line">git <span class="symbol">:add</span> =&gt; <span class="string">&apos;.&apos;</span></span><br><span class="line">git <span class="symbol">:commit</span> =&gt; <span class="string">&apos;-am &quot;Initial Commit&quot;&apos;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">gsub_file <span class="string">&apos;Gemfile&apos;</span>, <span class="string">&apos;https://rubygems.org&apos;</span>, <span class="string">&apos;https://gems.ruby-china.com&apos;</span></span><br><span class="line"></span><br><span class="line">copy_file <span class="string">&apos;~/.rails.gitignore&apos;</span>, <span class="string">&apos;.gitignore&apos;</span></span><br><span class="line">git <span class="symbol">:init</span></span><br><span class="line">git <span class="symbol">:add</span> =&gt; <span class="string">&apos;.&apos;</span></span><br><span class="line">git <span class="symbol">:commit</span> =&gt; <span class="string">&apos;-am &quot;Initial Commit&quot;&apos;</span></span><br></pre></td></tr></table></figure>
 </div>
 
 <p>
@@ -253,16 +253,16 @@
     <div id="share-footer" style="display: none">
       <ul>
   <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&text=将 Rails App 的 Gem Source 设置为 淘宝源" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&title=将 Rails App 的 Gem Source 设置为 淘宝源" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&is_video=false&description=将 Rails App 的 Gem Source 设置为 淘宝源" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=将 Rails App 的 Gem Source 设置为 淘宝源&body=Check out this article: http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&title=将 Rails App 的 Gem Source 设置为 淘宝源" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&title=将 Rails App 的 Gem Source 设置为 淘宝源" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&title=将 Rails App 的 Gem Source 设置为 淘宝源" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&title=将 Rails App 的 Gem Source 设置为 淘宝源" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&name=将 Rails App 的 Gem Source 设置为 淘宝源&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&t=将 Rails App 的 Gem Source 设置为 淘宝源" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&text=将 Rails App 的 Gem Source 设置为 Ruby China 源" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&title=将 Rails App 的 Gem Source 设置为 Ruby China 源" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&is_video=false&description=将 Rails App 的 Gem Source 设置为 Ruby China 源" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=将 Rails App 的 Gem Source 设置为 Ruby China 源&body=Check out this article: http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&title=将 Rails App 的 Gem Source 设置为 Ruby China 源" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&title=将 Rails App 的 Gem Source 设置为 Ruby China 源" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&title=将 Rails App 的 Gem Source 设置为 Ruby China 源" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&title=将 Rails App 的 Gem Source 设置为 Ruby China 源" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&name=将 Rails App 的 Gem Source 设置为 Ruby China 源&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://yoursite.com/2015/04/15/use-taobao-org-as-default-gem-source-when-generating-new-rails-apps/&t=将 Rails App 的 Gem Source 设置为 Ruby China 源" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
