@@ -14,7 +14,7 @@
 <meta property="og:description" content="&amp;#x4F7F;&amp;#x7528; Homebrew &amp;#x5B89;&amp;#x88C5;&amp;#x548C;&amp;#x7BA1;&amp;#x7406;&amp;#x547D;&amp;#x4EE4;&amp;#x884C;&amp;#x5DE5;&amp;#x5177;&amp;#x8F6F;&amp;#x4EF6;&amp;#x7684;&amp;#x65F6;&amp;#x5019;&amp;#xFF0C;&amp;#x6709;&amp;#x65F6;&amp;#x4F1A;&amp;#x9047;&amp;#x5230;&amp;#x9">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-12-30T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-12-31T07:36:58.490Z">
+<meta property="article:modified_time" content="2021-12-31T08:13:59.194Z">
 <meta property="article:author" content="zxyho">
 <meta property="article:tag" content="CLI">
 <meta property="article:tag" content="Homebrew">
@@ -106,7 +106,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#org562a746"><span class="toc-number">1.</span> <span class="toc-text">&#x5728; Homebrew &#x4E2D;&#x5B89;&#x88C5; pry &#x548C; pry-byebug</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#org5e5dbd6"><span class="toc-number">2.</span> <span class="toc-text">&#x8BBE;&#x7F6E;&#x65AD;&#x70B9;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#orga1b8086"><span class="toc-number">3.</span> <span class="toc-text">SEE ALSO</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#org5ef724b"><span class="toc-number">1.</span> <span class="toc-text">&#x5728; Homebrew &#x4E2D;&#x5B89;&#x88C5; pry &#x548C; pry-byebug</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#org3f308d0"><span class="toc-number">2.</span> <span class="toc-text">&#x8BBE;&#x7F6E;&#x65AD;&#x70B9;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#orga8c028d"><span class="toc-number">3.</span> <span class="toc-text">SEE ALSO</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -156,23 +156,23 @@
 &#x8FDB;&#x884C;&#x8C03;&#x8BD5;
 </p>
 
-<div id="outline-container-org562a746" class="outline-2">
-<h2 id="org562a746">&#x5728; Homebrew &#x4E2D;&#x5B89;&#x88C5; <code>pry</code> &#x548C; <code>pry-byebug</code></h2>
-<div class="outline-text-2" id="text-org562a746">
+<div id="outline-container-org5ef724b" class="outline-2">
+<h2 id="org5ef724b">&#x5728; Homebrew &#x4E2D;&#x5B89;&#x88C5; <code>pry</code> &#x548C; <code>pry-byebug</code></h2>
+<div class="outline-text-2" id="text-org5ef724b">
+<p>
+&#x5728; Homebrew &#x4EE3;&#x7801;&#x4E2D;&#x52A0;&#x5165;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#xFF0C;&#x4F8B;&#x5982;&#xFF0C;&#x82E5;&#x662F;&#x5728;&#x6267;&#x884C; <code>brew install</code> &#x7684;&#x65F6;&#x5019;&#x9047;&#x5230;&#x9519;&#x8BEF;&#x9700;&#x8981;&#x6392;&#x67E5;&#xFF0C;&#x5219;&#x53EF;&#x4EE5;&#x5728;
+<code>/usr/local/Homebrew/Library/Homebrew/cmd/install.rb</code> &#x6587;&#x4EF6;&#x7684;&#x9002;&#x5F53;&#x4F4D;&#x7F6E;&#x52A0;&#x5165;&#x3002;
+</p>
+
 <div class="org-src-container">
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="constant">Homebrew</span>.install_gem_setup_path!(<span class="string">&apos;pry&apos;</span>)</span><br><span class="line"><span class="constant">Homebrew</span>.install_gem!(<span class="string">&apos;byebug&apos;</span>)</span><br><span class="line"><span class="constant">Homebrew</span>.install_gem_setup_path!(<span class="string">&apos;pry-byebug&apos;</span>, <span class="symbol">executable:</span> <span class="string">&quot;pry&quot;</span>)</span><br></pre></td></tr></table></figure>
 </div>
-
-<p>
-&#x5B89;&#x88C5;&#x82E5;&#x53D1;&#x751F;&#x9519;&#x8BEF;&#xFF0C;&#x53EF;&#x901A;&#x8FC7;&#x5220;&#x9664; <code>/usr/local/Homebrew/Library/Homebrew/vendor/bundle/ruby/2.6.0/specifications/*.gemspec</code> &#x6587;
-&#x4EF6;&#x6392;&#x9664;&#x3002;
-</p>
 </div>
 </div>
 
-<div id="outline-container-org5e5dbd6" class="outline-2">
-<h2 id="org5e5dbd6">&#x8BBE;&#x7F6E;&#x65AD;&#x70B9;</h2>
-<div class="outline-text-2" id="text-org5e5dbd6">
+<div id="outline-container-org3f308d0" class="outline-2">
+<h2 id="org3f308d0">&#x8BBE;&#x7F6E;&#x65AD;&#x70B9;</h2>
+<div class="outline-text-2" id="text-org3f308d0">
 <p>
 &#x4F7F;&#x7528; <code>pry-byebug</code> &#x8BBE;&#x7F6E;&#x65AD;&#x70B9;&#x7684;&#x65B9;&#x6CD5;&#x662F;&#x5728;&#x9700;&#x8981;&#x6682;&#x505C;&#x7684;&#x4EE3;&#x7801;&#x4E4B;&#x524D;&#x6DFB;&#x52A0;&#x5982;&#x4E0B;&#x4E00;&#x884C;&#x4EE3;&#x7801;&#xFF1A;
 </p>
@@ -193,9 +193,9 @@
 </div>
 
 
-<div id="outline-container-orga1b8086" class="outline-2">
-<h2 id="orga1b8086">SEE ALSO</h2>
-<div class="outline-text-2" id="text-orga1b8086">
+<div id="outline-container-orga8c028d" class="outline-2">
+<h2 id="orga8c028d">SEE ALSO</h2>
+<div class="outline-text-2" id="text-orga8c028d">
 <ul class="org-ul">
 <li><code>pry</code>&apos;s GitHub: <a href="https://github.com/pry/pry" target="_blank" rel="noopener">pry/pry: A runtime developer console and IRB alternative with powerful introspection capabilities.</a></li>
 <li><code>pry-byebug</code>&apos;s GitHub: <a href="https://github.com/deivid-rodriguez/pry-byebug" target="_blank" rel="noopener">deivid-rodriguez/pry-byebug: Step-by-step debugging and stack navigation in Pry</a></li>
@@ -238,7 +238,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#org562a746"><span class="toc-number">1.</span> <span class="toc-text">&#x5728; Homebrew &#x4E2D;&#x5B89;&#x88C5; pry &#x548C; pry-byebug</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#org5e5dbd6"><span class="toc-number">2.</span> <span class="toc-text">&#x8BBE;&#x7F6E;&#x65AD;&#x70B9;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#orga1b8086"><span class="toc-number">3.</span> <span class="toc-text">SEE ALSO</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#org5ef724b"><span class="toc-number">1.</span> <span class="toc-text">&#x5728; Homebrew &#x4E2D;&#x5B89;&#x88C5; pry &#x548C; pry-byebug</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#org3f308d0"><span class="toc-number">2.</span> <span class="toc-text">&#x8BBE;&#x7F6E;&#x65AD;&#x70B9;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#orga8c028d"><span class="toc-number">3.</span> <span class="toc-text">SEE ALSO</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
