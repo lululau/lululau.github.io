@@ -612,6 +612,29 @@ Ruby 1.9+ &#x8FD8;&#x6709;&#x4E00;&#x4E2A; IO &#x9ED8;&#x8BA4;&#x5916;&#x90E8;&#
 </article>
 
 
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+
+<script>
+ const gitment = new Gitment({
+   id: 'Your page ID', // optional
+   owner: 'lululau',
+   repo: 'lululau.github.io',
+   oauth: {
+     client_id: 'e33c5fb34d0cde5c9cb8',
+     client_secret: '5473dd9df2a738c3b6482a5be11ac38da4d4765b',
+   },
+   // ...
+   // For more available options, check out the documentation below
+ })
+
+ // or
+ // gitment.render(document.getElementById('comments'))
+     // or
+ document.body.appendChild(gitment.render())
+</script>
+
 
         
           <div id="footer-post-container">

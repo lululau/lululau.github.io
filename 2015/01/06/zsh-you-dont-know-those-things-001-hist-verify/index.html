@@ -213,6 +213,29 @@ oh-my-zsh&#xFF0C;&#x90A3;&#x4E48;&#x8FD9;&#x4E2A;&#x9009;&#x9879;&#x5DF2;&#x7ECF
 </article>
 
 
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+
+<script>
+ const gitment = new Gitment({
+   id: 'Your page ID', // optional
+   owner: 'lululau',
+   repo: 'lululau.github.io',
+   oauth: {
+     client_id: 'e33c5fb34d0cde5c9cb8',
+     client_secret: '5473dd9df2a738c3b6482a5be11ac38da4d4765b',
+   },
+   // ...
+   // For more available options, check out the documentation below
+ })
+
+ // or
+ // gitment.render(document.getElementById('comments'))
+     // or
+ document.body.appendChild(gitment.render())
+</script>
+
 
         
           <div id="footer-post-container">
