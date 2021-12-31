@@ -76,7 +76,7 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2013/11/25/has-many-dependent-option-and-delete-destroy-clear-methods/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/2013/11/25/activerecord-many-to-many-self-join/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" href="/2013/11/20/the-difference-between-rubys-time-and-datetime-classes/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
@@ -166,27 +166,16 @@
 </article>
 
 
-<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
 
-<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<div id="vcomments" style="padding-top: 100px"></div>
 
 <script>
- const gitment = new Gitment({
-   id: 'Your page ID', // optional
-   owner: 'lululau',
-   repo: 'lululau.github.io',
-   oauth: {
-     client_id: 'e33c5fb34d0cde5c9cb8',
-     client_secret: '5473dd9df2a738c3b6482a5be11ac38da4d4765b',
-   },
-   // ...
-   // For more available options, check out the documentation below
+ new Valine({
+   el: '#vcomments',
+   appId: 'CXpJHsCNg9lAAfrgOa1JRTd9-gzGzoHsz',
+   appKey: 'crQzdlafrR4qUEj5G4Hk0szT'
  })
-
- // or
- // gitment.render(document.getElementById('comments'))
-     // or
- document.body.appendChild(gitment.render())
 </script>
 
 

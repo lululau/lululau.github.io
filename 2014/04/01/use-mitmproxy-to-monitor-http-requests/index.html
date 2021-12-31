@@ -394,27 +394,16 @@ mitmproxy &#x652F;&#x6301;&#x5BF9;&#x8BF7;&#x6C42;&#x8FDB;&#x884C;&#x62E6;&#x622
 </article>
 
 
-<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
 
-<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<div id="vcomments" style="padding-top: 100px"></div>
 
 <script>
- const gitment = new Gitment({
-   id: 'Your page ID', // optional
-   owner: 'lululau',
-   repo: 'lululau.github.io',
-   oauth: {
-     client_id: 'e33c5fb34d0cde5c9cb8',
-     client_secret: '5473dd9df2a738c3b6482a5be11ac38da4d4765b',
-   },
-   // ...
-   // For more available options, check out the documentation below
+ new Valine({
+   el: '#vcomments',
+   appId: 'CXpJHsCNg9lAAfrgOa1JRTd9-gzGzoHsz',
+   appKey: 'crQzdlafrR4qUEj5G4Hk0szT'
  })
-
- // or
- // gitment.render(document.getElementById('comments'))
-     // or
- document.body.appendChild(gitment.render())
 </script>
 
 
