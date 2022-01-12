@@ -14,7 +14,7 @@
 <meta property="og:description" content="&amp;#x4ECE; 1.9 &amp;#x5F00;&amp;#x59CB;&amp;#xFF0C;Ruby &amp;#x589E;&amp;#x52A0;&amp;#x4E86;&amp;#x5BF9;&amp;#x5B57;&amp;#x7B26;&amp;#x7F16;&amp;#x7801;&amp;#x7684;&amp;#x652F;&amp;#x6301;&amp;#x3002;&amp;#x8FD9;&amp;#x7BC7;&amp;#x6587;&amp;#x7AE0;&amp;#x57FA;&amp;#x672C;&amp;#x4E0A;&amp;#x6">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2014-01-17T16:00:00.000Z">
-<meta property="article:modified_time" content="2019-12-27T06:04:54.494Z">
+<meta property="article:modified_time" content="2022-01-12T06:14:11.768Z">
 <meta property="article:author" content="zxyho">
 <meta name="twitter:card" content="summary">
     
@@ -105,7 +105,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#orgfda902b"><span class="toc-number">1.</span> <span class="toc-text">Ruby &#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x7684;&#x7F16;&#x7801;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#org9f262b1"><span class="toc-number">1.1.</span> <span class="toc-text">Ruby &#x6E90;&#x6587;&#x4EF6;&#x7684;&#x9ED8;&#x8BA4;&#x7F16;&#x7801;&#xFF1A;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#orga214a88"><span class="toc-number">1.1.1.</span> <span class="toc-text">Ruby 1.9 &#x9ED8;&#x8BA4; Ruby &#x6E90;&#x6587;&#x4EF6;&#x7684;&#x7F16;&#x7801;&#x4E3A; US-ASCII</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#org0e25b93"><span class="toc-number">1.1.2.</span> <span class="toc-text">Ruby 2.0 &#x9ED8;&#x8BA4; Ruby &#x6E90;&#x6587;&#x4EF6;&#x7684;&#x7F16;&#x7801;&#x4E3A; UTF-8</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#org4c5a7ff"><span class="toc-number">1.2.</span> <span class="toc-text">&#x6307;&#x5B9A; Ruby &#x6E90;&#x6587;&#x4EF6;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#orge9daeea"><span class="toc-number">1.3.</span> <span class="toc-text">&#x67E5;&#x8BE2;&#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x7684;&#x7F16;&#x7801;&#xFF1A;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#org17b39af"><span class="toc-number">2.</span> <span class="toc-text">&#x5B57;&#x7B26;&#x4E32;&#xFF08;&#x8FD8;&#x6709; Symbol &#x548C; Regexp&#xFF09;&#x5B57;&#x9762;&#x91CF;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#org210bf02"><span class="toc-number">2.1.</span> <span class="toc-text">&#x5B57;&#x7B26;&#x4E32;&#x5B57;&#x9762;&#x91CF;&#x603B;&#x662F;&#x4EE5;&#x5B9A;&#x4E49;&#x5B83;&#x7684;&#x6E90;&#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;&#x6765;&#x7F16;&#x7801;&#x7684;&#x3002;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#org1ec4cfa"><span class="toc-number">2.2.</span> <span class="toc-text">Symbol</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#org63568e4"><span class="toc-number">2.3.</span> <span class="toc-text">&#x4E00;&#x4E2A;&#x4F8B;&#x5916;&#xFF1A;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#orgd5cc832"><span class="toc-number">3.</span> <span class="toc-text">&#x865A;&#x62DF;&#x7F16;&#x7801; ASCII-8BIT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#orga71a733"><span class="toc-number">4.</span> <span class="toc-text">&#x7F16;&#x7801;&#x8F6C;&#x6362;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#orgecf73b5"><span class="toc-number">4.1.</span> <span class="toc-text">&#x53EF;&#x4EE5;&#x5C06;&#x5B57;&#x7B26;&#x4E32;&#x4ECE;&#x4E00;&#x4E2A;&#x7F16;&#x7801;&#x8F6C;&#x6362;&#x4E3A;&#x53E6;&#x5916;&#x4E00;&#x4E2A;&#x7F16;&#x7801;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#orgd2f7b7b"><span class="toc-number">4.2.</span> <span class="toc-text">&#x6539;&#x53D8;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x7684;&#x7F16;&#x7801;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#orgc523aaa"><span class="toc-number">5.</span> <span class="toc-text">IO &#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#orga00627e"><span class="toc-number">5.1.</span> <span class="toc-text">&#x8F93;&#x51FA;&#x8FC7;&#x7A0B;&#x4E2D;&#x7684;&#x7F16;&#x7801;&#x8F6C;&#x6362;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#org401f2fd"><span class="toc-number">5.2.</span> <span class="toc-text">&#x8F93;&#x5165;&#x8FC7;&#x7A0B;&#x4E2D;&#x7684;&#x7F16;&#x7801;&#x8F6C;&#x6362;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#orgbddeac1"><span class="toc-number">5.3.</span> <span class="toc-text">&#x8BBE;&#x7F6E; IO &#x5BF9;&#x8C61;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#org10e12d2"><span class="toc-number">5.4.</span> <span class="toc-text">IO &#x9ED8;&#x8BA4;&#x7F16;&#x7801;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#org9d84018"><span class="toc-number">5.4.1.</span> <span class="toc-text">&#x8BBE;&#x7F6E;&#x9ED8;&#x8BA4;&#x7F16;&#x7801;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#org5db7ff0"><span class="toc-number">5.4.2.</span> <span class="toc-text">&#x6807;&#x51C6; IO &#x5BF9;&#x8C61;&#x7684;&#x9ED8;&#x8BA4;&#x7F16;&#x7801;</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#orga2fa76e"><span class="toc-number">1.</span> <span class="toc-text">Ruby &#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x7684;&#x7F16;&#x7801;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#org1af17ca"><span class="toc-number">1.1.</span> <span class="toc-text">Ruby &#x6E90;&#x6587;&#x4EF6;&#x7684;&#x9ED8;&#x8BA4;&#x7F16;&#x7801;&#xFF1A;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#orgd95e9b2"><span class="toc-number">1.1.1.</span> <span class="toc-text">Ruby 1.9 &#x9ED8;&#x8BA4; Ruby &#x6E90;&#x6587;&#x4EF6;&#x7684;&#x7F16;&#x7801;&#x4E3A; US-ASCII</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#orgae198b8"><span class="toc-number">1.1.2.</span> <span class="toc-text">Ruby 2.0 &#x9ED8;&#x8BA4; Ruby &#x6E90;&#x6587;&#x4EF6;&#x7684;&#x7F16;&#x7801;&#x4E3A; UTF-8</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#org99b3423"><span class="toc-number">1.2.</span> <span class="toc-text">&#x6307;&#x5B9A; Ruby &#x6E90;&#x6587;&#x4EF6;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#org5bfe20e"><span class="toc-number">1.3.</span> <span class="toc-text">&#x67E5;&#x8BE2;&#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x7684;&#x7F16;&#x7801;&#xFF1A;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#org03dc939"><span class="toc-number">2.</span> <span class="toc-text">&#x5B57;&#x7B26;&#x4E32;&#xFF08;&#x8FD8;&#x6709; Symbol &#x548C; Regexp&#xFF09;&#x5B57;&#x9762;&#x91CF;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#org2bb0b03"><span class="toc-number">2.1.</span> <span class="toc-text">&#x5B57;&#x7B26;&#x4E32;&#x5B57;&#x9762;&#x91CF;&#x603B;&#x662F;&#x4EE5;&#x5B9A;&#x4E49;&#x5B83;&#x7684;&#x6E90;&#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;&#x6765;&#x7F16;&#x7801;&#x7684;&#x3002;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#org1e9670c"><span class="toc-number">2.2.</span> <span class="toc-text">Symbol</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#orgf4a6bef"><span class="toc-number">2.3.</span> <span class="toc-text">&#x4E00;&#x4E2A;&#x4F8B;&#x5916;&#xFF1A;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#orgff6bc32"><span class="toc-number">3.</span> <span class="toc-text">&#x865A;&#x62DF;&#x7F16;&#x7801; ASCII-8BIT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#org9bb9428"><span class="toc-number">4.</span> <span class="toc-text">&#x7F16;&#x7801;&#x8F6C;&#x6362;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#org7067d7a"><span class="toc-number">4.1.</span> <span class="toc-text">&#x53EF;&#x4EE5;&#x5C06;&#x5B57;&#x7B26;&#x4E32;&#x4ECE;&#x4E00;&#x4E2A;&#x7F16;&#x7801;&#x8F6C;&#x6362;&#x4E3A;&#x53E6;&#x5916;&#x4E00;&#x4E2A;&#x7F16;&#x7801;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#orgb0547be"><span class="toc-number">4.2.</span> <span class="toc-text">&#x6539;&#x53D8;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x7684;&#x7F16;&#x7801;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#org5d12e49"><span class="toc-number">5.</span> <span class="toc-text">IO &#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#org2f74027"><span class="toc-number">5.1.</span> <span class="toc-text">&#x8F93;&#x51FA;&#x8FC7;&#x7A0B;&#x4E2D;&#x7684;&#x7F16;&#x7801;&#x8F6C;&#x6362;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#org7cf1630"><span class="toc-number">5.2.</span> <span class="toc-text">&#x8F93;&#x5165;&#x8FC7;&#x7A0B;&#x4E2D;&#x7684;&#x7F16;&#x7801;&#x8F6C;&#x6362;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#org6d2f4ce"><span class="toc-number">5.3.</span> <span class="toc-text">&#x8BBE;&#x7F6E; IO &#x5BF9;&#x8C61;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#org07b2e84"><span class="toc-number">5.4.</span> <span class="toc-text">IO &#x9ED8;&#x8BA4;&#x7F16;&#x7801;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#org2a7b419"><span class="toc-number">5.4.1.</span> <span class="toc-text">&#x8BBE;&#x7F6E;&#x9ED8;&#x8BA4;&#x7F16;&#x7801;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#org11e9f84"><span class="toc-number">5.4.2.</span> <span class="toc-text">&#x6807;&#x51C6; IO &#x5BF9;&#x8C61;&#x7684;&#x9ED8;&#x8BA4;&#x7F16;&#x7801;</span></a></li></ol></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -150,13 +150,13 @@
 17 &#x7AE0; <code>Character Encoding</code> &#x505A;&#x7684;&#x7B14;&#x8BB0;&#xFF0C;&#x5E76;&#x8865;&#x5145;&#x4E86;&#x4E00;&#x4E9B;&#x81EA;&#x5DF1;&#x901A;&#x8FC7;&#x5B9E;&#x9A8C;&#x5F97;&#x5230;&#x7684;&#x7ED3;&#x8BBA;&#x3002;
 </p>
 
-<div id="outline-container-orgfda902b" class="outline-2">
-<h2 id="orgfda902b">Ruby &#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x7684;&#x7F16;&#x7801;</h2>
-<div class="outline-text-2" id="text-orgfda902b">
+<div id="outline-container-orga2fa76e" class="outline-2">
+<h2 id="orga2fa76e">Ruby &#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x7684;&#x7F16;&#x7801;</h2>
+<div class="outline-text-2" id="text-orga2fa76e">
 </div>
-<div id="outline-container-org9f262b1" class="outline-3">
-<h3 id="org9f262b1">Ruby &#x6E90;&#x6587;&#x4EF6;&#x7684;&#x9ED8;&#x8BA4;&#x7F16;&#x7801;&#xFF1A;</h3>
-<div class="outline-text-3" id="text-org9f262b1">
+<div id="outline-container-org1af17ca" class="outline-3">
+<h3 id="org1af17ca">Ruby &#x6E90;&#x6587;&#x4EF6;&#x7684;&#x9ED8;&#x8BA4;&#x7F16;&#x7801;&#xFF1A;</h3>
+<div class="outline-text-3" id="text-org1af17ca">
 <p>
 &#x4F60;&#x9700;&#x8981;&#x544A;&#x8BC9; Ruby &#x4F60;&#x7684; Ruby &#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x4F7F;&#x7528;&#x7684;&#x662F;&#x4EC0;&#x4E48;&#x7F16;&#x7801;&#xFF0C;&#x56E0;&#x4E3A; Ruby &#x4E2D;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x5B57;&#x9762;&#x91CF;&#x3001;
 Symbol &#x5B57;&#x9762;&#x91CF;&#x4EE5;&#x53CA;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x5B57;&#x9762;&#x91CF;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;&#x5728;&#x591A;&#x6570;&#x65F6;&#x5019;&#x53D6;&#x51B3;&#x4E8E;&#x5B9A;&#x4E49;&#x4ED6;&#x4EEC;&#x7684;&#x6E90;&#x6587;&#x4EF6;&#x7684;&#x5B57;
@@ -164,9 +164,9 @@ Symbol &#x5B57;&#x9762;&#x91CF;&#x4EE5;&#x53CA;&#x6B63;&#x5219;&#x8868;&#x8FBE;&
 </p>
 </div>
 
-<div id="outline-container-orga214a88" class="outline-4">
-<h4 id="orga214a88">Ruby 1.9 &#x9ED8;&#x8BA4; Ruby &#x6E90;&#x6587;&#x4EF6;&#x7684;&#x7F16;&#x7801;&#x4E3A; <code>US-ASCII</code></h4>
-<div class="outline-text-4" id="text-orga214a88">
+<div id="outline-container-orgd95e9b2" class="outline-4">
+<h4 id="orgd95e9b2">Ruby 1.9 &#x9ED8;&#x8BA4; Ruby &#x6E90;&#x6587;&#x4EF6;&#x7684;&#x7F16;&#x7801;&#x4E3A; <code>US-ASCII</code></h4>
+<div class="outline-text-4" id="text-orgd95e9b2">
 <div class="org-src-container">
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env ruby</span></span><br><span class="line"><span class="comment"># default_source_encoding.rb</span></span><br><span class="line">puts __ENCODING_<span class="number">_</span>  <span class="comment"># &#x901A;&#x8FC7;__ENCODING__&#x6765;&#x67E5;&#x8BE2;&#x5F53;&#x524D;&#x6587;&#x4EF6;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;</span></span><br></pre></td></tr></table></figure>
 </div>
@@ -180,9 +180,9 @@ US-ASCII</span><br></pre></td></tr></table></figure>
 </div>
 </div>
 
-<div id="outline-container-org0e25b93" class="outline-4">
-<h4 id="org0e25b93">Ruby 2.0 &#x9ED8;&#x8BA4; Ruby &#x6E90;&#x6587;&#x4EF6;&#x7684;&#x7F16;&#x7801;&#x4E3A; <code>UTF-8</code></h4>
-<div class="outline-text-4" id="text-org0e25b93">
+<div id="outline-container-orgae198b8" class="outline-4">
+<h4 id="orgae198b8">Ruby 2.0 &#x9ED8;&#x8BA4; Ruby &#x6E90;&#x6587;&#x4EF6;&#x7684;&#x7F16;&#x7801;&#x4E3A; <code>UTF-8</code></h4>
+<div class="outline-text-4" id="text-orgae198b8">
 <div class="org-src-container">
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rvm use 2.0
 ruby default_source_encoding.rb
@@ -193,9 +193,9 @@ UTF-8</span><br></pre></td></tr></table></figure>
 </div>
 </div>
 
-<div id="outline-container-org4c5a7ff" class="outline-3">
-<h3 id="org4c5a7ff">&#x6307;&#x5B9A; Ruby &#x6E90;&#x6587;&#x4EF6;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;</h3>
-<div class="outline-text-3" id="text-org4c5a7ff">
+<div id="outline-container-org99b3423" class="outline-3">
+<h3 id="org99b3423">&#x6307;&#x5B9A; Ruby &#x6E90;&#x6587;&#x4EF6;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;</h3>
+<div class="outline-text-3" id="text-org99b3423">
 <p>
 &#x5728; Ruby 1.9 &#x4E2D;&#xFF0C;&#x5982;&#x679C;&#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x4E2D;&#x5305;&#x542B;&#x4E86;&#x975E; ASCII &#x5B57;&#x7B26;&#xFF0C;&#x6216;&#x8005;&#x5728; Ruby 2.0 &#x4E2D;&#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x4E2D;
 &#x5305;&#x542B;&#x4E86;&#x975E; UTF-8 &#x5B57;&#x7B26;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x9700;&#x8981;&#x5728;&#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x4E2D;&#x58F0;&#x660E;&#x8BE5;&#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;&#xFF1A;
@@ -216,7 +216,7 @@ non_ascii.rb:2: invalid multibyte char (US-ASCII)</span><br></pre></td></tr></ta
 <p>
 Ruby &#x4F7F;&#x7528;&#x4E00;&#x4E2A;&#x770B;&#x4F3C;&#x795E;&#x5947;&#x5B9E;&#x5219;&#x5F88;&#x7B80;&#x5355;&#x7684;&#x6807;&#x8BB0;&#x89C4;&#x5219;&#x6765;&#x6307;&#x5B9A;&#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;&#xFF1A;&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x7684;&#x7B2C;&#x4E00;&#x884C;&#xFF08;&#x5982;&#x679C;&#x7B2C;&#x4E00;&#x884C;&#x662F; UNIX shebang
 <code>#!</code> &#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x662F;&#x7B2C;&#x4E8C;&#x884C;&#xFF09;&#x662F;&#x6CE8;&#x91CA;&#x884C;&#xFF0C;Ruby &#x4F1A;&#x4F7F;&#x7528; <code>coding:\s*(\S+)</code> &#x8FD9;&#x4E2A;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x6765;&#x5BF9;&#x8FD9;&#x4E2A;&#x6CE8;&#x91CA;&#x884C;&#x8FDB;&#x884C;&#x5339;&#x914D;&#xFF0C;&#x5982;&#x679C;&#x5339;&#x914D;&#x6210;&#x529F;&#x90A3;&#x4E48;
-&#x8BE5;&#x6587;&#x4EF6;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;&#x5C31;&#x88AB;&#x8BBE;&#x7F6E;&#x4E3A; =$1=&#x7684;&#x503C;&#x3002;&#x6240;&#x4EE5;&#xFF0C;&#x53EF;&#x4EE5;&#x8FD9;&#x6837;&#x5C06;&#x4E00;&#x4E2A; Ruby &#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;&#x8BBE;&#x7F6E;&#x4E3A;UTF-8&#xFF1A;
+&#x8BE5;&#x6587;&#x4EF6;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;&#x5C31;&#x88AB;&#x8BBE;&#x7F6E;&#x4E3A; <code>$1</code> &#x7684;&#x503C;&#x3002;&#x6240;&#x4EE5;&#xFF0C;&#x53EF;&#x4EE5;&#x8FD9;&#x6837;&#x5C06;&#x4E00;&#x4E2A; Ruby &#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;&#x8BBE;&#x7F6E;&#x4E3A;UTF-8&#xFF1A;
 </p>
 
 <div class="org-src-container">
@@ -262,9 +262,9 @@ UTF-8</span><br></pre></td></tr></table></figure>
 </div>
 </div>
 
-<div id="outline-container-orge9daeea" class="outline-3">
-<h3 id="orge9daeea">&#x67E5;&#x8BE2;&#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x7684;&#x7F16;&#x7801;&#xFF1A;</h3>
-<div class="outline-text-3" id="text-orge9daeea">
+<div id="outline-container-org5bfe20e" class="outline-3">
+<h3 id="org5bfe20e">&#x67E5;&#x8BE2;&#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x7684;&#x7F16;&#x7801;&#xFF1A;</h3>
+<div class="outline-text-3" id="text-org5bfe20e">
 <p>
 &#x7279;&#x6B8A;&#x5E38;&#x91CF; <code>__ENCODING__</code> &#x5B58;&#x50A8;&#x4E86;&#x6587;&#x4EF6;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;
 </p>
@@ -272,9 +272,9 @@ UTF-8</span><br></pre></td></tr></table></figure>
 </div>
 </div>
 
-<div id="outline-container-org17b39af" class="outline-2">
-<h2 id="org17b39af">&#x5B57;&#x7B26;&#x4E32;&#xFF08;&#x8FD8;&#x6709; Symbol &#x548C; Regexp&#xFF09;&#x5B57;&#x9762;&#x91CF;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;</h2>
-<div class="outline-text-2" id="text-org17b39af">
+<div id="outline-container-org03dc939" class="outline-2">
+<h2 id="org03dc939">&#x5B57;&#x7B26;&#x4E32;&#xFF08;&#x8FD8;&#x6709; Symbol &#x548C; Regexp&#xFF09;&#x5B57;&#x9762;&#x91CF;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;</h2>
+<div class="outline-text-2" id="text-org03dc939">
 <p>
 &#x5728; Ruby 1.9+ &#x4E2D;&#xFF0C;&#x6BCF;&#x4E00;&#x4E2A;&#x5B57;&#x7B26;&#x4E32;&#x5BF9;&#x8C61;&#x3001;Symbol &#x5BF9;&#x8C61;&#x548C;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x5BF9;&#x8C61;&#x90FD;&#x6709;&#x81EA;&#x5DF1;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;&#x3002;
 </p>
@@ -297,9 +297,9 @@ GBK</span><br></pre></td></tr></table></figure>
 </p>
 </div>
 
-<div id="outline-container-org210bf02" class="outline-3">
-<h3 id="org210bf02">&#x5B57;&#x7B26;&#x4E32;&#x5B57;&#x9762;&#x91CF;&#x603B;&#x662F;&#x4EE5;&#x5B9A;&#x4E49;&#x5B83;&#x7684;&#x6E90;&#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;&#x6765;&#x7F16;&#x7801;&#x7684;&#x3002;</h3>
-<div class="outline-text-3" id="text-org210bf02">
+<div id="outline-container-org2bb0b03" class="outline-3">
+<h3 id="org2bb0b03">&#x5B57;&#x7B26;&#x4E32;&#x5B57;&#x9762;&#x91CF;&#x603B;&#x662F;&#x4EE5;&#x5B9A;&#x4E49;&#x5B83;&#x7684;&#x6E90;&#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;&#x6765;&#x7F16;&#x7801;&#x7684;&#x3002;</h3>
+<div class="outline-text-3" id="text-org2bb0b03">
 <div class="org-src-container">
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env ruby</span></span><br><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"><span class="comment"># utf8.rb</span></span><br><span class="line">puts <span class="string">&quot;abc&quot;</span>.encoding</span><br><span class="line">puts <span class="string">&quot;&#x4E2D;&#x6587;&quot;</span>.encoding</span><br></pre></td></tr></table></figure>
 </div>
@@ -314,9 +314,9 @@ GBK</span><br></pre></td></tr></table></figure>
 </div>
 </div>
 
-<div id="outline-container-org1ec4cfa" class="outline-3">
-<h3 id="org1ec4cfa">Symbol</h3>
-<div class="outline-text-3" id="text-org1ec4cfa">
+<div id="outline-container-org1e9670c" class="outline-3">
+<h3 id="org1e9670c">Symbol</h3>
+<div class="outline-text-3" id="text-org1e9670c">
 <p>
 &#x548C;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x6709;&#x70B9;&#x7279;&#x522B;&#xFF08;&#x6211;&#x731C;&#x6D4B;&#x53EF;&#x80FD;&#x51FA;&#x4E8E;&#x6027;&#x80FD;&#x65B9;&#x9762;&#x7684;&#x8003;&#x91CF;&#xFF09;&#xFF1A;&#x5982;&#x679C;&#x5B83;&#x4EEC;&#x53EA;&#x5305;&#x542B; ASCII &#x5B57;&#x7B26;
 &#xFF08;&#x5373;&#x6240;&#x6709;&#x5B57;&#x8282;&#x7684;&#x6700;&#x9AD8;&#x4F4D;&#x90FD;&#x4E3A; 0&#xFF09;&#xFF0C;&#x90A3;&#x4E48;&#x5B83;&#x4EEC;&#x5C31;&#x4EE5; US-ASCII &#x7F16;&#x7801;&#xFF1B;&#x5426;&#x5219;&#x5B83;&#x4EEC;&#x5C31;&#x4EE5;&#x5B9A;&#x4E49;&#x5B83;&#x4EEC;&#x7684;
@@ -339,9 +339,9 @@ UTF-8</span><br></pre></td></tr></table></figure>
 </div>
 </div>
 
-<div id="outline-container-org63568e4" class="outline-3">
-<h3 id="org63568e4">&#x4E00;&#x4E2A;&#x4F8B;&#x5916;&#xFF1A;</h3>
-<div class="outline-text-3" id="text-org63568e4">
+<div id="outline-container-orgf4a6bef" class="outline-3">
+<h3 id="orgf4a6bef">&#x4E00;&#x4E2A;&#x4F8B;&#x5916;&#xFF1A;</h3>
+<div class="outline-text-3" id="text-orgf4a6bef">
 <p>
 &#x5728;&#x5B57;&#x7B26;&#x4E32;&#x548C;&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x4E2D;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <code>\uxxxx</code> &#x6216; <code>\u{x... x... x...}</code> &#x6765;&#x521B;&#x5EFA;&#x4EFB;&#x610F;&#x7684;UNICODE &#x5B57;&#x7B26;&#xFF0C;&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x5B57;&#x7B26;&#x4E32;&#x5B57;&#x9762;&#x91CF;&#x6216;&#x8005;
 &#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;&#x5B57;&#x9762;&#x91CF;&#x4E2D;&#x5305;&#x542B;&#x4E86; <code>\uxxxx</code> &#x6216; <code>\u{x... x... x...}</code> &#x6807;&#x8BB0;&#xFF0C;&#x4E14;&#x6B64;&#x6807;&#x8BB0;&#x6240;&#x8868;&#x793A;&#x7684;&#x5B57;&#x7B26;&#x4E0D;&#x662F; ASCII &#x5B57;&#x7B26;&#xFF0C;&#x90A3;&#x4E48;&#x5B83;&#x7684;&#x7F16;&#x7801;&#x5C06;&#x8BBE;
@@ -365,9 +365,9 @@ UTF-8</span><br></pre></td></tr></table></figure>
 </div>
 </div>
 
-<div id="outline-container-orgd5cc832" class="outline-2">
-<h2 id="orgd5cc832">&#x865A;&#x62DF;&#x7F16;&#x7801; ASCII-8BIT</h2>
-<div class="outline-text-2" id="text-orgd5cc832">
+<div id="outline-container-orgff6bc32" class="outline-2">
+<h2 id="orgff6bc32">&#x865A;&#x62DF;&#x7F16;&#x7801; ASCII-8BIT</h2>
+<div class="outline-text-2" id="text-orgff6bc32">
 <p>
 Ruby &#x652F;&#x6301;&#x4E00;&#x4E2A;&#x53EB;&#x505A; <code>ASCII-8BIT</code> &#x7684;&#x865A;&#x62DF;&#x5B57;&#x7B26;&#x7F16;&#x7801;&#x3002;&#x8FD9;&#x4E2A;&#x865A;&#x62DF;&#x7F16;&#x7801;&#x66F4;&#x591A;&#x5730;&#x662F;&#x7528;&#x6765;&#x5904;&#x7406;&#x4E8C;&#x8FDB;
 &#x5236;&#x6570;&#x636E;&#xFF0C;&#x6216;&#x8005;&#x5728;&#x4E0D;&#x786E;&#x5B9A; Ruby &#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x7F16;&#x7801;&#x65F6;&#x4E5F;&#x53EF;&#x4EE5;&#x5C06;&#x5176;&#x6307;&#x5B9A;&#x4E3A; <code>ASCII-8BIT</code> &#x3002;
@@ -375,13 +375,13 @@ Ruby &#x652F;&#x6301;&#x4E00;&#x4E2A;&#x53EB;&#x505A; <code>ASCII-8BIT</code> &#
 </div>
 </div>
 
-<div id="outline-container-orga71a733" class="outline-2">
-<h2 id="orga71a733">&#x7F16;&#x7801;&#x8F6C;&#x6362;</h2>
-<div class="outline-text-2" id="text-orga71a733">
+<div id="outline-container-org9bb9428" class="outline-2">
+<h2 id="org9bb9428">&#x7F16;&#x7801;&#x8F6C;&#x6362;</h2>
+<div class="outline-text-2" id="text-org9bb9428">
 </div>
-<div id="outline-container-orgecf73b5" class="outline-3">
-<h3 id="orgecf73b5">&#x53EF;&#x4EE5;&#x5C06;&#x5B57;&#x7B26;&#x4E32;&#x4ECE;&#x4E00;&#x4E2A;&#x7F16;&#x7801;&#x8F6C;&#x6362;&#x4E3A;&#x53E6;&#x5916;&#x4E00;&#x4E2A;&#x7F16;&#x7801;</h3>
-<div class="outline-text-3" id="text-orgecf73b5">
+<div id="outline-container-org7067d7a" class="outline-3">
+<h3 id="org7067d7a">&#x53EF;&#x4EE5;&#x5C06;&#x5B57;&#x7B26;&#x4E32;&#x4ECE;&#x4E00;&#x4E2A;&#x7F16;&#x7801;&#x8F6C;&#x6362;&#x4E3A;&#x53E6;&#x5916;&#x4E00;&#x4E2A;&#x7F16;&#x7801;</h3>
+<div class="outline-text-3" id="text-org7067d7a">
 <div class="org-src-container">
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env ruby</span></span><br><span class="line"><span class="comment"># coding: UTF-8</span></span><br><span class="line"><span class="comment"># transcoding.rb</span></span><br><span class="line">a = <span class="string">&quot;&#x4E2D;&quot;</span></span><br><span class="line">puts a.encoding</span><br><span class="line">p a.bytes.map { |e| e.to_s(<span class="number">16</span>) }</span><br><span class="line">b = a.encode(<span class="string">&quot;GBK&quot;</span>)</span><br><span class="line">puts b.encoding</span><br><span class="line">p b.bytes.map { |e| e.to_s(<span class="number">16</span>) }</span><br></pre></td></tr></table></figure>
 </div>
@@ -404,9 +404,9 @@ d6  d0</span><br></pre></td></tr></table></figure>
 </div>
 </div>
 
-<div id="outline-container-orgd2f7b7b" class="outline-3">
-<h3 id="orgd2f7b7b">&#x6539;&#x53D8;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x7684;&#x7F16;&#x7801;</h3>
-<div class="outline-text-3" id="text-orgd2f7b7b">
+<div id="outline-container-orgb0547be" class="outline-3">
+<h3 id="orgb0547be">&#x6539;&#x53D8;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x7684;&#x7F16;&#x7801;</h3>
+<div class="outline-text-3" id="text-orgb0547be">
 <p>
 <code>encode</code> &#x65B9;&#x6CD5;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x5BF9;&#x8C61;&#xFF0C;&#x800C;&#x8981;&#x6539;&#x53D8;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x7684;&#x7F16;&#x7801;&#xFF0C;&#x5219;&#x4F7F;&#x7528;
 <code>force_encoding</code> &#x65B9;&#x6CD5;&#xFF1A;
@@ -435,9 +435,9 @@ GBK
 </div>
 </div>
 
-<div id="outline-container-orgc523aaa" class="outline-2">
-<h2 id="orgc523aaa">IO &#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;</h2>
-<div class="outline-text-2" id="text-orgc523aaa">
+<div id="outline-container-org5d12e49" class="outline-2">
+<h2 id="org5d12e49">IO &#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;</h2>
+<div class="outline-text-2" id="text-org5d12e49">
 <p>
 &#x5982;&#x679C;&#x5C06;&#x4E00;&#x4E2A;&#x67D0;&#x79CD;&#x7279;&#x5B9A;&#x5B57;&#x7B26;&#x7F16;&#x7801;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x8F93;&#x51FA;&#x5230;&#x5916;&#x90E8; IO &#x5BF9;&#x8C61;&#x65F6;&#xFF0C;Ruby &#x5C06;&#x4F1A;&#x4F7F;&#x7528;&#x4EC0;&#x4E48;&#x7F16;&#x7801;&#x8F93;
 &#x51FA;&#x8FD9;&#x4E2A;&#x5B57;&#x7B26;&#x4E32;&#x5462;&#xFF1F;&#x7B54;&#x6848;&#x53D6;&#x51B3;&#x4E8E;&#x8FD9;&#x4E2A; IO &#x5BF9;&#x8C61;&#x7684;&#x7F16;&#x7801;&#x662F;&#x4EC0;&#x4E48;&#x3002;&#x6BCF;&#x4E2A; IO &#x5BF9;&#x8C61;&#x90FD;&#x6709;&#x4E24;&#x4E2A;&#x548C;&#x5B57;
@@ -445,9 +445,9 @@ GBK
 </p>
 </div>
 
-<div id="outline-container-orga00627e" class="outline-3">
-<h3 id="orga00627e">&#x8F93;&#x51FA;&#x8FC7;&#x7A0B;&#x4E2D;&#x7684;&#x7F16;&#x7801;&#x8F6C;&#x6362;</h3>
-<div class="outline-text-3" id="text-orga00627e">
+<div id="outline-container-org2f74027" class="outline-3">
+<h3 id="org2f74027">&#x8F93;&#x51FA;&#x8FC7;&#x7A0B;&#x4E2D;&#x7684;&#x7F16;&#x7801;&#x8F6C;&#x6362;</h3>
+<div class="outline-text-3" id="text-org2f74027">
 <p>
 &#x4E0E;&#x8F93;&#x51FA;&#x6570;&#x636E;&#x5230;&#x4E00;&#x4E2A; IO &#x5BF9;&#x8C61;&#x8FD9;&#x4E2A;&#x8FC7;&#x7A0B;&#x76F8;&#x5173;&#x7684;&#x662F; <code>external_encoding</code> &#xFF0C; &#x8F93;&#x51FA;&#x8FC7;&#x7A0B;&#x4E2D;&#x7684;&#x5B57;&#x7B26;
 &#x7F16;&#x7801;&#x8F6C;&#x6362;&#x89C4;&#x5219;&#x4E3A;&#xFF1A;&#x82E5;&#x6B64; IO &#x5BF9;&#x8C61;&#x7684; <code>external_encoding</code> &#x4E3A; <code>nil</code> &#xFF0C;&#x5219;&#x88AB;&#x8F93;&#x51FA;&#x7684;&#x5BF9;&#x8C61;&#x5C06;&#x4E0D;
@@ -462,14 +462,14 @@ GBK
 </div>
 </div>
 
-<div id="outline-container-org401f2fd" class="outline-3">
-<h3 id="org401f2fd">&#x8F93;&#x5165;&#x8FC7;&#x7A0B;&#x4E2D;&#x7684;&#x7F16;&#x7801;&#x8F6C;&#x6362;</h3>
-<div class="outline-text-3" id="text-org401f2fd">
+<div id="outline-container-org7cf1630" class="outline-3">
+<h3 id="org7cf1630">&#x8F93;&#x5165;&#x8FC7;&#x7A0B;&#x4E2D;&#x7684;&#x7F16;&#x7801;&#x8F6C;&#x6362;</h3>
+<div class="outline-text-3" id="text-org7cf1630">
 <p>
 &#x5F53;&#x4ECE;&#x4E00;&#x4E2A; IO &#x5BF9;&#x8C61;&#x8BFB;&#x53D6;&#x6570;&#x636E;&#x65F6;&#xFF0C;&#x8BFB;&#x53D6;&#x7684;&#x6570;&#x636E;&#x7684;&#x7F16;&#x7801;&#x548C;&#x6B64; IO &#x5BF9;&#x8C61;&#x7684; <code>external_encoding</code> &#x548C; <code>internal_encoding</code> &#x4E24;&#x4E2A;&#x5C5E;&#x6027;&#x90FD;&#x6709;&#x5173;
 &#x7CFB;&#xFF0C;&#x5177;&#x4F53;&#x7684;&#x89C4;&#x5219;&#x4E3A;&#xFF1A;&#x82E5; <code>internal_encoding</code> &#x4E3A;nil&#xFF0C;&#x90A3;&#x4E48;&#x5916;&#x90E8;&#x6570;&#x636E;&#x5C06;&#x88AB;&#x4E0D;&#x7ECF;&#x4EFB;&#x4F55;&#x8F6C;&#x6362;&#x5730;&#x8BFB;&#x8FDB;&#x5185;&#x5B58;&#xFF0C;&#x5728;&#x5185;&#x5B58;&#x4E2D;&#x5B58;&#x50A8;&#x6B64;&#x5757;&#x6570;&#x636E;&#x7684;&#x5BF9;&#x8C61;&#x7684;
 <code>encoding</code> &#x5C5E;&#x6027;&#x88AB;&#x8BBE;&#x7F6E;&#x4E3A;&#x6B64; IO &#x5BF9;&#x8C61;&#x7684; <code>external_encoding</code> &#xFF1B;&#x5426;&#x5219;&#xFF0C;&#x5916;&#x90E8;&#x6570;&#x636E;&#x88AB;&#x8BFB;&#x8FDB;&#x5185;&#x5B58;&#x65F6;&#x5C06;&#x88AB;&#x8F6C;&#x6362;&#x4E3A; <code>internal_encoding</code> &#x6240;
-&#x6807;&#x8BC6;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;&#xFF0C;&#x4E14;&#x5B58;&#x50A8;&#x6B64;&#x5757;&#x6570;&#x636E;&#x7684;&#x5BF9;&#x8C61;&#x7684;=encoding= &#x5C5E;&#x6027;&#x88AB;&#x8BBE;&#x7F6E;&#x4E3A; <code>internal_encoding</code> &#xFF0C;&#x7F16;&#x7801;&#x8F6C;&#x6362;&#x6240;&#x4F7F;&#x7528;&#x7684;&#x6E90;&#x7F16;&#x7801;&#x4E3A;
+&#x6807;&#x8BC6;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;&#xFF0C;&#x4E14;&#x5B58;&#x50A8;&#x6B64;&#x5757;&#x6570;&#x636E;&#x7684;&#x5BF9;&#x8C61;&#x7684; <code>encoding</code> &#x5C5E;&#x6027;&#x88AB;&#x8BBE;&#x7F6E;&#x4E3A; <code>internal_encoding</code> &#xFF0C;&#x7F16;&#x7801;&#x8F6C;&#x6362;&#x6240;&#x4F7F;&#x7528;&#x7684;&#x6E90;&#x7F16;&#x7801;&#x4E3A;
 <code>external_encoding</code> &#x3002;
 </p>
 
@@ -486,9 +486,9 @@ cat tmp
 </div>
 </div>
 
-<div id="outline-container-orgbddeac1" class="outline-3">
-<h3 id="orgbddeac1">&#x8BBE;&#x7F6E; IO &#x5BF9;&#x8C61;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;</h3>
-<div class="outline-text-3" id="text-orgbddeac1">
+<div id="outline-container-org6d2f4ce" class="outline-3">
+<h3 id="org6d2f4ce">&#x8BBE;&#x7F6E; IO &#x5BF9;&#x8C61;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;</h3>
+<div class="outline-text-3" id="text-org6d2f4ce">
 <p>
 &#x5728;&#x4F7F;&#x7528; <code>IO.new()</code> &#x521B;&#x5EFA;&#x4E00;&#x4E2A; IO &#x5BF9;&#x8C61;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x6307;&#x5B9A;&#x8FD9;&#x4E2A;&#x5BF9;&#x8C61;&#x7684; <code>external_encoding</code> &#x548C; <code>internal_encoding</code> &#xFF1A;
 </p>
@@ -532,9 +532,9 @@ nil
 </div>
 </div>
 
-<div id="outline-container-org10e12d2" class="outline-3">
-<h3 id="org10e12d2">IO &#x9ED8;&#x8BA4;&#x7F16;&#x7801;</h3>
-<div class="outline-text-3" id="text-org10e12d2">
+<div id="outline-container-org07b2e84" class="outline-3">
+<h3 id="org07b2e84">IO &#x9ED8;&#x8BA4;&#x7F16;&#x7801;</h3>
+<div class="outline-text-3" id="text-org07b2e84">
 <p>
 Ruby 1.9+ &#x8FD8;&#x6709;&#x4E00;&#x4E2A; IO &#x9ED8;&#x8BA4;&#x5916;&#x90E8;&#x7F16;&#x7801; <code>Encoding.default_external</code> &#x548C; IO &#x9ED8;&#x8BA4;&#x5185;&#x90E8;&#x7F16;
 &#x7801; <code>Encoding.default_internal</code> &#x7684;&#x6982;&#x5FF5;&#xFF0C;&#x4E0D;&#x8FC7;&#x901A;&#x8FC7;&#x6211;&#x5728; ruby-2.0.0-p247 &#x4E0A;&#x7684;&#x5B9E;&#x8DF5;&#xFF0C;&#x53D1;
@@ -574,13 +574,13 @@ Ruby 1.9+ &#x8FD8;&#x6709;&#x4E00;&#x4E2A; IO &#x9ED8;&#x8BA4;&#x5916;&#x90E8;&#
 </p>
 </div>
 
-<div id="outline-container-org9d84018" class="outline-4">
-<h4 id="org9d84018">&#x8BBE;&#x7F6E;&#x9ED8;&#x8BA4;&#x7F16;&#x7801;</h4>
-<div class="outline-text-4" id="text-org9d84018">
+<div id="outline-container-org2a7b419" class="outline-4">
+<h4 id="org2a7b419">&#x8BBE;&#x7F6E;&#x9ED8;&#x8BA4;&#x7F16;&#x7801;</h4>
+<div class="outline-text-4" id="text-org2a7b419">
 <ul class="org-ul">
 <li>&#x53EF;&#x4EE5;&#x901A;&#x8FC7; <code>Encoding.default_external=()</code> &#x548C; <code>Encoding.default_internal=()</code> &#x6765;&#x8BBE;
 &#x7F6E;&#x9ED8;&#x8BA4;&#x5916;&#x90E8;&#x7F16;&#x7801;&#x548C;&#x9ED8;&#x8BA4;&#x5185;&#x90E8;&#x7F16;&#x7801;&#x3002;</li>
-<li>&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; ruby &#x89E3;&#x91CA;&#x5668;&#x7684; =-E=&#x9009;&#x9879;&#x6765;&#x6307;&#x5B9A;&#x9ED8; &#x8BA4;&#x5916;&#x90E8;&#x7F16;&#x7801;&#x548C;&#x9ED8;&#x8BA4;&#x5185;&#x90E8;&#x7F16;&#x7801;&#x3002;</li>
+<li>&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; ruby &#x89E3;&#x91CA;&#x5668;&#x7684; <code>-E</code> &#x9009;&#x9879;&#x6765;&#x6307;&#x5B9A;&#x9ED8; &#x8BA4;&#x5916;&#x90E8;&#x7F16;&#x7801;&#x548C;&#x9ED8;&#x8BA4;&#x5185;&#x90E8;&#x7F16;&#x7801;&#x3002;</li>
 <li>&#x53E6;&#x5916;&#xFF0C;Ruby &#x4E5F;&#x4F1A;&#x4ECE; <code>LANG</code> &#x73AF;&#x5883;&#x53D8;&#x91CF;&#x63A8;&#x65AD;&#x9ED8;&#x8BA4;&#x7684;&#x5916;&#x90E8;&#x7F16;&#x7801;</li>
 <li>&#x5982;&#x679C;&#x6CA1;&#x6709;&#x8BBE;&#x7F6E; <code>LANG</code> &#x73AF;&#x5883;&#x53D8;&#x91CF;&#xFF0C;&#x4E5F;&#x6CA1;&#x6709;&#x6307;&#x5B9A; <code>-E</code> &#x9009;&#x9879;&#xFF0C;&#x90A3;&#x4E48;&#x9ED8;&#x8BA4;&#x7684;&#x5916;&#x90E8;&#x7F16;&#x7801;&#x5C31;&#x88AB;&#x8BBE;
 &#x7F6E;&#x4E3A; <code>US-ASCII</code></li>
@@ -588,9 +588,9 @@ Ruby 1.9+ &#x8FD8;&#x6709;&#x4E00;&#x4E2A; IO &#x9ED8;&#x8BA4;&#x5916;&#x90E8;&#
 </div>
 </div>
 
-<div id="outline-container-org5db7ff0" class="outline-4">
-<h4 id="org5db7ff0">&#x6807;&#x51C6; IO &#x5BF9;&#x8C61;&#x7684;&#x9ED8;&#x8BA4;&#x7F16;&#x7801;</h4>
-<div class="outline-text-4" id="text-org5db7ff0">
+<div id="outline-container-org11e9f84" class="outline-4">
+<h4 id="org11e9f84">&#x6807;&#x51C6; IO &#x5BF9;&#x8C61;&#x7684;&#x9ED8;&#x8BA4;&#x7F16;&#x7801;</h4>
+<div class="outline-text-4" id="text-org11e9f84">
 <p>
 <code>STDIN</code> &#x3001; <code>STDOUT</code> &#x548C; <code>STDERR</code> &#x8FD9;&#x4E09;&#x4E2A;&#x6807;&#x51C6; IO &#x5BF9;&#x8C61;&#x7684;&#x5916;&#x90E8;&#x7F16;&#x7801;&#x548C;&#x5185;&#x90E8;&#x7F16;&#x7801;&#x7684;&#x9ED8;&#x8BA4;&#x503C;&#x53D7;
 <code>Encoding.default_external</code> &#x548C; <code>Encoding.default_internal</code> &#x63A7;&#x5236;&#xFF0C;&#x5176;&#x89C4;&#x5219;&#x548C;&#x524D;&#x6587;&#x6240;
@@ -642,7 +642,7 @@ Ruby 1.9+ &#x8FD8;&#x6709;&#x4E00;&#x4E2A; IO &#x9ED8;&#x8BA4;&#x5916;&#x90E8;&#
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#orgfda902b"><span class="toc-number">1.</span> <span class="toc-text">Ruby &#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x7684;&#x7F16;&#x7801;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#org9f262b1"><span class="toc-number">1.1.</span> <span class="toc-text">Ruby &#x6E90;&#x6587;&#x4EF6;&#x7684;&#x9ED8;&#x8BA4;&#x7F16;&#x7801;&#xFF1A;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#orga214a88"><span class="toc-number">1.1.1.</span> <span class="toc-text">Ruby 1.9 &#x9ED8;&#x8BA4; Ruby &#x6E90;&#x6587;&#x4EF6;&#x7684;&#x7F16;&#x7801;&#x4E3A; US-ASCII</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#org0e25b93"><span class="toc-number">1.1.2.</span> <span class="toc-text">Ruby 2.0 &#x9ED8;&#x8BA4; Ruby &#x6E90;&#x6587;&#x4EF6;&#x7684;&#x7F16;&#x7801;&#x4E3A; UTF-8</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#org4c5a7ff"><span class="toc-number">1.2.</span> <span class="toc-text">&#x6307;&#x5B9A; Ruby &#x6E90;&#x6587;&#x4EF6;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#orge9daeea"><span class="toc-number">1.3.</span> <span class="toc-text">&#x67E5;&#x8BE2;&#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x7684;&#x7F16;&#x7801;&#xFF1A;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#org17b39af"><span class="toc-number">2.</span> <span class="toc-text">&#x5B57;&#x7B26;&#x4E32;&#xFF08;&#x8FD8;&#x6709; Symbol &#x548C; Regexp&#xFF09;&#x5B57;&#x9762;&#x91CF;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#org210bf02"><span class="toc-number">2.1.</span> <span class="toc-text">&#x5B57;&#x7B26;&#x4E32;&#x5B57;&#x9762;&#x91CF;&#x603B;&#x662F;&#x4EE5;&#x5B9A;&#x4E49;&#x5B83;&#x7684;&#x6E90;&#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;&#x6765;&#x7F16;&#x7801;&#x7684;&#x3002;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#org1ec4cfa"><span class="toc-number">2.2.</span> <span class="toc-text">Symbol</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#org63568e4"><span class="toc-number">2.3.</span> <span class="toc-text">&#x4E00;&#x4E2A;&#x4F8B;&#x5916;&#xFF1A;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#orgd5cc832"><span class="toc-number">3.</span> <span class="toc-text">&#x865A;&#x62DF;&#x7F16;&#x7801; ASCII-8BIT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#orga71a733"><span class="toc-number">4.</span> <span class="toc-text">&#x7F16;&#x7801;&#x8F6C;&#x6362;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#orgecf73b5"><span class="toc-number">4.1.</span> <span class="toc-text">&#x53EF;&#x4EE5;&#x5C06;&#x5B57;&#x7B26;&#x4E32;&#x4ECE;&#x4E00;&#x4E2A;&#x7F16;&#x7801;&#x8F6C;&#x6362;&#x4E3A;&#x53E6;&#x5916;&#x4E00;&#x4E2A;&#x7F16;&#x7801;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#orgd2f7b7b"><span class="toc-number">4.2.</span> <span class="toc-text">&#x6539;&#x53D8;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x7684;&#x7F16;&#x7801;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#orgc523aaa"><span class="toc-number">5.</span> <span class="toc-text">IO &#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#orga00627e"><span class="toc-number">5.1.</span> <span class="toc-text">&#x8F93;&#x51FA;&#x8FC7;&#x7A0B;&#x4E2D;&#x7684;&#x7F16;&#x7801;&#x8F6C;&#x6362;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#org401f2fd"><span class="toc-number">5.2.</span> <span class="toc-text">&#x8F93;&#x5165;&#x8FC7;&#x7A0B;&#x4E2D;&#x7684;&#x7F16;&#x7801;&#x8F6C;&#x6362;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#orgbddeac1"><span class="toc-number">5.3.</span> <span class="toc-text">&#x8BBE;&#x7F6E; IO &#x5BF9;&#x8C61;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#org10e12d2"><span class="toc-number">5.4.</span> <span class="toc-text">IO &#x9ED8;&#x8BA4;&#x7F16;&#x7801;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#org9d84018"><span class="toc-number">5.4.1.</span> <span class="toc-text">&#x8BBE;&#x7F6E;&#x9ED8;&#x8BA4;&#x7F16;&#x7801;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#org5db7ff0"><span class="toc-number">5.4.2.</span> <span class="toc-text">&#x6807;&#x51C6; IO &#x5BF9;&#x8C61;&#x7684;&#x9ED8;&#x8BA4;&#x7F16;&#x7801;</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#orga2fa76e"><span class="toc-number">1.</span> <span class="toc-text">Ruby &#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x7684;&#x7F16;&#x7801;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#org1af17ca"><span class="toc-number">1.1.</span> <span class="toc-text">Ruby &#x6E90;&#x6587;&#x4EF6;&#x7684;&#x9ED8;&#x8BA4;&#x7F16;&#x7801;&#xFF1A;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#orgd95e9b2"><span class="toc-number">1.1.1.</span> <span class="toc-text">Ruby 1.9 &#x9ED8;&#x8BA4; Ruby &#x6E90;&#x6587;&#x4EF6;&#x7684;&#x7F16;&#x7801;&#x4E3A; US-ASCII</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#orgae198b8"><span class="toc-number">1.1.2.</span> <span class="toc-text">Ruby 2.0 &#x9ED8;&#x8BA4; Ruby &#x6E90;&#x6587;&#x4EF6;&#x7684;&#x7F16;&#x7801;&#x4E3A; UTF-8</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#org99b3423"><span class="toc-number">1.2.</span> <span class="toc-text">&#x6307;&#x5B9A; Ruby &#x6E90;&#x6587;&#x4EF6;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#org5bfe20e"><span class="toc-number">1.3.</span> <span class="toc-text">&#x67E5;&#x8BE2;&#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x7684;&#x7F16;&#x7801;&#xFF1A;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#org03dc939"><span class="toc-number">2.</span> <span class="toc-text">&#x5B57;&#x7B26;&#x4E32;&#xFF08;&#x8FD8;&#x6709; Symbol &#x548C; Regexp&#xFF09;&#x5B57;&#x9762;&#x91CF;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#org2bb0b03"><span class="toc-number">2.1.</span> <span class="toc-text">&#x5B57;&#x7B26;&#x4E32;&#x5B57;&#x9762;&#x91CF;&#x603B;&#x662F;&#x4EE5;&#x5B9A;&#x4E49;&#x5B83;&#x7684;&#x6E90;&#x4EE3;&#x7801;&#x6587;&#x4EF6;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;&#x6765;&#x7F16;&#x7801;&#x7684;&#x3002;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#org1e9670c"><span class="toc-number">2.2.</span> <span class="toc-text">Symbol</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#orgf4a6bef"><span class="toc-number">2.3.</span> <span class="toc-text">&#x4E00;&#x4E2A;&#x4F8B;&#x5916;&#xFF1A;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#orgff6bc32"><span class="toc-number">3.</span> <span class="toc-text">&#x865A;&#x62DF;&#x7F16;&#x7801; ASCII-8BIT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#org9bb9428"><span class="toc-number">4.</span> <span class="toc-text">&#x7F16;&#x7801;&#x8F6C;&#x6362;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#org7067d7a"><span class="toc-number">4.1.</span> <span class="toc-text">&#x53EF;&#x4EE5;&#x5C06;&#x5B57;&#x7B26;&#x4E32;&#x4ECE;&#x4E00;&#x4E2A;&#x7F16;&#x7801;&#x8F6C;&#x6362;&#x4E3A;&#x53E6;&#x5916;&#x4E00;&#x4E2A;&#x7F16;&#x7801;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#orgb0547be"><span class="toc-number">4.2.</span> <span class="toc-text">&#x6539;&#x53D8;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x7684;&#x7F16;&#x7801;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#org5d12e49"><span class="toc-number">5.</span> <span class="toc-text">IO &#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#org2f74027"><span class="toc-number">5.1.</span> <span class="toc-text">&#x8F93;&#x51FA;&#x8FC7;&#x7A0B;&#x4E2D;&#x7684;&#x7F16;&#x7801;&#x8F6C;&#x6362;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#org7cf1630"><span class="toc-number">5.2.</span> <span class="toc-text">&#x8F93;&#x5165;&#x8FC7;&#x7A0B;&#x4E2D;&#x7684;&#x7F16;&#x7801;&#x8F6C;&#x6362;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#org6d2f4ce"><span class="toc-number">5.3.</span> <span class="toc-text">&#x8BBE;&#x7F6E; IO &#x5BF9;&#x8C61;&#x7684;&#x5B57;&#x7B26;&#x7F16;&#x7801;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#org07b2e84"><span class="toc-number">5.4.</span> <span class="toc-text">IO &#x9ED8;&#x8BA4;&#x7F16;&#x7801;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#org2a7b419"><span class="toc-number">5.4.1.</span> <span class="toc-text">&#x8BBE;&#x7F6E;&#x9ED8;&#x8BA4;&#x7F16;&#x7801;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#org11e9f84"><span class="toc-number">5.4.2.</span> <span class="toc-text">&#x6807;&#x51C6; IO &#x5BF9;&#x8C61;&#x7684;&#x9ED8;&#x8BA4;&#x7F16;&#x7801;</span></a></li></ol></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">

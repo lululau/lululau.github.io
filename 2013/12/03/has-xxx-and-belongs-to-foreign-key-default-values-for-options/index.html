@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="1. has_one &#x2F; has_many &#x2F; has_and_belongs_to_many &amp;#x7684; :foreign_key &amp;#x7684;&amp;#x9ED8;&amp;#x8BA4;&amp;#x503C;   has_one&#x3D;&amp;#x3001;&#x3D;has_many&#x3D;&amp;#x3001;&#x3D;has_and_belongs_to_many &amp;#x7684; :foreign_key &amp;#x7684;&amp;#x">
+    <meta name="description" content="1. has_one &#x2F; has_many &#x2F; has_and_belongs_to_many &amp;#x7684; :foreign_key &amp;#x7684;&amp;#x9ED8;&amp;#x8BA4;&amp;#x503C;   has_one, has_many, has_and_belongs_to_many &amp;#x7684; :foreign_key &amp;#x7684;&amp;#x9ED8;&amp;#x8BA4;&amp;#x">
 <meta property="og:type" content="article">
 <meta property="og:title" content="has_xxx 和 belongs_to 的 :foreign_key 选项的默认值">
 <meta property="og:url" content="http://yoursite.com/2013/12/03/has-xxx-and-belongs-to-foreign-key-default-values-for-options/index.html">
 <meta property="og:site_name" content="Let&#39;s hack it!">
-<meta property="og:description" content="1. has_one &#x2F; has_many &#x2F; has_and_belongs_to_many &amp;#x7684; :foreign_key &amp;#x7684;&amp;#x9ED8;&amp;#x8BA4;&amp;#x503C;   has_one&#x3D;&amp;#x3001;&#x3D;has_many&#x3D;&amp;#x3001;&#x3D;has_and_belongs_to_many &amp;#x7684; :foreign_key &amp;#x7684;&amp;#x">
+<meta property="og:description" content="1. has_one &#x2F; has_many &#x2F; has_and_belongs_to_many &amp;#x7684; :foreign_key &amp;#x7684;&amp;#x9ED8;&amp;#x8BA4;&amp;#x503C;   has_one, has_many, has_and_belongs_to_many &amp;#x7684; :foreign_key &amp;#x7684;&amp;#x9ED8;&amp;#x8BA4;&amp;#x">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2013-12-02T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-12-31T05:01:21.506Z">
+<meta property="article:modified_time" content="2022-01-12T06:15:22.238Z">
 <meta property="article:author" content="zxyho">
 <meta property="article:tag" content="Ruby">
 <meta property="article:tag" content="Rails">
@@ -107,7 +107,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#org777e505"><span class="toc-number">1.</span> <span class="toc-text">1. has_one / has_many / has_and_belongs_to_many &#x7684; :foreign_key &#x7684;&#x9ED8;&#x8BA4;&#x503C;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#orgc216cee"><span class="toc-number">2.</span> <span class="toc-text">2. belongs_to &#x7684; :foreign_key &#x7684;&#x9ED8;&#x8BA4;&#x503C;</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#org05db7a8"><span class="toc-number">1.</span> <span class="toc-text">1. has_one / has_many / has_and_belongs_to_many &#x7684; :foreign_key &#x7684;&#x9ED8;&#x8BA4;&#x503C;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#orge9293e1"><span class="toc-number">2.</span> <span class="toc-text">2. belongs_to &#x7684; :foreign_key &#x7684;&#x9ED8;&#x8BA4;&#x503C;</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -153,11 +153,11 @@
   <div class="content" itemprop="articleBody">
     <div id="content">
 
-<div id="outline-container-org777e505" class="outline-2">
-<h2 id="org777e505">1. <code>has_one</code> / <code>has_many</code> / <code>has_and_belongs_to_many</code> &#x7684; <code>:foreign_key</code> &#x7684;&#x9ED8;&#x8BA4;&#x503C;</h2>
-<div class="outline-text-2" id="text-org777e505">
+<div id="outline-container-org05db7a8" class="outline-2">
+<h2 id="org05db7a8">1. <code>has_one</code> / <code>has_many</code> / <code>has_and_belongs_to_many</code> &#x7684; <code>:foreign_key</code> &#x7684;&#x9ED8;&#x8BA4;&#x503C;</h2>
+<div class="outline-text-2" id="text-org05db7a8">
 <p>
-<code>has_one=&#x3001;=has_many=&#x3001;=has_and_belongs_to_many</code> &#x7684; <code>:foreign_key</code> &#x7684;&#x9ED8;&#x8BA4;&#x503C;&#x4E3A;&#x4EE5;&#x58F0;&#x660E;&#x4E86;&#x6B64;&#x5173;&#x8054;&#x5173;&#x7CFB;&#x7684;&#x6A21;&#x578B;&#x7C7B;&#x7684;&#x7C7B;&#x540D;&#x7684;&#x5C0F;&#x5199;&#x52A0;
+<code>has_one</code>, <code>has_many</code>, <code>has_and_belongs_to_many</code> &#x7684; <code>:foreign_key</code> &#x7684;&#x9ED8;&#x8BA4;&#x503C;&#x4E3A;&#x4EE5;&#x58F0;&#x660E;&#x4E86;&#x6B64;&#x5173;&#x8054;&#x5173;&#x7CFB;&#x7684;&#x6A21;&#x578B;&#x7C7B;&#x7684;&#x7C7B;&#x540D;&#x7684;&#x5C0F;&#x5199;&#x52A0;
 &#x4E0A; <code>_id</code> &#x3002;&#x4F8B;&#x5982;:&#x4E00;&#x7BC7;&#x6587;&#x7AE0;(model class: <code>Article</code>)&#x6709;&#x4E00;&#x4E2A;&#x4F5C;&#x8005;(model class: <code>User</code>)&#x4EE5;&#x53CA;&#x591A;&#x4E2A;&#x8D21;&#x732E;&#x8005;(model class: <code>User</code>)&#xFF0C;&#x5BF9;
 &#x5E94;&#x7684;&#x8FD9;&#x4E2A;&#x6570;&#x636E;&#x6A21;&#x578B;&#x7684;migration &#x4E3A;&#xFF1A;
 </p>
@@ -185,9 +185,9 @@
 </div>
 </div>
 
-<div id="outline-container-orgc216cee" class="outline-2">
-<h2 id="orgc216cee">2. <code>belongs_to</code> &#x7684; <code>:foreign_key</code> &#x7684;&#x9ED8;&#x8BA4;&#x503C;</h2>
-<div class="outline-text-2" id="text-orgc216cee">
+<div id="outline-container-orge9293e1" class="outline-2">
+<h2 id="orge9293e1">2. <code>belongs_to</code> &#x7684; <code>:foreign_key</code> &#x7684;&#x9ED8;&#x8BA4;&#x503C;</h2>
+<div class="outline-text-2" id="text-orge9293e1">
 <p>
 <code>belongs_to</code> &#x7684;&#x9ED8;&#x8BA4;&#x503C;&#x4E3A;&#x5173;&#x8054;&#x5173;&#x7CFB;&#x7684;&#x540D;&#x79F0;&#x52A0;&#x4E0A; <code>_id</code> &#x3002;&#x4F8B;&#x5982;&#xFF0C;&#x5728;&#x4E0A;&#x9762;&#x7684;&#x4F8B;&#x5B50;&#x4E2D;&#xFF0C;&#x9700;&#x8981;&#x8868;&#x793A;&#x4E00;&#x7BC7;&#x6587;&#x7AE0;&#x6709;&#x4E00;&#x4E2A;&#x4F5C;&#x8005;&#xFF0C;&#x90A3;&#x4E48;&#x9700;&#x8981;&#x5728;
 <code>Article</code> &#x6A21;&#x578B;&#x91CC;&#x6DFB;&#x52A0;&#x4EE5;&#x4E0B;&#x7684;&#x5173;&#x8054;&#x58F0;&#x660E;&#xFF1A;
@@ -198,8 +198,8 @@
 </div>
 
 <p>
-&#x56E0;&#x4E3A; <code>belongs_to</code> &#x7684; <code>:foreign_key=&#x9009;&#x9879;&#x7684;&#x9ED8;&#x8BA4;&#x503C;&#x4E3A;&#x6B64;&#x5173;&#x8054;&#x5173;&#x7CFB;&#x7684;&#x540D;&#x79F0;&#x52A0;&#x4E0A; =_id</code> &#xFF0C;&#x5373; <code>author</code> &#x52A0;&#x4E0A; <code>_id</code> &#xFF0C;&#x56E0;&#x6B64;article.rb
-&#x4E2D;&#x7684; <code>belongs_to :author, :class_name =&gt; :User, :foreign_key =&gt; :author_id</code> &#x53EF;&#x4EE5;&#x7B80;&#x5316;&#x4E3A; <code>belongs_to :author,
+&#x56E0;&#x4E3A; <code>belongs_to</code> &#x7684; <code>:foreign_key</code> &#x9009;&#x9879;&#x7684;&#x9ED8;&#x8BA4;&#x503C;&#x4E3A;&#x6B64;&#x5173;&#x8054;&#x5173;&#x7CFB;&#x7684;&#x540D;&#x79F0;&#x52A0;&#x4E0A; <code>_id</code> &#xFF0C;&#x5373; <code>author</code> &#x52A0;&#x4E0A; <code>_id</code> &#xFF0C;&#x56E0;&#x6B64;
+article.rb&#x4E2D;&#x7684; <code>belongs_to :author, :class_name =&gt; :User, :foreign_key =&gt; :author_id</code> &#x53EF;&#x4EE5;&#x7B80;&#x5316;&#x4E3A; <code>belongs_to :author,
   :class_name =&gt; :User</code>
 </p>
 </div>
@@ -240,7 +240,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#org777e505"><span class="toc-number">1.</span> <span class="toc-text">1. has_one / has_many / has_and_belongs_to_many &#x7684; :foreign_key &#x7684;&#x9ED8;&#x8BA4;&#x503C;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#orgc216cee"><span class="toc-number">2.</span> <span class="toc-text">2. belongs_to &#x7684; :foreign_key &#x7684;&#x9ED8;&#x8BA4;&#x503C;</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#org05db7a8"><span class="toc-number">1.</span> <span class="toc-text">1. has_one / has_many / has_and_belongs_to_many &#x7684; :foreign_key &#x7684;&#x9ED8;&#x8BA4;&#x503C;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#orge9293e1"><span class="toc-number">2.</span> <span class="toc-text">2. belongs_to &#x7684; :foreign_key &#x7684;&#x9ED8;&#x8BA4;&#x503C;</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">

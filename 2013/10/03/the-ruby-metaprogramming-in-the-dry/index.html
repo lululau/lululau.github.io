@@ -16,7 +16,7 @@
 <meta property="og:image" content="http://yoursite.com/2013/10/03/the-ruby-metaprogramming-in-the-dry/1.png">
 <meta property="og:image" content="http://yoursite.com/2013/10/03/the-ruby-metaprogramming-in-the-dry/2.png">
 <meta property="article:published_time" content="2013-10-02T16:00:00.000Z">
-<meta property="article:modified_time" content="2013-10-03T02:00:00.000Z">
+<meta property="article:modified_time" content="2022-01-12T06:23:25.313Z">
 <meta property="article:author" content="zxyho">
 <meta property="article:tag" content="Ruby">
 <meta name="twitter:card" content="summary">
@@ -109,7 +109,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x5BF9;&#x8C61;&#x6A21;&#x578B;"><span class="toc-number">1.</span> <span class="toc-text">1. &#x5BF9;&#x8C61;&#x6A21;&#x578B;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x6253;&#x5F00;&#x7C7B;"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 &#x6253;&#x5F00;&#x7C7B;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x51E0;&#x4E2A;-reflection-&#x65B9;&#x6CD5;"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 &#x51E0;&#x4E2A; Reflection &#x65B9;&#x6CD5;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#objectinstance_variables"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.2.1 Object#instance_variables()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#objectmethodsalltrue"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2.2 Object#methods(all=true)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#moduleinstance_methodsinclude_supertrue"><span class="toc-number">1.2.3.</span> <span class="toc-text">1.2.3 Module#instance_methods(include_super=true)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#moduleancesotrs"><span class="toc-number">1.2.4.</span> <span class="toc-text">1.2.4 Module#ancesotrs()</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5E38;&#x91CF;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x548C;&#x8DEF;&#x5F84;"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 &#x5E38;&#x91CF;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x548C;&#x8DEF;&#x5F84;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x51E0;&#x4E2A;&#x548C;&#x5E38;&#x91CF;&#x6709;&#x5173;&#x7684;&#x65B9;&#x6CD5;"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 &#x51E0;&#x4E2A;&#x548C;&#x5E38;&#x91CF;&#x6709;&#x5173;&#x7684;&#x65B9;&#x6CD5;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#moduleconstantsinherittrue"><span class="toc-number">1.4.1.</span> <span class="toc-text">1.4.1 Module#constants(inherit=true)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#module.constants-&#x548C;-module.constantsinherit"><span class="toc-number">1.4.2.</span> <span class="toc-text">1.4.2 Module.constants() &#x548C; Module.constants(inherit)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#module.nesting"><span class="toc-number">1.4.3.</span> <span class="toc-text">1.4.3 Module.nesting()</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4FEE;&#x526A;&#x5E38;&#x91CF;&#x6811;"><span class="toc-number">1.5.</span> <span class="toc-text">1.5 &#x4FEE;&#x526A;&#x5E38;&#x91CF;&#x6811;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5173;&#x4E8E;-kernel-&#x6A21;&#x5757;"><span class="toc-number">1.6.</span> <span class="toc-text">1.6 &#x5173;&#x4E8E; Kernel &#x6A21;&#x5757;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#private-&#x7A76;&#x7ADF;&#x610F;&#x5473;&#x7740;&#x4EC0;&#x4E48;"><span class="toc-number">1.7.</span> <span class="toc-text">1.7 private &#x7A76;&#x7ADF;&#x610F;&#x5473;&#x7740;&#x4EC0;&#x4E48;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x6DF7;&#x4E71;&#x7684;&#x6A21;&#x5757;"><span class="toc-number">1.8.</span> <span class="toc-text">1.8 &#x6DF7;&#x4E71;&#x7684;&#x6A21;&#x5757;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5B8C;&#x6574;&#x7684;&#x7C7B;&#x548C;&#x5BF9;&#x8C61;&#x6A21;&#x578B;&#x56FE;"><span class="toc-number">1.9.</span> <span class="toc-text">1.9 &#x5B8C;&#x6574;&#x7684;&#x7C7B;&#x548C;&#x5BF9;&#x8C61;&#x6A21;&#x578B;&#x56FE;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x65B9;&#x6CD5;"><span class="toc-number">2.</span> <span class="toc-text">2. &#x65B9;&#x6CD5;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x52A8;&#x6001;&#x65B9;&#x6CD5;"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 &#x52A8;&#x6001;&#x65B9;&#x6CD5;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x52A8;&#x6001;&#x65B9;&#x6CD5;&#x6240;&#x4F9D;&#x8D56;&#x7684;&#x57FA;&#x7840;"><span class="toc-number">2.1.1.</span> <span class="toc-text">2.1.1 &#x52A8;&#x6001;&#x65B9;&#x6CD5;&#x6240;&#x4F9D;&#x8D56;&#x7684;&#x57FA;&#x7840;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x793A;&#x4F8B;"><span class="toc-number">2.1.2.</span> <span class="toc-text">2.1.2 &#x793A;&#x4F8B;</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#method_missing-&#x5E7D;&#x7075;&#x65B9;&#x6CD5;ghost-method"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 method_missing &#x5E7D;&#x7075;&#x65B9;&#x6CD5;(Ghost Method)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#method_missingsymbol-args-&#x65B9;&#x6CD5;"><span class="toc-number">2.2.1.</span> <span class="toc-text">2.2.1 method_missing(symbol [, *args] ) &#x65B9;&#x6CD5;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x4F7F;&#x7528;-method_missing-&#x91CD;&#x6784;-computer.rb"><span class="toc-number">2.2.2.</span> <span class="toc-text">2.2.2 &#x4F7F;&#x7528; method_missing &#x91CD;&#x6784; computer.rb</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x8986;&#x76D6;-respond_to"><span class="toc-number">2.2.3.</span> <span class="toc-text">2.2.3 &#x8986;&#x76D6; respond_to?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x767D;&#x677F;&#x7C7B;blankslate"><span class="toc-number">2.2.4.</span> <span class="toc-text">2.2.4 &#x767D;&#x677F;&#x7C7B;(BlankSlate)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x4EE3;&#x7801;&#x5757;"><span class="toc-number">3.</span> <span class="toc-text">3. &#x4EE3;&#x7801;&#x5757;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5F53;&#x524D;&#x5757;"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 &#x5F53;&#x524D;&#x5757;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4F7F;&#x7528;-ruby-&#x5B9E;&#x73B0;-c-&#x7684;-using-&#x5173;&#x952E;&#x5B57;"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 &#x4F7F;&#x7528; Ruby &#x5B9E;&#x73B0; C# &#x7684; using &#x5173;&#x952E;&#x5B57;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x95ED;&#x5305;"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 &#x95ED;&#x5305;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x5757;&#x5C40;&#x90E8;&#x4F5C;&#x7528;&#x57DF;"><span class="toc-number">3.3.1.</span> <span class="toc-text">3.3.1 &#x5757;&#x5C40;&#x90E8;&#x4F5C;&#x7528;&#x57DF;</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4F5C;&#x7528;&#x57DF;&#x95E8;"><span class="toc-number">3.4.</span> <span class="toc-text">3.4 &#x4F5C;&#x7528;&#x57DF;&#x95E8;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x548C;&#x9876;&#x7EA7;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;"><span class="toc-number">3.5.</span> <span class="toc-text">3.5 &#x5168;&#x5C40;&#x53D8;&#x91CF;&#x548C;&#x9876;&#x7EA7;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x6241;&#x5E73;&#x5316;&#x4F5C;&#x7528;&#x57DF;"><span class="toc-number">3.6.</span> <span class="toc-text">3.6 &#x6241;&#x5E73;&#x5316;&#x4F5C;&#x7528;&#x57DF;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4E0A;&#x4E0B;&#x6587;&#x63A2;&#x9488;-objectinstant_eval"><span class="toc-number">3.7.</span> <span class="toc-text">3.7 &#x4E0A;&#x4E0B;&#x6587;&#x63A2;&#x9488; Object#instant_eval()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x53EF;&#x8C03;&#x7528;&#x5BF9;&#x8C61;"><span class="toc-number">3.8.</span> <span class="toc-text">3.8 &#x53EF;&#x8C03;&#x7528;&#x5BF9;&#x8C61;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#proc-&#x548C;-lambda-&#x7684;&#x533A;&#x522B;"><span class="toc-number">3.8.1.</span> <span class="toc-text">3.8.1 proc &#x548C; lambda &#x7684;&#x533A;&#x522B;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x65B9;&#x6CD5;-1"><span class="toc-number">3.8.2.</span> <span class="toc-text">3.8.2 &#x65B9;&#x6CD5;</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#redflag"><span class="toc-number">3.9.</span> <span class="toc-text">3.9 RedFlag</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x7C7B;&#x5B9A;&#x4E49;"><span class="toc-number">4.</span> <span class="toc-text">4. &#x7C7B;&#x5B9A;&#x4E49;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#moduleclass_eval-&#x65B9;&#x6CD5;"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 Module#class_eval() &#x65B9;&#x6CD5;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x548C;&#x7C7B;&#x53D8;&#x91CF;"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 &#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x548C;&#x7C7B;&#x53D8;&#x91CF;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;"><span class="toc-number">4.2.1.</span> <span class="toc-text">4.2.1 &#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x7C7B;&#x53D8;&#x91CF;"><span class="toc-number">4.2.2.</span> <span class="toc-text">4.2.2 &#x7C7B;&#x53D8;&#x91CF;</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#class.new"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 Class.new</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x7C7B;&#x65B9;&#x6CD5;&#x7684;&#x5199;&#x6CD5;"><span class="toc-number">4.4.</span> <span class="toc-text">4.4 &#x7C7B;&#x65B9;&#x6CD5;&#x7684;&#x5199;&#x6CD5;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x7C7B;&#x65B9;&#x6CD5;&#x548C;moduleinclude-&#x4EE5;&#x53CA;-objectextend"><span class="toc-number">4.5.</span> <span class="toc-text">4.5 &#x7C7B;&#x65B9;&#x6CD5;&#x548C;=Module#include()= &#x4EE5;&#x53CA; Object#extend()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x73AF;&#x7ED5;&#x522B;&#x540D;"><span class="toc-number">4.6.</span> <span class="toc-text">4.6 &#x73AF;&#x7ED5;&#x522B;&#x540D;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x7F16;&#x5199;&#x4EE3;&#x7801;&#x7684;&#x4EE3;&#x7801;"><span class="toc-number">5.</span> <span class="toc-text">5. &#x7F16;&#x5199;&#x4EE3;&#x7801;&#x7684;&#x4EE3;&#x7801;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#binding-&#x5BF9;&#x8C61;"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 Binding &#x5BF9;&#x8C61;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4EE3;&#x7801;&#x5B57;&#x7B26;&#x4E32;"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 &#x4EE3;&#x7801;&#x5B57;&#x7B26;&#x4E32;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#kerneleval-&#x4E0E;-ruby-&#x5B89;&#x5168;&#x7EA7;&#x522B;"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 Kernel#eval &#x4E0E; Ruby &#x5B89;&#x5168;&#x7EA7;&#x522B;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x7C7B;&#x6269;&#x5C55;&#x6DF7;&#x5165;class-extension-mixins"><span class="toc-number">5.4.</span> <span class="toc-text">5.4 &#x7C7B;&#x6269;&#x5C55;&#x6DF7;&#x5165;&#xFF08;Class Extension Mixins&#xFF09;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#checkedattributes"><span class="toc-number">5.5.</span> <span class="toc-text">5.5 CheckedAttributes</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x5BF9;&#x8C61;&#x6A21;&#x578B;"><span class="toc-number">1.</span> <span class="toc-text">1. &#x5BF9;&#x8C61;&#x6A21;&#x578B;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x6253;&#x5F00;&#x7C7B;"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 &#x6253;&#x5F00;&#x7C7B;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x51E0;&#x4E2A;-reflection-&#x65B9;&#x6CD5;"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 &#x51E0;&#x4E2A; Reflection &#x65B9;&#x6CD5;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#objectinstance_variables"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.2.1 Object#instance_variables()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#objectmethodsalltrue"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2.2 Object#methods(all=true)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#moduleinstance_methodsinclude_supertrue"><span class="toc-number">1.2.3.</span> <span class="toc-text">1.2.3 Module#instance_methods(include_super=true)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#moduleancesotrs"><span class="toc-number">1.2.4.</span> <span class="toc-text">1.2.4 Module#ancesotrs()</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5E38;&#x91CF;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x548C;&#x8DEF;&#x5F84;"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 &#x5E38;&#x91CF;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x548C;&#x8DEF;&#x5F84;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x51E0;&#x4E2A;&#x548C;&#x5E38;&#x91CF;&#x6709;&#x5173;&#x7684;&#x65B9;&#x6CD5;"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 &#x51E0;&#x4E2A;&#x548C;&#x5E38;&#x91CF;&#x6709;&#x5173;&#x7684;&#x65B9;&#x6CD5;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#moduleconstantsinherittrue"><span class="toc-number">1.4.1.</span> <span class="toc-text">1.4.1 Module#constants(inherit=true)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#module.constants-&#x548C;-module.constantsinherit"><span class="toc-number">1.4.2.</span> <span class="toc-text">1.4.2 Module.constants() &#x548C; Module.constants(inherit)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#module.nesting"><span class="toc-number">1.4.3.</span> <span class="toc-text">1.4.3 Module.nesting()</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4FEE;&#x526A;&#x5E38;&#x91CF;&#x6811;"><span class="toc-number">1.5.</span> <span class="toc-text">1.5 &#x4FEE;&#x526A;&#x5E38;&#x91CF;&#x6811;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5173;&#x4E8E;-kernel-&#x6A21;&#x5757;"><span class="toc-number">1.6.</span> <span class="toc-text">1.6 &#x5173;&#x4E8E; Kernel &#x6A21;&#x5757;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#private-&#x7A76;&#x7ADF;&#x610F;&#x5473;&#x7740;&#x4EC0;&#x4E48;"><span class="toc-number">1.7.</span> <span class="toc-text">1.7 private &#x7A76;&#x7ADF;&#x610F;&#x5473;&#x7740;&#x4EC0;&#x4E48;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x6DF7;&#x4E71;&#x7684;&#x6A21;&#x5757;"><span class="toc-number">1.8.</span> <span class="toc-text">1.8 &#x6DF7;&#x4E71;&#x7684;&#x6A21;&#x5757;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5B8C;&#x6574;&#x7684;&#x7C7B;&#x548C;&#x5BF9;&#x8C61;&#x6A21;&#x578B;&#x56FE;"><span class="toc-number">1.9.</span> <span class="toc-text">1.9 &#x5B8C;&#x6574;&#x7684;&#x7C7B;&#x548C;&#x5BF9;&#x8C61;&#x6A21;&#x578B;&#x56FE;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x65B9;&#x6CD5;"><span class="toc-number">2.</span> <span class="toc-text">2. &#x65B9;&#x6CD5;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x52A8;&#x6001;&#x65B9;&#x6CD5;"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 &#x52A8;&#x6001;&#x65B9;&#x6CD5;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x52A8;&#x6001;&#x65B9;&#x6CD5;&#x6240;&#x4F9D;&#x8D56;&#x7684;&#x57FA;&#x7840;"><span class="toc-number">2.1.1.</span> <span class="toc-text">2.1.1 &#x52A8;&#x6001;&#x65B9;&#x6CD5;&#x6240;&#x4F9D;&#x8D56;&#x7684;&#x57FA;&#x7840;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x793A;&#x4F8B;"><span class="toc-number">2.1.2.</span> <span class="toc-text">2.1.2 &#x793A;&#x4F8B;</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#method_missing-&#x5E7D;&#x7075;&#x65B9;&#x6CD5;ghost-method"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 method_missing &#x5E7D;&#x7075;&#x65B9;&#x6CD5;(Ghost Method)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#method_missingsymbol-args-&#x65B9;&#x6CD5;"><span class="toc-number">2.2.1.</span> <span class="toc-text">2.2.1 method_missing(symbol [, *args] ) &#x65B9;&#x6CD5;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x4F7F;&#x7528;-method_missing-&#x91CD;&#x6784;-computer.rb"><span class="toc-number">2.2.2.</span> <span class="toc-text">2.2.2 &#x4F7F;&#x7528; method_missing &#x91CD;&#x6784; computer.rb</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x8986;&#x76D6;-respond_to"><span class="toc-number">2.2.3.</span> <span class="toc-text">2.2.3 &#x8986;&#x76D6; respond_to?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x767D;&#x677F;&#x7C7B;blankslate"><span class="toc-number">2.2.4.</span> <span class="toc-text">2.2.4 &#x767D;&#x677F;&#x7C7B;(BlankSlate)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x4EE3;&#x7801;&#x5757;"><span class="toc-number">3.</span> <span class="toc-text">3. &#x4EE3;&#x7801;&#x5757;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5F53;&#x524D;&#x5757;"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 &#x5F53;&#x524D;&#x5757;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4F7F;&#x7528;-ruby-&#x5B9E;&#x73B0;-c-&#x7684;-using-&#x5173;&#x952E;&#x5B57;"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 &#x4F7F;&#x7528; Ruby &#x5B9E;&#x73B0; C# &#x7684; using &#x5173;&#x952E;&#x5B57;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x95ED;&#x5305;"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 &#x95ED;&#x5305;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x5757;&#x5C40;&#x90E8;&#x4F5C;&#x7528;&#x57DF;"><span class="toc-number">3.3.1.</span> <span class="toc-text">3.3.1 &#x5757;&#x5C40;&#x90E8;&#x4F5C;&#x7528;&#x57DF;</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4F5C;&#x7528;&#x57DF;&#x95E8;"><span class="toc-number">3.4.</span> <span class="toc-text">3.4 &#x4F5C;&#x7528;&#x57DF;&#x95E8;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x548C;&#x9876;&#x7EA7;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;"><span class="toc-number">3.5.</span> <span class="toc-text">3.5 &#x5168;&#x5C40;&#x53D8;&#x91CF;&#x548C;&#x9876;&#x7EA7;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x6241;&#x5E73;&#x5316;&#x4F5C;&#x7528;&#x57DF;"><span class="toc-number">3.6.</span> <span class="toc-text">3.6 &#x6241;&#x5E73;&#x5316;&#x4F5C;&#x7528;&#x57DF;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4E0A;&#x4E0B;&#x6587;&#x63A2;&#x9488;-objectinstant_eval"><span class="toc-number">3.7.</span> <span class="toc-text">3.7 &#x4E0A;&#x4E0B;&#x6587;&#x63A2;&#x9488; Object#instant_eval()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x53EF;&#x8C03;&#x7528;&#x5BF9;&#x8C61;"><span class="toc-number">3.8.</span> <span class="toc-text">3.8 &#x53EF;&#x8C03;&#x7528;&#x5BF9;&#x8C61;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#proc-&#x548C;-lambda-&#x7684;&#x533A;&#x522B;"><span class="toc-number">3.8.1.</span> <span class="toc-text">3.8.1 proc &#x548C; lambda &#x7684;&#x533A;&#x522B;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x65B9;&#x6CD5;-1"><span class="toc-number">3.8.2.</span> <span class="toc-text">3.8.2 &#x65B9;&#x6CD5;</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#redflag"><span class="toc-number">3.9.</span> <span class="toc-text">3.9 RedFlag</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x7C7B;&#x5B9A;&#x4E49;"><span class="toc-number">4.</span> <span class="toc-text">4. &#x7C7B;&#x5B9A;&#x4E49;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#moduleclass_eval-&#x65B9;&#x6CD5;"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 Module#class_eval() &#x65B9;&#x6CD5;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x548C;&#x7C7B;&#x53D8;&#x91CF;"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 &#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x548C;&#x7C7B;&#x53D8;&#x91CF;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;"><span class="toc-number">4.2.1.</span> <span class="toc-text">4.2.1 &#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x7C7B;&#x53D8;&#x91CF;"><span class="toc-number">4.2.2.</span> <span class="toc-text">4.2.2 &#x7C7B;&#x53D8;&#x91CF;</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#class.new"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 Class.new</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x7C7B;&#x65B9;&#x6CD5;&#x7684;&#x5199;&#x6CD5;"><span class="toc-number">4.4.</span> <span class="toc-text">4.4 &#x7C7B;&#x65B9;&#x6CD5;&#x7684;&#x5199;&#x6CD5;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x7C7B;&#x65B9;&#x6CD5;&#x548C;moduleinclude-&#x4EE5;&#x53CA;-objectextend"><span class="toc-number">4.5.</span> <span class="toc-text">4.5 &#x7C7B;&#x65B9;&#x6CD5;&#x548C; Module#include() &#x4EE5;&#x53CA; Object#extend()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x73AF;&#x7ED5;&#x522B;&#x540D;"><span class="toc-number">4.6.</span> <span class="toc-text">4.6 &#x73AF;&#x7ED5;&#x522B;&#x540D;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x7F16;&#x5199;&#x4EE3;&#x7801;&#x7684;&#x4EE3;&#x7801;"><span class="toc-number">5.</span> <span class="toc-text">5. &#x7F16;&#x5199;&#x4EE3;&#x7801;&#x7684;&#x4EE3;&#x7801;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#binding-&#x5BF9;&#x8C61;"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 Binding &#x5BF9;&#x8C61;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4EE3;&#x7801;&#x5B57;&#x7B26;&#x4E32;"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 &#x4EE3;&#x7801;&#x5B57;&#x7B26;&#x4E32;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#kerneleval-&#x4E0E;-ruby-&#x5B89;&#x5168;&#x7EA7;&#x522B;"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 Kernel#eval &#x4E0E; Ruby &#x5B89;&#x5168;&#x7EA7;&#x522B;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x7C7B;&#x6269;&#x5C55;&#x6DF7;&#x5165;class-extension-mixins"><span class="toc-number">5.4.</span> <span class="toc-text">5.4 &#x7C7B;&#x6269;&#x5C55;&#x6DF7;&#x5165;&#xFF08;Class Extension Mixins&#xFF09;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#checkedattributes"><span class="toc-number">5.5.</span> <span class="toc-text">5.5 CheckedAttributes</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -155,12 +155,12 @@
   <div class="content" itemprop="articleBody">
     <div id="content">
 
-<div id="outline-container-orgfb3223b" class="outline-2">
+<div id="outline-container-orgdb3bc10" class="outline-2">
 <h2 id="&#x5BF9;&#x8C61;&#x6A21;&#x578B;">1. &#x5BF9;&#x8C61;&#x6A21;&#x578B;</h2>
 <div class="outline-text-2" id="text-&#x5BF9;&#x8C61;&#x6A21;&#x578B;">
 </div>
 
-<div id="outline-container-org60b6f99" class="outline-3">
+<div id="outline-container-orge5082cd" class="outline-3">
 <h3 id="&#x6253;&#x5F00;&#x7C7B;">1.1 &#x6253;&#x5F00;&#x7C7B;</h3>
 <div class="outline-text-3" id="text-&#x6253;&#x5F00;&#x7C7B;">
 <p>
@@ -209,12 +209,12 @@
 </div>
 </div>
 
-<div id="outline-container-org1fad7d5" class="outline-3">
+<div id="outline-container-org544d354" class="outline-3">
 <h3 id="&#x51E0;&#x4E2A;-reflection-&#x65B9;&#x6CD5;">1.2 &#x51E0;&#x4E2A; Reflection &#x65B9;&#x6CD5;</h3>
 <div class="outline-text-3" id="text-&#x51E0;&#x4E2A;-reflection-&#x65B9;&#x6CD5;">
 </div>
 
-<div id="outline-container-org76a58c9" class="outline-4">
+<div id="outline-container-org5a54726" class="outline-4">
 <h4 id="objectinstance_variables">1.2.1 <code>Object#instance_variables()</code></h4>
 <div class="outline-text-4" id="text-objectinstance_variables">
 <p>
@@ -225,7 +225,7 @@ variable.
 </div>
 </div>
 
-<div id="outline-container-org7642610" class="outline-4">
+<div id="outline-container-org2b68aa6" class="outline-4">
 <h4 id="objectmethodsalltrue">1.2.2 <code>Object#methods(all=true)</code></h4>
 <div class="outline-text-4" id="text-objectmethodsalltrue">
 <p>
@@ -237,7 +237,7 @@ listed.
 </div>
 </div>
 
-<div id="outline-container-org1504c54" class="outline-4">
+<div id="outline-container-orgda73e0b" class="outline-4">
 <h4 id="moduleinstance_methodsinclude_supertrue">1.2.3 <code>Module#instance_methods(include_super=true)</code></h4>
 <div class="outline-text-4" id="text-moduleinstance_methodsinclude_supertrue">
 <p>
@@ -251,7 +251,7 @@ mod&apos;s superclasses are returned.
 </div>
 </div>
 
-<div id="outline-container-org3bf62ff" class="outline-4">
+<div id="outline-container-org0f76104" class="outline-4">
 <h4 id="moduleancesotrs">1.2.4 <code>Module#ancesotrs()</code></h4>
 <div class="outline-text-4" id="text-moduleancesotrs">
 <p>
@@ -265,7 +265,7 @@ Returns a list of modules included in mod (including mod itself).
 </div>
 </div>
 
-<div id="outline-container-orgdf312d9" class="outline-3">
+<div id="outline-container-org00e1b88" class="outline-3">
 <h3 id="&#x5E38;&#x91CF;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x548C;&#x8DEF;&#x5F84;">1.3 &#x5E38;&#x91CF;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x548C;&#x8DEF;&#x5F84;</h3>
 <div class="outline-text-3" id="text-&#x5E38;&#x91CF;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x548C;&#x8DEF;&#x5F84;">
 <p>
@@ -288,12 +288,12 @@ MyModule
 </div>
 </div>
 
-<div id="outline-container-org5678141" class="outline-3">
+<div id="outline-container-orge92c6eb" class="outline-3">
 <h3 id="&#x51E0;&#x4E2A;&#x548C;&#x5E38;&#x91CF;&#x6709;&#x5173;&#x7684;&#x65B9;&#x6CD5;">1.4 &#x51E0;&#x4E2A;&#x548C;&#x5E38;&#x91CF;&#x6709;&#x5173;&#x7684;&#x65B9;&#x6CD5;</h3>
 <div class="outline-text-3" id="text-&#x51E0;&#x4E2A;&#x548C;&#x5E38;&#x91CF;&#x6709;&#x5173;&#x7684;&#x65B9;&#x6CD5;">
 </div>
 
-<div id="outline-container-org4213bf9" class="outline-4">
+<div id="outline-container-org97ffa9d" class="outline-4">
 <h4 id="moduleconstantsinherittrue">1.4.1 <code>Module#constants(inherit=true)</code></h4>
 <div class="outline-text-4" id="text-moduleconstantsinherittrue">
 <p>
@@ -304,7 +304,7 @@ start of section), unless the inherit parameter is set to false.
 </div>
 </div>
 
-<div id="outline-container-org92b8ad3" class="outline-4">
+<div id="outline-container-orgcdcb91d" class="outline-4">
 <h4 id="module.constants-&#x548C;-module.constantsinherit">1.4.2 <code>Module.constants()</code> &#x548C; <code>Module.constants(inherit)</code></h4>
 <div class="outline-text-4" id="text-module.constants-&#x548C;-module.constantsinherit">
 <p>
@@ -319,7 +319,7 @@ The second form calls the instance method constants.
 </div>
 </div>
 
-<div id="outline-container-org74cdc52" class="outline-4">
+<div id="outline-container-orgd0b9581" class="outline-4">
 <h4 id="module.nesting">1.4.3 <code>Module.nesting()</code></h4>
 <div class="outline-text-4" id="text-module.nesting">
 <p>
@@ -333,12 +333,12 @@ The second form calls the instance method constants.
 </div>
 </div>
 
-<div id="outline-container-orgf6ff461" class="outline-3">
+<div id="outline-container-orge51f650" class="outline-3">
 <h3 id="&#x4FEE;&#x526A;&#x5E38;&#x91CF;&#x6811;">1.5 &#x4FEE;&#x526A;&#x5E38;&#x91CF;&#x6811;</h3>
 <div class="outline-text-3" id="text-&#x4FEE;&#x526A;&#x5E38;&#x91CF;&#x6811;">
 <p>
-&#x82E5;&#x60F3;&#x5728;&#x7F51;&#x4E0A;&#x627E;&#x5230;&#x4E00;&#x4E2A; <code>motd.rb</code>
-&#x6587;&#x4EF6;&#x7528;&#x6765;&#x5728;&#x63A7;&#x5236;&#x53F0;&#x4E0A;&#x663E;&#x793A;&quot;&#x5F53;&#x5929;&#x7684;&#x6D88;&#x606F;&quot;&#xFF0C;&#x4E14;&#x60F3;&#x628A;&#x8FD9;&#x6BB5;&#x4EE3;&#x7801;&#x96C6;&#x6210;&#x5230;&#x6700;&#x65B0;&#x7684;&#x7A0B;&#x5E8F;&#x4E2D;&#x53BB;&#xFF0C;&#x90A3;&#x4E48;&#x4F7F;&#x7528;=load=&#x6267;&#x884C;&#x8BE5;&#x6587;&#x4EF6;&#x6765;&#x663E;&#x793A;&#x6D88;&#x606F;&#xFF1A;
+&#x82E5;&#x60F3;&#x5728;&#x7F51;&#x4E0A;&#x627E;&#x5230;&#x4E00;&#x4E2A; <code>motd.rb</code> &#x6587;&#x4EF6;&#x7528;&#x6765;&#x5728;&#x63A7;&#x5236;&#x53F0;&#x4E0A;&#x663E;&#x793A;&quot;&#x5F53;&#x5929;&#x7684;&#x6D88;&#x606F;&quot;&#xFF0C;&#x4E14;&#x60F3;&#x628A;&#x8FD9;&#x6BB5;&#x4EE3;&#x7801;&#x96C6;&#x6210;&#x5230;&#x6700;&#x65B0;&#x7684;&#x7A0B;&#x5E8F;&#x4E2D;&#x53BB;&#xFF0C;&#x90A3;&#x4E48;&#x4F7F;&#x7528; <code>load</code> &#x6267;
+&#x884C;&#x8BE5;&#x6587;&#x4EF6;&#x6765;&#x663E;&#x793A;&#x6D88;&#x606F;&#xFF1A;
 </p>
 
 <div class="org-src-container">
@@ -346,8 +346,8 @@ The second form calls the instance method constants.
 </div>
 
 <p>
-&#x4E0D;&#x8FC7;&#xFF0C;&#x4F7F;&#x7528; <code>load()</code> &#x65B9;&#x6CD5;&#x6709;&#x4E00;&#x4E2A;&#x526F;&#x4F5C;&#x7528;&#x3002;=motd.rb=
-&#x6587;&#x4EF6;&#x5F88;&#x53EF;&#x80FD;&#x5B9A;&#x4E49;&#x4E86;&#x53D8;&#x91CF;&#x548C;&#x7C7B;&#x3002;&#x5C3D;&#x7BA1;&#x53D8;&#x91CF;&#x5728;&#x52A0;&#x8F7D;&#x5B8C;&#x6210;&#x540E;&#x4F1A;&#x843D;&#x5728;&#x5F53;&#x524D;&#x4F5C;&#x7528;&#x57DF;&#x4E4B;&#x5916;&#xFF0C;&#x4F46;&#x5E38;&#x91CF;&#x4E0D;&#x4F1A;&#x3002;&#x8FD9;&#x6837;&#xFF0C;=motd.rb=&#x53EF;&#x80FD;&#x4F1A;&#x901A;&#x8FC7;&#x5B83;&#x7684;&#x5E38;&#x91CF;&#xFF08;&#x5C24;&#x5176;&#x662F;&#x7C7B;&#x540D;&#xFF09;&#x6C61;&#x67D3;&#x5F53;&#x524D;&#x7A0B;&#x5E8F;&#x7684;&#x547D;&#x540D;&#x7A7A;&#x95F4;&#x3002;
+&#x4E0D;&#x8FC7;&#xFF0C;&#x4F7F;&#x7528; <code>load()</code> &#x65B9;&#x6CD5;&#x6709;&#x4E00;&#x4E2A;&#x526F;&#x4F5C;&#x7528;&#x3002; <code>motd.rb</code> &#x6587;&#x4EF6;&#x5F88;&#x53EF;&#x80FD;&#x5B9A;&#x4E49;&#x4E86;&#x53D8;&#x91CF;&#x548C;&#x7C7B;&#x3002;&#x5C3D;&#x7BA1;&#x53D8;&#x91CF;&#x5728;&#x52A0;&#x8F7D;&#x5B8C;&#x6210;&#x540E;&#x4F1A;&#x843D;&#x5728;&#x5F53;&#x524D;&#x4F5C;&#x7528;&#x57DF;&#x4E4B;&#x5916;&#xFF0C;&#x4F46;
+&#x5E38;&#x91CF;&#x4E0D;&#x4F1A;&#x3002;&#x8FD9;&#x6837;&#xFF0C; <code>motd.rb</code> &#x53EF;&#x80FD;&#x4F1A;&#x901A;&#x8FC7;&#x5B83;&#x7684;&#x5E38;&#x91CF;&#xFF08;&#x5C24;&#x5176;&#x662F;&#x7C7B;&#x540D;&#xFF09;&#x6C61;&#x67D3;&#x5F53;&#x524D;&#x7A0B;&#x5E8F;&#x7684;&#x547D;&#x540D;&#x7A7A;&#x95F4;&#x3002;
 </p>
 
 <p>
@@ -365,12 +365,14 @@ The second form calls the instance method constants.
 </p>
 
 <p>
-=require()=&#x65B9;&#x6CD5;&#x4E0E;=load()=&#x65B9;&#x6CD5;&#x9887;&#x4E3A;&#x76F8;&#x4F3C;&#xFF0C;&#x4F46;&#x662F;&#x5B83;&#x7684;&#x76EE;&#x7684;&#x4E0D;&#x540C;&#x3002;&#x901A;&#x8FC7;=load()=&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x6267;&#x884C;&#x4EE3;&#x7801;&#xFF0C;&#x800C;=require()=&#x5219;&#x662F;&#x7528;&#x6765;&#x5BFC;&#x5165;&#x7C7B;&#x5E93;&#x3002;&#x8FD9;&#x5C31;&#x662F;=require()=&#x65B9;&#x6CD5;&#x6CA1;&#x6709;&#x7B2C;&#x4E8C;&#x4E2A;&#x53EF;&#x9009;&#x53C2;&#x6570;&#x7684;&#x539F;&#x56E0;&#x3002;&#x5728;&#x8FD9;&#x4E9B;&#x7C7B;&#x5E93;&#x4E2D;&#x7684;&#x7C7B;&#x540D;&#x901A;&#x5E38;&#x662F;&#x4F60;&#x5BFC;&#x5165;&#x8FD9;&#x4E9B;&#x5E93;&#x65F6;&#x6240;&#x5E0C;&#x671B;&#x5F97;&#x5230;&#x7684;&#xFF0C;&#x56E0;&#x6B64;&#x6CA1;&#x6709;&#x7406;&#x7531;&#x5728;&#x52A0;&#x8F7D;&#x540E;&#x9500;&#x6BC1;&#x5B83;&#x4EEC;&#x3002;
+<code>require()</code> &#x65B9;&#x6CD5;&#x4E0E; <code>load()</code> &#x65B9;&#x6CD5;&#x9887;&#x4E3A;&#x76F8;&#x4F3C;&#xFF0C;&#x4F46;&#x662F;&#x5B83;&#x7684;&#x76EE;&#x7684;&#x4E0D;&#x540C;&#x3002;&#x901A;&#x8FC7; <code>load()</code> &#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x6267;&#x884C;&#x4EE3;&#x7801;&#xFF0C;&#x800C; <code>require()</code> &#x5219;&#x662F;&#x7528;&#x6765;&#x5BFC;&#x5165;
+&#x7C7B;&#x5E93;&#x3002;&#x8FD9;&#x5C31;&#x662F; <code>require()</code> &#x65B9;&#x6CD5;&#x6CA1;&#x6709;&#x7B2C;&#x4E8C;&#x4E2A;&#x53EF;&#x9009;&#x53C2;&#x6570;&#x7684;&#x539F;&#x56E0;&#x3002;&#x5728;&#x8FD9;&#x4E9B;&#x7C7B;&#x5E93;&#x4E2D;&#x7684;&#x7C7B;&#x540D;&#x901A;&#x5E38;&#x662F;&#x4F60;&#x5BFC;&#x5165;&#x8FD9;&#x4E9B;&#x5E93;&#x65F6;&#x6240;&#x5E0C;&#x671B;&#x5F97;&#x5230;&#x7684;&#xFF0C;&#x56E0;&#x6B64;&#x6CA1;&#x6709;&#x7406;&#x7531;
+&#x5728;&#x52A0;&#x8F7D;&#x540E;&#x9500;&#x6BC1;&#x5B83;&#x4EEC;&#x3002;
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgac41042" class="outline-3">
+<div id="outline-container-orgba24f32" class="outline-3">
 <h3 id="&#x5173;&#x4E8E;-kernel-&#x6A21;&#x5757;">1.6 &#x5173;&#x4E8E; Kernel &#x6A21;&#x5757;</h3>
 <div class="outline-text-3" id="text-&#x5173;&#x4E8E;-kernel-&#x6A21;&#x5757;">
 <p>
@@ -380,7 +382,7 @@ Kernel &#x6A21;&#x5757;&#x7684;&#x65B9;&#x6CD5;&#x3002;
 </div>
 </div>
 
-<div id="outline-container-org50a8179" class="outline-3">
+<div id="outline-container-org7902232" class="outline-3">
 <h3 id="private-&#x7A76;&#x7ADF;&#x610F;&#x5473;&#x7740;&#x4EC0;&#x4E48;">1.7 <code>private</code> &#x7A76;&#x7ADF;&#x610F;&#x5473;&#x7740;&#x4EC0;&#x4E48;</h3>
 <div class="outline-text-3" id="text-private-&#x7A76;&#x7ADF;&#x610F;&#x5473;&#x7740;&#x4EC0;&#x4E48;">
 <p>
@@ -402,7 +404,7 @@ Kernel &#x6A21;&#x5757;&#x7684;&#x65B9;&#x6CD5;&#x3002;
 </div>
 </div>
 
-<div id="outline-container-orgf76f0b7" class="outline-3">
+<div id="outline-container-org22fc0a4" class="outline-3">
 <h3 id="&#x6DF7;&#x4E71;&#x7684;&#x6A21;&#x5757;">1.8 &#x6DF7;&#x4E71;&#x7684;&#x6A21;&#x5757;</h3>
 <div class="outline-text-3" id="text-&#x6DF7;&#x4E71;&#x7684;&#x6A21;&#x5757;">
 <p>
@@ -414,19 +416,17 @@ Kernel &#x6A21;&#x5757;&#x7684;&#x65B9;&#x6CD5;&#x3002;
 </div>
 
 <p>
-&#x95EE;&#xFF1A;=b.print= &#x8C03;&#x7528;&#x7684;&#x662F; <code>Printable</code> &#x8FD8;&#x662F; <code>Document</code> &#x4E2D;&#x5B9A;&#x4E49;&#x7684; <code>print</code>
-&#x65B9;&#x6CD5;&#xFF1F;
+&#x95EE;&#xFF1A; <code>b.print</code> &#x8C03;&#x7528;&#x7684;&#x662F; <code>Printable</code> &#x8FD8;&#x662F; <code>Document</code> &#x4E2D;&#x5B9A;&#x4E49;&#x7684; <code>print</code> &#x65B9;&#x6CD5;&#xFF1F;
 </p>
 
 <p>
-&#x7B54;&#xFF1A;=Book.ancestors=
-&#x7684;&#x8F93;&#x51FA;&#xFF1A;=[Book, Printable, Document, Object, .. ..]=&#xFF0C;&#x56E0;&#x6B64;&#x8C03;&#x7528;&#x7684;&#x662F;
-<code>Printable</code> &#x4E2D;&#x5B9A;&#x4E49;&#x7684; <code>print</code> &#x65B9;&#x6CD5;&#x3002;
+&#x7B54;&#xFF1A; <code>Book.ancestors</code> &#x7684;&#x8F93;&#x51FA;&#xFF1A; <code>[Book, Printable, Document, Object, .. ..]</code> &#xFF0C;&#x56E0;&#x6B64;&#x8C03;&#x7528;&#x7684;&#x662F;=Printable= &#x4E2D;&#x5B9A;&#x4E49;&#x7684; <code>print</code>
+&#x65B9;&#x6CD5;&#x3002;
 </p>
 </div>
 </div>
 
-<div id="outline-container-org37c0b76" class="outline-3">
+<div id="outline-container-org304c6d8" class="outline-3">
 <h3 id="&#x5B8C;&#x6574;&#x7684;&#x7C7B;&#x548C;&#x5BF9;&#x8C61;&#x6A21;&#x578B;&#x56FE;">1.9 &#x5B8C;&#x6574;&#x7684;&#x7C7B;&#x548C;&#x5BF9;&#x8C61;&#x6A21;&#x578B;&#x56FE;</h3>
 <div class="outline-text-3" id="text-&#x5B8C;&#x6574;&#x7684;&#x7C7B;&#x548C;&#x5BF9;&#x8C61;&#x6A21;&#x578B;&#x56FE;">
 <p>
@@ -451,22 +451,22 @@ Kernel &#x6A21;&#x5757;&#x7684;&#x65B9;&#x6CD5;&#x3002;
 </div>
 </div>
 
-<div id="outline-container-org2436556" class="outline-2">
+<div id="outline-container-org8f91856" class="outline-2">
 <h2 id="&#x65B9;&#x6CD5;">2. &#x65B9;&#x6CD5;</h2>
 <div class="outline-text-2" id="text-&#x65B9;&#x6CD5;">
 </div>
 
-<div id="outline-container-orgdea6dfc" class="outline-3">
+<div id="outline-container-orgf07e17a" class="outline-3">
 <h3 id="&#x52A8;&#x6001;&#x65B9;&#x6CD5;">2.1 &#x52A8;&#x6001;&#x65B9;&#x6CD5;</h3>
 <div class="outline-text-3" id="text-&#x52A8;&#x6001;&#x65B9;&#x6CD5;">
 </div>
 
-<div id="outline-container-org4ed3f1c" class="outline-4">
+<div id="outline-container-org191e823" class="outline-4">
 <h4 id="&#x52A8;&#x6001;&#x65B9;&#x6CD5;&#x6240;&#x4F9D;&#x8D56;&#x7684;&#x57FA;&#x7840;">2.1.1 &#x52A8;&#x6001;&#x65B9;&#x6CD5;&#x6240;&#x4F9D;&#x8D56;&#x7684;&#x57FA;&#x7840;</h4>
 <div class="outline-text-4" id="text-&#x52A8;&#x6001;&#x65B9;&#x6CD5;&#x6240;&#x4F9D;&#x8D56;&#x7684;&#x57FA;&#x7840;">
 <ul class="org-ul">
 <li><p>
-&#x52A8;&#x6001;&#x6D3E;&#x53D1;&#xFF1A;=Object#send(symbol_or_string [, args&#x2026;])=
+&#x52A8;&#x6001;&#x6D3E;&#x53D1;&#xFF1A; <code>Object#send(symbol_or_string [, args&#x2026;])</code>
 </p>
 
 <p>
@@ -477,8 +477,7 @@ string is converted to a symbol.
 </p></li>
 
 <li><p>
-&#x52A8;&#x6001;&#x5B9A;&#x4E49;&#xFF1A;=Module#define_method(symbol, method)= &#x6216;
-<code>Module#define_method(symbol){ block }</code>
+&#x52A8;&#x6001;&#x5B9A;&#x4E49;&#xFF1A; <code>Module#define_method(symbol, method)</code> &#x6216; <code>Module#define_method(symbol){ block }</code>
 </p>
 
 <p>
@@ -491,7 +490,7 @@ using instance_eval. <code>define_method</code> is a <b>private</b> method.
 </div>
 </div>
 
-<div id="outline-container-orgcb90827" class="outline-4">
+<div id="outline-container-org2b4fec9" class="outline-4">
 <h4 id="&#x793A;&#x4F8B;">2.1.2 &#x793A;&#x4F8B;</h4>
 <div class="outline-text-4" id="text-&#x793A;&#x4F8B;">
 <p>
@@ -531,12 +530,12 @@ using instance_eval. <code>define_method</code> is a <b>private</b> method.
 </div>
 </div>
 
-<div id="outline-container-org934686f" class="outline-3">
+<div id="outline-container-orgf3e3eed" class="outline-3">
 <h3 id="method_missing-&#x5E7D;&#x7075;&#x65B9;&#x6CD5;ghost-method">2.2 <code>method_missing</code> &#x5E7D;&#x7075;&#x65B9;&#x6CD5;(Ghost Method)</h3>
 <div class="outline-text-3" id="text-method_missing-&#x5E7D;&#x7075;&#x65B9;&#x6CD5;ghost-method">
 </div>
 
-<div id="outline-container-orgf72cbc4" class="outline-4">
+<div id="outline-container-org732b8fd" class="outline-4">
 <h4 id="method_missingsymbol-args-&#x65B9;&#x6CD5;">2.2.1 <code>method_missing(symbol [, *args] )</code> &#x65B9;&#x6CD5;</h4>
 <div class="outline-text-4" id="text-method_missingsymbol-args-&#x65B9;&#x6CD5;">
 <p>
@@ -551,7 +550,7 @@ can pick up the missing method.
 </div>
 </div>
 
-<div id="outline-container-org04fc9f3" class="outline-4">
+<div id="outline-container-org1e96e7a" class="outline-4">
 <h4 id="&#x4F7F;&#x7528;-method_missing-&#x91CD;&#x6784;-computer.rb">2.2.2 &#x4F7F;&#x7528; <code>method_missing</code> &#x91CD;&#x6784; <code>computer.rb</code></h4>
 <div class="outline-text-4" id="text-&#x4F7F;&#x7528;-method_missing-&#x91CD;&#x6784;-computer.rb">
 <div class="org-src-container">
@@ -560,7 +559,7 @@ can pick up the missing method.
 </div>
 </div>
 
-<div id="outline-container-orgb65243c" class="outline-4">
+<div id="outline-container-org302acfa" class="outline-4">
 <h4 id="&#x8986;&#x76D6;-respond_to">2.2.3 &#x8986;&#x76D6; <code>respond_to?</code></h4>
 <div class="outline-text-4" id="text-&#x8986;&#x76D6;-respond_to">
 <div class="org-src-container">
@@ -569,7 +568,7 @@ can pick up the missing method.
 </div>
 </div>
 
-<div id="outline-container-org294fc9f" class="outline-4">
+<div id="outline-container-org799d7e1" class="outline-4">
 <h4 id="&#x767D;&#x677F;&#x7C7B;blankslate">2.2.4 &#x767D;&#x677F;&#x7C7B;(BlankSlate)</h4>
 <div class="outline-text-4" id="text-&#x767D;&#x677F;&#x7C7B;blankslate">
 <p>
@@ -618,10 +617,8 @@ symbols.
 
 <blockquote>
 <p>
-&#x4ECE; Ruby 1.9
-&#x5F00;&#x59CB;&#xFF0C;&#x767D;&#x677F;&#x6280;&#x672F;&#x88AB;&#x96C6;&#x6210;&#x5230;&#x8BED;&#x8A00;&#x81EA;&#x8EAB;&#x4E2D;&#xFF0C;&#x5728;&#x8FC7;&#x53BB;&#x7684;&#x7248;&#x672C;&#x4E2D;&#xFF0C;=Object=&#x662F;&#x7C7B;&#x4F53;&#x7CFB;&#x7ED3;&#x6784;&#x7684;&#x6839;&#x8282;&#x70B9;&#x3002;&#x5728;
-Ruby 1.9 &#x4E2D;&#xFF0C;=Object=&#x7C7B;&#x6709;&#x4E00;&#x4E2A;&#x540D;&#x53EB; <code>BasicObject</code>
-&#x7684;&#x8D85;&#x7C7B;&#xFF0C;&#x5B83;&#x53EA;&#x63D0;&#x4F9B;&#x51E0;&#x4E2A;&#x5F88;&#x57FA;&#x672C;&#x7684;&#x65B9;&#x6CD5;&#xFF1A;
+&#x4ECE; Ruby 1.9&#x5F00;&#x59CB;&#xFF0C;&#x767D;&#x677F;&#x6280;&#x672F;&#x88AB;&#x96C6;&#x6210;&#x5230;&#x8BED;&#x8A00;&#x81EA;&#x8EAB;&#x4E2D;&#xFF0C;&#x5728;&#x8FC7;&#x53BB;&#x7684;&#x7248;&#x672C;&#x4E2D;&#xFF0C; <code>Object</code> &#x662F;&#x7C7B;&#x4F53;&#x7CFB;&#x7ED3;&#x6784;&#x7684;&#x6839;&#x8282;&#x70B9;&#x3002;&#x5728;Ruby 1.9 &#x4E2D;&#xFF0C; <code>Object</code>
+&#x7C7B;&#x6709;&#x4E00;&#x4E2A;&#x540D;&#x53EB; <code>BasicObject</code> &#x7684;&#x8D85;&#x7C7B;&#xFF0C;&#x5B83;&#x53EA;&#x63D0;&#x4F9B;&#x51E0;&#x4E2A;&#x5F88;&#x57FA;&#x672C;&#x7684;&#x65B9;&#x6CD5;&#xFF1A;
 </p>
 </blockquote>
 
@@ -631,8 +628,7 @@ Ruby 1.9 &#x4E2D;&#xFF0C;=Object=&#x7C7B;&#x6709;&#x4E00;&#x4E2A;&#x540D;&#x53EB
 
 <blockquote>
 <p>
-&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x7C7B;&#x8FD8;&#x662F;&#x4F1A;&#x4ECE; <code>Object</code> &#x7EE7;&#x627F;&#xFF0C;&#x4ECE; <code>BasicObject</code>
-&#x7EE7;&#x627F;&#x6765;&#x7684;&#x7C7B;&#x4F1A;&#x81EA;&#x52A8;&#x6210;&#x4E3A;&#x767D;&#x677F;&#x7C7B;&#x3002;
+&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x7C7B;&#x8FD8;&#x662F;&#x4F1A;&#x4ECE; <code>Object</code> &#x7EE7;&#x627F;&#xFF0C;&#x4ECE; <code>BasicObject</code> &#x7EE7;&#x627F;&#x6765;&#x7684;&#x7C7B;&#x4F1A;&#x81EA;&#x52A8;&#x6210;&#x4E3A;&#x767D;&#x677F;&#x7C7B;&#x3002;
 </p>
 </blockquote>
 </div>
@@ -640,12 +636,12 @@ Ruby 1.9 &#x4E2D;&#xFF0C;=Object=&#x7C7B;&#x6709;&#x4E00;&#x4E2A;&#x540D;&#x53EB
 </div>
 </div>
 
-<div id="outline-container-org39a9fbe" class="outline-2">
+<div id="outline-container-org4c5bbcc" class="outline-2">
 <h2 id="&#x4EE3;&#x7801;&#x5757;">3. &#x4EE3;&#x7801;&#x5757;</h2>
 <div class="outline-text-2" id="text-&#x4EE3;&#x7801;&#x5757;">
 </div>
 
-<div id="outline-container-org3c6721b" class="outline-3">
+<div id="outline-container-org5af6ab4" class="outline-3">
 <h3 id="&#x5F53;&#x524D;&#x5757;">3.1 &#x5F53;&#x524D;&#x5757;</h3>
 <div class="outline-text-3" id="text-&#x5F53;&#x524D;&#x5757;">
 <p>
@@ -659,7 +655,7 @@ Ruby 1.9 &#x4E2D;&#xFF0C;=Object=&#x7C7B;&#x6709;&#x4E00;&#x4E2A;&#x540D;&#x53EB
 </div>
 </div>
 
-<div id="outline-container-org7695fe3" class="outline-3">
+<div id="outline-container-org8042485" class="outline-3">
 <h3 id="&#x4F7F;&#x7528;-ruby-&#x5B9E;&#x73B0;-c-&#x7684;-using-&#x5173;&#x952E;&#x5B57;">3.2 &#x4F7F;&#x7528; Ruby &#x5B9E;&#x73B0; C# &#x7684; <code>using</code> &#x5173;&#x952E;&#x5B57;</h3>
 <div class="outline-text-3" id="text-&#x4F7F;&#x7528;-ruby-&#x5B9E;&#x73B0;-c-&#x7684;-using-&#x5173;&#x952E;&#x5B57;">
 <p>
@@ -697,7 +693,7 @@ OK&#xFF0C;&#x4E0B;&#x9762;&#x8FD9;&#x4E2A;&#x662F;&#x7528;Ruby&#x5B9E;&#x73B0;&#
 </div>
 </div>
 
-<div id="outline-container-orga31b770" class="outline-3">
+<div id="outline-container-org51467c2" class="outline-3">
 <h3 id="&#x95ED;&#x5305;">3.3 &#x95ED;&#x5305;</h3>
 <div class="outline-text-3" id="text-&#x95ED;&#x5305;">
 
@@ -722,15 +718,15 @@ OK&#xFF0C;&#x4E0B;&#x9762;&#x8FD9;&#x4E2A;&#x662F;&#x7528;Ruby&#x5B9E;&#x73B0;&#
 </div>
 
 <p>
-&#x5F53;&#x521B;&#x5EFA;&#x5757;&#x65F6;&#x4F1A;&#x83B7;&#x53D6;&#x5230;&#x5C40;&#x90E8;&#x7ED1;&#x5B9A;&#xFF08;&#x6BD4;&#x5982;&#x4E0A;&#x9762;&#x7684;=x=&#xFF09;&#xFF0C;&#x7136;&#x540E;&#x628A;&#x5757;&#x8FDE;&#x540C;&#x5B83;&#x81EA;&#x5DF1;&#x7684;&#x7ED1;&#x5B9A;&#x4F20;&#x7ED9;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#x3002;&#x5728;&#x4E0A;&#x9762;&#x7684;&#x4F8B;&#x5B50;&#x4E2D;&#xFF0C;&#x5757;&#x7684;&#x7ED1;&#x5B9A;&#x4E2D;&#x5305;&#x62EC;&#x4E00;&#x4E2A;&#x540D;&#x4E3A;
-<code>x</code> &#x7684;&#x53D8;&#x91CF;&#x3002;&#x867D;&#x7136;&#x5728;&#x65B9;&#x6CD5;&#x4E2D;&#x5B9A;&#x4E49;&#x4E86;&#x4E00;&#x4E2A;&#x53D8;&#x91CF; <code>x=&#xFF0C;&#x5757;&#x770B;&#x5230;&#x7684; =x</code>
-&#x4E5F;&#x662F;&#x5728;&#x5757;&#x5B9A;&#x4E49;&#x65F6;&#x7ED1;&#x5B9A;&#x7684; <code>x=&#xFF0C;&#x4F46;&#x662F;&#x65B9;&#x6CD5;&#x4E2D;&#x7684; =x</code>
+&#x5F53;&#x521B;&#x5EFA;&#x5757;&#x65F6;&#x4F1A;&#x83B7;&#x53D6;&#x5230;&#x5C40;&#x90E8;&#x7ED1;&#x5B9A;&#xFF08;&#x6BD4;&#x5982;&#x4E0A;&#x9762;&#x7684; <code>x</code> &#xFF09;&#xFF0C;&#x7136;&#x540E;&#x628A;&#x5757;&#x8FDE;&#x540C;&#x5B83;&#x81EA;&#x5DF1;&#x7684;&#x7ED1;&#x5B9A;&#x4F20;&#x7ED9;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#x3002;&#x5728;&#x4E0A;&#x9762;&#x7684;&#x4F8B;&#x5B50;&#x4E2D;&#xFF0C;&#x5757;&#x7684;&#x7ED1;&#x5B9A;&#x4E2D;&#x5305;&#x62EC;&#x4E00;&#x4E2A;&#x540D;&#x4E3A;
+<code>x</code> &#x7684;&#x53D8;&#x91CF;&#x3002;&#x867D;&#x7136;&#x5728;&#x65B9;&#x6CD5;&#x4E2D;&#x5B9A;&#x4E49;&#x4E86;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;  <code>x</code> &#xFF0C;&#x5757;&#x770B;&#x5230;&#x7684; <code>x</code>
+&#x4E5F;&#x662F;&#x5728;&#x5757;&#x5B9A;&#x4E49;&#x65F6;&#x7ED1;&#x5B9A;&#x7684;  <code>x</code> &#xFF0C;&#x4F46;&#x662F;&#x65B9;&#x6CD5;&#x4E2D;&#x7684; <code>x</code>
 &#x5BF9;&#x8FD9;&#x4E2A;&#x5757;&#x6765;&#x8BF4;&#x662F;&#x4E0D;&#x53EF;&#x89C1;&#x7684;&#x3002;&#x57FA;&#x4E8E;&#x8FD9;&#x6837;&#x7684;&#x7279;&#x6027;&#xFF0C;&#x8BA1;&#x7B97;&#x673A;&#x79D1;&#x5B66;&#x5BB6;&#x559C;&#x6B22;&#x628A;&#x5757;&#x79F0;&#x4E3A;
 *&#x95ED;&#x5305;(Closure)*&#x3002;
 </p>
 </div>
 
-<div id="outline-container-org69faf99" class="outline-4">
+<div id="outline-container-orgaf043d7" class="outline-4">
 <h4 id="&#x5757;&#x5C40;&#x90E8;&#x4F5C;&#x7528;&#x57DF;">3.3.1 &#x5757;&#x5C40;&#x90E8;&#x4F5C;&#x7528;&#x57DF;</h4>
 <div class="outline-text-4" id="text-&#x5757;&#x5C40;&#x90E8;&#x4F5C;&#x7528;&#x57DF;">
 <p>
@@ -759,7 +755,7 @@ OK&#xFF0C;&#x4E0B;&#x9762;&#x8FD9;&#x4E2A;&#x662F;&#x7528;Ruby&#x5B9E;&#x73B0;&#
 </div>
 </div>
 
-<div id="outline-container-org5a18cc2" class="outline-3">
+<div id="outline-container-org9c9b9fe" class="outline-3">
 <h3 id="&#x4F5C;&#x7528;&#x57DF;&#x95E8;">3.4 &#x4F5C;&#x7528;&#x57DF;&#x95E8;</h3>
 <div class="outline-text-3" id="text-&#x4F5C;&#x7528;&#x57DF;&#x95E8;">
 <p>
@@ -796,7 +792,7 @@ Returns the names of the current local variables.
 </div>
 </div>
 
-<div id="outline-container-orgfe73592" class="outline-3">
+<div id="outline-container-org0da243f" class="outline-3">
 <h3 id="&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x548C;&#x9876;&#x7EA7;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;">3.5 &#x5168;&#x5C40;&#x53D8;&#x91CF;&#x548C;&#x9876;&#x7EA7;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;</h3>
 <div class="outline-text-3" id="text-&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x548C;&#x9876;&#x7EA7;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;">
 <p>
@@ -831,7 +827,7 @@ Returns the names of the current local variables.
 </div>
 </div>
 
-<div id="outline-container-org702a8f0" class="outline-3">
+<div id="outline-container-orgfc1d4e2" class="outline-3">
 <h3 id="&#x6241;&#x5E73;&#x5316;&#x4F5C;&#x7528;&#x57DF;">3.6 &#x6241;&#x5E73;&#x5316;&#x4F5C;&#x7528;&#x57DF;</h3>
 <div class="outline-text-3" id="text-&#x6241;&#x5E73;&#x5316;&#x4F5C;&#x7528;&#x57DF;">
 <ul class="org-ul">
@@ -858,7 +854,7 @@ Returns the names of the current local variables.
 </div>
 </div>
 
-<div id="outline-container-orgca04712" class="outline-3">
+<div id="outline-container-org0fbd408" class="outline-3">
 <h3 id="&#x4E0A;&#x4E0B;&#x6587;&#x63A2;&#x9488;-objectinstant_eval">3.7 &#x4E0A;&#x4E0B;&#x6587;&#x63A2;&#x9488; <code>Object#instant_eval()</code></h3>
 <div class="outline-text-3" id="text-&#x4E0A;&#x4E0B;&#x6587;&#x63A2;&#x9488;-objectinstant_eval">
 <ul class="org-ul">
@@ -895,7 +891,7 @@ Ruby 1.9 &#x4E2D;&#x5F15;&#x5165;&#x4E86;&#x4E00;&#x4E2A;&#x540D;&#x4E3A; <code>
 </div>
 </div>
 
-<div id="outline-container-orgf71c6a0" class="outline-3">
+<div id="outline-container-org9f8e7b6" class="outline-3">
 <h3 id="&#x53EF;&#x8C03;&#x7528;&#x5BF9;&#x8C61;">3.8 &#x53EF;&#x8C03;&#x7528;&#x5BF9;&#x8C61;</h3>
 <div class="outline-text-3" id="text-&#x53EF;&#x8C03;&#x7528;&#x5BF9;&#x8C61;">
 <p>
@@ -909,7 +905,7 @@ Ruby 1.9 &#x4E2D;&#x5F15;&#x5165;&#x4E86;&#x4E00;&#x4E2A;&#x540D;&#x4E3A; <code>
 </ul>
 </div>
 
-<div id="outline-container-org71c4840" class="outline-4">
+<div id="outline-container-org32c4e66" class="outline-4">
 <h4 id="proc-&#x548C;-lambda-&#x7684;&#x533A;&#x522B;">3.8.1 proc &#x548C; lambda &#x7684;&#x533A;&#x522B;</h4>
 <div class="outline-text-4" id="text-proc-&#x548C;-lambda-&#x7684;&#x533A;&#x522B;">
 <p>
@@ -936,7 +932,7 @@ Ruby 1.9 &#x4E2D; <code>Kernel#proc()</code> &#x662F; <code>Proc.new()</code> &#
 </div>
 </div>
 
-<div id="outline-container-org56b3faa" class="outline-4">
+<div id="outline-container-org8a7c374" class="outline-4">
 <h4 id="&#x65B9;&#x6CD5;-1">3.8.2 &#x65B9;&#x6CD5;</h4>
 <div class="outline-text-4" id="text-&#x65B9;&#x6CD5;-1">
 <p>
@@ -961,7 +957,7 @@ Ruby 1.9 &#x4E2D; <code>Kernel#proc()</code> &#x662F; <code>Proc.new()</code> &#
 </div>
 </div>
 
-<div id="outline-container-org11197e0" class="outline-3">
+<div id="outline-container-org45e5d75" class="outline-3">
 <h3 id="redflag">3.9 RedFlag</h3>
 <div class="outline-text-3" id="text-redflag">
 <p>
@@ -991,12 +987,12 @@ Ruby 1.9 &#x4E2D; <code>Kernel#proc()</code> &#x662F; <code>Proc.new()</code> &#
 </div>
 </div>
 
-<div id="outline-container-orge44d7c3" class="outline-2">
+<div id="outline-container-org60e0f44" class="outline-2">
 <h2 id="&#x7C7B;&#x5B9A;&#x4E49;">4. &#x7C7B;&#x5B9A;&#x4E49;</h2>
 <div class="outline-text-2" id="text-&#x7C7B;&#x5B9A;&#x4E49;">
 </div>
 
-<div id="outline-container-org60be00b" class="outline-3">
+<div id="outline-container-org212e109" class="outline-3">
 <h3 id="moduleclass_eval-&#x65B9;&#x6CD5;">4.1 <code>Module#class_eval()</code> &#x65B9;&#x6CD5;</h3>
 <div class="outline-text-3" id="text-moduleclass_eval-&#x65B9;&#x6CD5;">
 <p>
@@ -1017,16 +1013,16 @@ Ruby 1.9 &#x4E2D; <code>Kernel#proc()</code> &#x662F; <code>Proc.new()</code> &#
 </div>
 </div>
 
-<div id="outline-container-orgd4cbf10" class="outline-3">
+<div id="outline-container-orgecbd5e5" class="outline-3">
 <h3 id="&#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x548C;&#x7C7B;&#x53D8;&#x91CF;">4.2 &#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x548C;&#x7C7B;&#x53D8;&#x91CF;</h3>
 <div class="outline-text-3" id="text-&#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x548C;&#x7C7B;&#x53D8;&#x91CF;">
 </div>
 
-<div id="outline-container-org835ceb4" class="outline-4">
+<div id="outline-container-org1e9ee59" class="outline-4">
 <h4 id="&#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;">4.2.1 &#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;</h4>
 <div class="outline-text-4" id="text-&#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;">
 <p>
-Ruby &#x89E3;&#x91CA;&#x5668;&#x5047;&#x5B9A;&#x6240;&#x6709;&#x7684;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x90FD;&#x5C5E;&#x4E8E;&#x5F53;&#x524D;&#x5BF9;&#x8C61; =self=&#x3002;&#x5728;&#x7C7B;&#x5B9A;&#x4E49;&#x65F6;&#x4E5F;&#x662F;&#x5982;&#x6B64;&#xFF1A;
+Ruby &#x89E3;&#x91CA;&#x5668;&#x5047;&#x5B9A;&#x6240;&#x6709;&#x7684;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x90FD;&#x5C5E;&#x4E8E;&#x5F53;&#x524D;&#x5BF9;&#x8C61;  <code>self</code> &#x3002;&#x5728;&#x7C7B;&#x5B9A;&#x4E49;&#x65F6;&#x4E5F;&#x662F;&#x5982;&#x6B64;&#xFF1A;
 </p>
 
 <div class="org-src-container">
@@ -1044,7 +1040,7 @@ Ruby &#x89E3;&#x91CA;&#x5668;&#x5047;&#x5B9A;&#x6240;&#x6709;&#x7684;&#x5B9E;&#x
 </div>
 </div>
 
-<div id="outline-container-org6cb456e" class="outline-4">
+<div id="outline-container-orgb6bf671" class="outline-4">
 <h4 id="&#x7C7B;&#x53D8;&#x91CF;">4.2.2 &#x7C7B;&#x53D8;&#x91CF;</h4>
 <div class="outline-text-4" id="text-&#x7C7B;&#x53D8;&#x91CF;">
 <p>
@@ -1066,9 +1062,9 @@ Java &#x7684;&#x9759;&#x6001;&#x6210;&#x5458;&#xFF09;&#x3002;
 
 <p>
 &#x7684;&#x642D;&#x914D;&#x8FD9;&#x6837;&#x7684;&#x7ED3;&#x679C;&#x662F;&#x56E0;&#x4E3A;&#x7C7B;&#x53D8;&#x91CF;&#x5E76;&#x4E0D;&#x771F;&#x6B63;&#x5C5E;&#x4E8E;&#x7C7B;-------&#x2013;&#x2014;&#x5B83;&#x4EEC;&#x5C5E;&#x4E8E;&#x7C7B;&#x4F53;&#x7CFB;&#x7ED3;&#x6784;&#x3002;&#x7531;&#x4E8E;
-<code>@@v</code> &#x5B9A;&#x4E49;&#x4E8E; <code>main</code> &#x7684;&#x4E0A;&#x4E0B;&#x6587;&#xFF0C;&#x5B83;&#x5C5E;&#x4E8E; <code>main</code> &#x7684;&#x7C7B; <code>Object=&#xFF0C;&#x6240;&#x4EE5;&#x4E5F;&#x5C5E;&#x4E8E;
-=Object</code> &#x7684;&#x6240;&#x6709;&#x540E;&#x53F0;&#x3002; <code>MyClass</code> &#x7EE7;&#x627F;&#x81EA;
-=Object=&#xFF0C;&#x56E0;&#x6B64;&#x5B83;&#x4E5F;&#x5171;&#x4EAB;&#x4E86;&#x8FD9;&#x4E2A;&#x7C7B;&#x53D8;&#x91CF;&#x3002;
+<code>@@v</code> &#x5B9A;&#x4E49;&#x4E8E; <code>main</code> &#x7684;&#x4E0A;&#x4E0B;&#x6587;&#xFF0C;&#x5B83;&#x5C5E;&#x4E8E; <code>main</code> &#x7684;&#x7C7B;  <code>Object</code> &#xFF0C;&#x6240;&#x4EE5;&#x4E5F;&#x5C5E;&#x4E8E;
+<code>Object</code> &#x7684;&#x6240;&#x6709;&#x540E;&#x53F0;&#x3002; <code>MyClass</code> &#x7EE7;&#x627F;&#x81EA;
+ <code>Object</code> &#xFF0C;&#x56E0;&#x6B64;&#x5B83;&#x4E5F;&#x5171;&#x4EAB;&#x4E86;&#x8FD9;&#x4E2A;&#x7C7B;&#x53D8;&#x91CF;&#x3002;
 </p>
 
 <p>
@@ -1079,7 +1075,7 @@ Ruby &#x4E3B;&#x4E49;&#x8005;&#x90FD;&#x907F;&#x514D;&#x4F7F;&#x7528;&#x7C7B;&#x
 </div>
 </div>
 
-<div id="outline-container-org9c93db3" class="outline-3">
+<div id="outline-container-org5541d5e" class="outline-3">
 <h3 id="class.new">4.3 <code>Class.new</code></h3>
 <div class="outline-text-3" id="text-class.new">
 <p>
@@ -1104,7 +1100,7 @@ this class using class_eval.
 </div>
 </div>
 
-<div id="outline-container-org890d9da" class="outline-3">
+<div id="outline-container-orga8ae81e" class="outline-3">
 <h3 id="&#x7C7B;&#x65B9;&#x6CD5;&#x7684;&#x5199;&#x6CD5;">4.4 &#x7C7B;&#x65B9;&#x6CD5;&#x7684;&#x5199;&#x6CD5;</h3>
 <div class="outline-text-3" id="text-&#x7C7B;&#x65B9;&#x6CD5;&#x7684;&#x5199;&#x6CD5;">
 <ol class="org-ol">
@@ -1140,8 +1136,8 @@ this class using class_eval.
 </div>
 </div>
 
-<div id="outline-container-orgd5322b6" class="outline-3">
-<h3 id="&#x7C7B;&#x65B9;&#x6CD5;&#x548C;moduleinclude-&#x4EE5;&#x53CA;-objectextend">4.5 &#x7C7B;&#x65B9;&#x6CD5;&#x548C;=Module#include()= &#x4EE5;&#x53CA; <code>Object#extend()</code></h3>
+<div id="outline-container-org7dbf97e" class="outline-3">
+<h3 id="&#x7C7B;&#x65B9;&#x6CD5;&#x548C;moduleinclude-&#x4EE5;&#x53CA;-objectextend">4.5 &#x7C7B;&#x65B9;&#x6CD5;&#x548C; <code>Module#include()</code> &#x4EE5;&#x53CA; <code>Object#extend()</code></h3>
 <div class="outline-text-3" id="text-&#x7C7B;&#x65B9;&#x6CD5;&#x548C;moduleinclude-&#x4EE5;&#x53CA;-objectextend">
 <p>
 &#x4F7F;&#x7528; <code>Module#inculde()</code>
@@ -1171,7 +1167,7 @@ this class using class_eval.
 </div>
 </div>
 
-<div id="outline-container-org6e1dd5e" class="outline-3">
+<div id="outline-container-orgd2b8cd6" class="outline-3">
 <h3 id="&#x73AF;&#x7ED5;&#x522B;&#x540D;">4.6 &#x73AF;&#x7ED5;&#x522B;&#x540D;</h3>
 <div class="outline-text-3" id="text-&#x73AF;&#x7ED5;&#x522B;&#x540D;">
 <p>
@@ -1199,18 +1195,18 @@ this class using class_eval.
 </div>
 </div>
 
-<div id="outline-container-org75c3f1b" class="outline-2">
+<div id="outline-container-org9099d0d" class="outline-2">
 <h2 id="&#x7F16;&#x5199;&#x4EE3;&#x7801;&#x7684;&#x4EE3;&#x7801;">5. &#x7F16;&#x5199;&#x4EE3;&#x7801;&#x7684;&#x4EE3;&#x7801;</h2>
 <div class="outline-text-2" id="text-&#x7F16;&#x5199;&#x4EE3;&#x7801;&#x7684;&#x4EE3;&#x7801;">
 </div>
 
-<div id="outline-container-org820a71f" class="outline-3">
+<div id="outline-container-orga06b383" class="outline-3">
 <h3 id="binding-&#x5BF9;&#x8C61;">5.1 Binding &#x5BF9;&#x8C61;</h3>
 <div class="outline-text-3" id="text-binding-&#x5BF9;&#x8C61;">
 <p>
 Binding &#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x7528;&#x5BF9;&#x8C61;&#x8868;&#x793A;&#x7684;&#x5B8C;&#x6574;&#x4F5C;&#x7528;&#x57DF;&#x3002;&#x4F60;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x521B;&#x5EFA; Binding
 &#x5BF9;&#x8C61;&#x6765;&#x6355;&#x83B7;&#x5E76;&#x5E26;&#x8D70;&#x5F53;&#x524D;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x3002;&#x63A5;&#x4E0B;&#x6765;&#xFF0C;&#x4F60;&#x8FD8;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; <code>eval()</code>
-&#x65B9;&#x6CD5;&#x3001;=instance_eval()= &#x65B9;&#x6CD5;&#x6216; <code>class_eval()</code> &#x65B9;&#x6CD5;&#xFF0C;&#x5728; Binding
+&#x65B9;&#x6CD5;&#x3001; <code>instance_eval()</code>  &#x65B9;&#x6CD5;&#x6216; <code>class_eval()</code> &#x65B9;&#x6CD5;&#xFF0C;&#x5728; Binding
 &#x5BF9;&#x8C61;&#x6240;&#x643A;&#x5E26;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x4E2D;&#x6267;&#x884C;&#x4EE3;&#x7801;&#x3002;
 </p>
 
@@ -1248,7 +1244,7 @@ Ruby &#x8FD8;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A;&#x540D;&#x4E3A; <code>TOPL
 </div>
 </div>
 
-<div id="outline-container-org0488ae3" class="outline-3">
+<div id="outline-container-org091917a" class="outline-3">
 <h3 id="&#x4EE3;&#x7801;&#x5B57;&#x7B26;&#x4E32;">5.2 &#x4EE3;&#x7801;&#x5B57;&#x7B26;&#x4E32;</h3>
 <div class="outline-text-3" id="text-&#x4EE3;&#x7801;&#x5B57;&#x7B26;&#x4E32;">
 <p>
@@ -1261,7 +1257,7 @@ Ruby &#x8FD8;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A;&#x540D;&#x4E3A; <code>TOPL
 </div>
 </div>
 
-<div id="outline-container-orgec9fc5e" class="outline-3">
+<div id="outline-container-org5a720d8" class="outline-3">
 <h3 id="kerneleval-&#x4E0E;-ruby-&#x5B89;&#x5168;&#x7EA7;&#x522B;">5.3 <code>Kernel#eval</code> &#x4E0E; Ruby &#x5B89;&#x5168;&#x7EA7;&#x522B;</h3>
 <div class="outline-text-3" id="text-kerneleval-&#x4E0E;-ruby-&#x5B89;&#x5168;&#x7EA7;&#x522B;">
 <p>
@@ -1306,7 +1302,7 @@ Web
 </div>
 </div>
 
-<div id="outline-container-orgaf27058" class="outline-3">
+<div id="outline-container-org752ffb9" class="outline-3">
 <h3 id="&#x7C7B;&#x6269;&#x5C55;&#x6DF7;&#x5165;class-extension-mixins">5.4 &#x7C7B;&#x6269;&#x5C55;&#x6DF7;&#x5165;&#xFF08;Class Extension Mixins&#xFF09;</h3>
 <div class="outline-text-3" id="text-&#x7C7B;&#x6269;&#x5C55;&#x6DF7;&#x5165;class-extension-mixins">
 <p>
@@ -1316,7 +1312,7 @@ Web
 <ol class="org-ol">
 <li>&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x6A21;&#x5757;&#xFF0C;&#x59D1;&#x4E14;&#x53EB;&#x505A; <code>MyMixin</code></li>
 <li>&#x5728; <code>MyMixin</code> &#x4E2D;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x5185;&#x90E8;&#x6A21;&#x5757;&#xFF08;&#x901A;&#x5E38;&#x628A;&#x5B83;&#x53EB;&#x505A;
-=ClassMethods=&#xFF09;&#xFF0C;&#x5E76;&#x7ED9;&#x5B83;&#x5B9A;&#x4E49;&#x4E00;&#x4E9B;&#x65B9;&#x6CD5;&#x3002;&#x8FD9;&#x4E9B;&#x65B9;&#x6CD5;&#x6700;&#x7EC8;&#x4F1A;&#x6210;&#x4E3A;&#x7C7B;&#x65B9;&#x6CD5;&#x3002;</li>
+<code>ClassMethods</code> &#xFF09;&#xFF0C;&#x5E76;&#x7ED9;&#x5B83;&#x5B9A;&#x4E49;&#x4E00;&#x4E9B;&#x65B9;&#x6CD5;&#x3002;&#x8FD9;&#x4E9B;&#x65B9;&#x6CD5;&#x6700;&#x7EC8;&#x4F1A;&#x6210;&#x4E3A;&#x7C7B;&#x65B9;&#x6CD5;&#x3002;</li>
 <li>&#x8986;&#x76D6; <code>MyMixin#included()</code> &#x65B9;&#x6CD5;&#x6765;&#x7528; <code>ClassMethods</code> &#x6269;&#x5C55;&#x5305;&#x542B;&#x8005;&#xFF08;&#x4F7F;&#x7528;
 <code>extend()</code> &#x65B9;&#x6CD5;&#xFF09;&#x3002;</li>
 </ol>
@@ -1331,7 +1327,7 @@ Web
 </div>
 </div>
 
-<div id="outline-container-org7504780" class="outline-3">
+<div id="outline-container-org7491835" class="outline-3">
 <h3 id="checkedattributes">5.5 CheckedAttributes</h3>
 <div class="outline-text-3" id="text-checkedattributes">
 <div class="org-src-container">
@@ -1376,7 +1372,7 @@ Web
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x5BF9;&#x8C61;&#x6A21;&#x578B;"><span class="toc-number">1.</span> <span class="toc-text">1. &#x5BF9;&#x8C61;&#x6A21;&#x578B;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x6253;&#x5F00;&#x7C7B;"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 &#x6253;&#x5F00;&#x7C7B;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x51E0;&#x4E2A;-reflection-&#x65B9;&#x6CD5;"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 &#x51E0;&#x4E2A; Reflection &#x65B9;&#x6CD5;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#objectinstance_variables"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.2.1 Object#instance_variables()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#objectmethodsalltrue"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2.2 Object#methods(all=true)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#moduleinstance_methodsinclude_supertrue"><span class="toc-number">1.2.3.</span> <span class="toc-text">1.2.3 Module#instance_methods(include_super=true)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#moduleancesotrs"><span class="toc-number">1.2.4.</span> <span class="toc-text">1.2.4 Module#ancesotrs()</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5E38;&#x91CF;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x548C;&#x8DEF;&#x5F84;"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 &#x5E38;&#x91CF;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x548C;&#x8DEF;&#x5F84;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x51E0;&#x4E2A;&#x548C;&#x5E38;&#x91CF;&#x6709;&#x5173;&#x7684;&#x65B9;&#x6CD5;"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 &#x51E0;&#x4E2A;&#x548C;&#x5E38;&#x91CF;&#x6709;&#x5173;&#x7684;&#x65B9;&#x6CD5;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#moduleconstantsinherittrue"><span class="toc-number">1.4.1.</span> <span class="toc-text">1.4.1 Module#constants(inherit=true)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#module.constants-&#x548C;-module.constantsinherit"><span class="toc-number">1.4.2.</span> <span class="toc-text">1.4.2 Module.constants() &#x548C; Module.constants(inherit)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#module.nesting"><span class="toc-number">1.4.3.</span> <span class="toc-text">1.4.3 Module.nesting()</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4FEE;&#x526A;&#x5E38;&#x91CF;&#x6811;"><span class="toc-number">1.5.</span> <span class="toc-text">1.5 &#x4FEE;&#x526A;&#x5E38;&#x91CF;&#x6811;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5173;&#x4E8E;-kernel-&#x6A21;&#x5757;"><span class="toc-number">1.6.</span> <span class="toc-text">1.6 &#x5173;&#x4E8E; Kernel &#x6A21;&#x5757;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#private-&#x7A76;&#x7ADF;&#x610F;&#x5473;&#x7740;&#x4EC0;&#x4E48;"><span class="toc-number">1.7.</span> <span class="toc-text">1.7 private &#x7A76;&#x7ADF;&#x610F;&#x5473;&#x7740;&#x4EC0;&#x4E48;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x6DF7;&#x4E71;&#x7684;&#x6A21;&#x5757;"><span class="toc-number">1.8.</span> <span class="toc-text">1.8 &#x6DF7;&#x4E71;&#x7684;&#x6A21;&#x5757;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5B8C;&#x6574;&#x7684;&#x7C7B;&#x548C;&#x5BF9;&#x8C61;&#x6A21;&#x578B;&#x56FE;"><span class="toc-number">1.9.</span> <span class="toc-text">1.9 &#x5B8C;&#x6574;&#x7684;&#x7C7B;&#x548C;&#x5BF9;&#x8C61;&#x6A21;&#x578B;&#x56FE;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x65B9;&#x6CD5;"><span class="toc-number">2.</span> <span class="toc-text">2. &#x65B9;&#x6CD5;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x52A8;&#x6001;&#x65B9;&#x6CD5;"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 &#x52A8;&#x6001;&#x65B9;&#x6CD5;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x52A8;&#x6001;&#x65B9;&#x6CD5;&#x6240;&#x4F9D;&#x8D56;&#x7684;&#x57FA;&#x7840;"><span class="toc-number">2.1.1.</span> <span class="toc-text">2.1.1 &#x52A8;&#x6001;&#x65B9;&#x6CD5;&#x6240;&#x4F9D;&#x8D56;&#x7684;&#x57FA;&#x7840;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x793A;&#x4F8B;"><span class="toc-number">2.1.2.</span> <span class="toc-text">2.1.2 &#x793A;&#x4F8B;</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#method_missing-&#x5E7D;&#x7075;&#x65B9;&#x6CD5;ghost-method"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 method_missing &#x5E7D;&#x7075;&#x65B9;&#x6CD5;(Ghost Method)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#method_missingsymbol-args-&#x65B9;&#x6CD5;"><span class="toc-number">2.2.1.</span> <span class="toc-text">2.2.1 method_missing(symbol [, *args] ) &#x65B9;&#x6CD5;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x4F7F;&#x7528;-method_missing-&#x91CD;&#x6784;-computer.rb"><span class="toc-number">2.2.2.</span> <span class="toc-text">2.2.2 &#x4F7F;&#x7528; method_missing &#x91CD;&#x6784; computer.rb</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x8986;&#x76D6;-respond_to"><span class="toc-number">2.2.3.</span> <span class="toc-text">2.2.3 &#x8986;&#x76D6; respond_to?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x767D;&#x677F;&#x7C7B;blankslate"><span class="toc-number">2.2.4.</span> <span class="toc-text">2.2.4 &#x767D;&#x677F;&#x7C7B;(BlankSlate)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x4EE3;&#x7801;&#x5757;"><span class="toc-number">3.</span> <span class="toc-text">3. &#x4EE3;&#x7801;&#x5757;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5F53;&#x524D;&#x5757;"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 &#x5F53;&#x524D;&#x5757;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4F7F;&#x7528;-ruby-&#x5B9E;&#x73B0;-c-&#x7684;-using-&#x5173;&#x952E;&#x5B57;"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 &#x4F7F;&#x7528; Ruby &#x5B9E;&#x73B0; C# &#x7684; using &#x5173;&#x952E;&#x5B57;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x95ED;&#x5305;"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 &#x95ED;&#x5305;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x5757;&#x5C40;&#x90E8;&#x4F5C;&#x7528;&#x57DF;"><span class="toc-number">3.3.1.</span> <span class="toc-text">3.3.1 &#x5757;&#x5C40;&#x90E8;&#x4F5C;&#x7528;&#x57DF;</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4F5C;&#x7528;&#x57DF;&#x95E8;"><span class="toc-number">3.4.</span> <span class="toc-text">3.4 &#x4F5C;&#x7528;&#x57DF;&#x95E8;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x548C;&#x9876;&#x7EA7;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;"><span class="toc-number">3.5.</span> <span class="toc-text">3.5 &#x5168;&#x5C40;&#x53D8;&#x91CF;&#x548C;&#x9876;&#x7EA7;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x6241;&#x5E73;&#x5316;&#x4F5C;&#x7528;&#x57DF;"><span class="toc-number">3.6.</span> <span class="toc-text">3.6 &#x6241;&#x5E73;&#x5316;&#x4F5C;&#x7528;&#x57DF;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4E0A;&#x4E0B;&#x6587;&#x63A2;&#x9488;-objectinstant_eval"><span class="toc-number">3.7.</span> <span class="toc-text">3.7 &#x4E0A;&#x4E0B;&#x6587;&#x63A2;&#x9488; Object#instant_eval()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x53EF;&#x8C03;&#x7528;&#x5BF9;&#x8C61;"><span class="toc-number">3.8.</span> <span class="toc-text">3.8 &#x53EF;&#x8C03;&#x7528;&#x5BF9;&#x8C61;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#proc-&#x548C;-lambda-&#x7684;&#x533A;&#x522B;"><span class="toc-number">3.8.1.</span> <span class="toc-text">3.8.1 proc &#x548C; lambda &#x7684;&#x533A;&#x522B;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x65B9;&#x6CD5;-1"><span class="toc-number">3.8.2.</span> <span class="toc-text">3.8.2 &#x65B9;&#x6CD5;</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#redflag"><span class="toc-number">3.9.</span> <span class="toc-text">3.9 RedFlag</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x7C7B;&#x5B9A;&#x4E49;"><span class="toc-number">4.</span> <span class="toc-text">4. &#x7C7B;&#x5B9A;&#x4E49;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#moduleclass_eval-&#x65B9;&#x6CD5;"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 Module#class_eval() &#x65B9;&#x6CD5;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x548C;&#x7C7B;&#x53D8;&#x91CF;"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 &#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x548C;&#x7C7B;&#x53D8;&#x91CF;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;"><span class="toc-number">4.2.1.</span> <span class="toc-text">4.2.1 &#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x7C7B;&#x53D8;&#x91CF;"><span class="toc-number">4.2.2.</span> <span class="toc-text">4.2.2 &#x7C7B;&#x53D8;&#x91CF;</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#class.new"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 Class.new</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x7C7B;&#x65B9;&#x6CD5;&#x7684;&#x5199;&#x6CD5;"><span class="toc-number">4.4.</span> <span class="toc-text">4.4 &#x7C7B;&#x65B9;&#x6CD5;&#x7684;&#x5199;&#x6CD5;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x7C7B;&#x65B9;&#x6CD5;&#x548C;moduleinclude-&#x4EE5;&#x53CA;-objectextend"><span class="toc-number">4.5.</span> <span class="toc-text">4.5 &#x7C7B;&#x65B9;&#x6CD5;&#x548C;=Module#include()= &#x4EE5;&#x53CA; Object#extend()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x73AF;&#x7ED5;&#x522B;&#x540D;"><span class="toc-number">4.6.</span> <span class="toc-text">4.6 &#x73AF;&#x7ED5;&#x522B;&#x540D;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x7F16;&#x5199;&#x4EE3;&#x7801;&#x7684;&#x4EE3;&#x7801;"><span class="toc-number">5.</span> <span class="toc-text">5. &#x7F16;&#x5199;&#x4EE3;&#x7801;&#x7684;&#x4EE3;&#x7801;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#binding-&#x5BF9;&#x8C61;"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 Binding &#x5BF9;&#x8C61;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4EE3;&#x7801;&#x5B57;&#x7B26;&#x4E32;"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 &#x4EE3;&#x7801;&#x5B57;&#x7B26;&#x4E32;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#kerneleval-&#x4E0E;-ruby-&#x5B89;&#x5168;&#x7EA7;&#x522B;"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 Kernel#eval &#x4E0E; Ruby &#x5B89;&#x5168;&#x7EA7;&#x522B;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x7C7B;&#x6269;&#x5C55;&#x6DF7;&#x5165;class-extension-mixins"><span class="toc-number">5.4.</span> <span class="toc-text">5.4 &#x7C7B;&#x6269;&#x5C55;&#x6DF7;&#x5165;&#xFF08;Class Extension Mixins&#xFF09;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#checkedattributes"><span class="toc-number">5.5.</span> <span class="toc-text">5.5 CheckedAttributes</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x5BF9;&#x8C61;&#x6A21;&#x578B;"><span class="toc-number">1.</span> <span class="toc-text">1. &#x5BF9;&#x8C61;&#x6A21;&#x578B;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x6253;&#x5F00;&#x7C7B;"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 &#x6253;&#x5F00;&#x7C7B;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x51E0;&#x4E2A;-reflection-&#x65B9;&#x6CD5;"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 &#x51E0;&#x4E2A; Reflection &#x65B9;&#x6CD5;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#objectinstance_variables"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.2.1 Object#instance_variables()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#objectmethodsalltrue"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2.2 Object#methods(all=true)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#moduleinstance_methodsinclude_supertrue"><span class="toc-number">1.2.3.</span> <span class="toc-text">1.2.3 Module#instance_methods(include_super=true)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#moduleancesotrs"><span class="toc-number">1.2.4.</span> <span class="toc-text">1.2.4 Module#ancesotrs()</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5E38;&#x91CF;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x548C;&#x8DEF;&#x5F84;"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 &#x5E38;&#x91CF;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x548C;&#x8DEF;&#x5F84;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x51E0;&#x4E2A;&#x548C;&#x5E38;&#x91CF;&#x6709;&#x5173;&#x7684;&#x65B9;&#x6CD5;"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 &#x51E0;&#x4E2A;&#x548C;&#x5E38;&#x91CF;&#x6709;&#x5173;&#x7684;&#x65B9;&#x6CD5;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#moduleconstantsinherittrue"><span class="toc-number">1.4.1.</span> <span class="toc-text">1.4.1 Module#constants(inherit=true)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#module.constants-&#x548C;-module.constantsinherit"><span class="toc-number">1.4.2.</span> <span class="toc-text">1.4.2 Module.constants() &#x548C; Module.constants(inherit)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#module.nesting"><span class="toc-number">1.4.3.</span> <span class="toc-text">1.4.3 Module.nesting()</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4FEE;&#x526A;&#x5E38;&#x91CF;&#x6811;"><span class="toc-number">1.5.</span> <span class="toc-text">1.5 &#x4FEE;&#x526A;&#x5E38;&#x91CF;&#x6811;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5173;&#x4E8E;-kernel-&#x6A21;&#x5757;"><span class="toc-number">1.6.</span> <span class="toc-text">1.6 &#x5173;&#x4E8E; Kernel &#x6A21;&#x5757;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#private-&#x7A76;&#x7ADF;&#x610F;&#x5473;&#x7740;&#x4EC0;&#x4E48;"><span class="toc-number">1.7.</span> <span class="toc-text">1.7 private &#x7A76;&#x7ADF;&#x610F;&#x5473;&#x7740;&#x4EC0;&#x4E48;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x6DF7;&#x4E71;&#x7684;&#x6A21;&#x5757;"><span class="toc-number">1.8.</span> <span class="toc-text">1.8 &#x6DF7;&#x4E71;&#x7684;&#x6A21;&#x5757;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5B8C;&#x6574;&#x7684;&#x7C7B;&#x548C;&#x5BF9;&#x8C61;&#x6A21;&#x578B;&#x56FE;"><span class="toc-number">1.9.</span> <span class="toc-text">1.9 &#x5B8C;&#x6574;&#x7684;&#x7C7B;&#x548C;&#x5BF9;&#x8C61;&#x6A21;&#x578B;&#x56FE;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x65B9;&#x6CD5;"><span class="toc-number">2.</span> <span class="toc-text">2. &#x65B9;&#x6CD5;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x52A8;&#x6001;&#x65B9;&#x6CD5;"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 &#x52A8;&#x6001;&#x65B9;&#x6CD5;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x52A8;&#x6001;&#x65B9;&#x6CD5;&#x6240;&#x4F9D;&#x8D56;&#x7684;&#x57FA;&#x7840;"><span class="toc-number">2.1.1.</span> <span class="toc-text">2.1.1 &#x52A8;&#x6001;&#x65B9;&#x6CD5;&#x6240;&#x4F9D;&#x8D56;&#x7684;&#x57FA;&#x7840;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x793A;&#x4F8B;"><span class="toc-number">2.1.2.</span> <span class="toc-text">2.1.2 &#x793A;&#x4F8B;</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#method_missing-&#x5E7D;&#x7075;&#x65B9;&#x6CD5;ghost-method"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 method_missing &#x5E7D;&#x7075;&#x65B9;&#x6CD5;(Ghost Method)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#method_missingsymbol-args-&#x65B9;&#x6CD5;"><span class="toc-number">2.2.1.</span> <span class="toc-text">2.2.1 method_missing(symbol [, *args] ) &#x65B9;&#x6CD5;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x4F7F;&#x7528;-method_missing-&#x91CD;&#x6784;-computer.rb"><span class="toc-number">2.2.2.</span> <span class="toc-text">2.2.2 &#x4F7F;&#x7528; method_missing &#x91CD;&#x6784; computer.rb</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x8986;&#x76D6;-respond_to"><span class="toc-number">2.2.3.</span> <span class="toc-text">2.2.3 &#x8986;&#x76D6; respond_to?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x767D;&#x677F;&#x7C7B;blankslate"><span class="toc-number">2.2.4.</span> <span class="toc-text">2.2.4 &#x767D;&#x677F;&#x7C7B;(BlankSlate)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x4EE3;&#x7801;&#x5757;"><span class="toc-number">3.</span> <span class="toc-text">3. &#x4EE3;&#x7801;&#x5757;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5F53;&#x524D;&#x5757;"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 &#x5F53;&#x524D;&#x5757;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4F7F;&#x7528;-ruby-&#x5B9E;&#x73B0;-c-&#x7684;-using-&#x5173;&#x952E;&#x5B57;"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 &#x4F7F;&#x7528; Ruby &#x5B9E;&#x73B0; C# &#x7684; using &#x5173;&#x952E;&#x5B57;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x95ED;&#x5305;"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 &#x95ED;&#x5305;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x5757;&#x5C40;&#x90E8;&#x4F5C;&#x7528;&#x57DF;"><span class="toc-number">3.3.1.</span> <span class="toc-text">3.3.1 &#x5757;&#x5C40;&#x90E8;&#x4F5C;&#x7528;&#x57DF;</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4F5C;&#x7528;&#x57DF;&#x95E8;"><span class="toc-number">3.4.</span> <span class="toc-text">3.4 &#x4F5C;&#x7528;&#x57DF;&#x95E8;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x548C;&#x9876;&#x7EA7;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;"><span class="toc-number">3.5.</span> <span class="toc-text">3.5 &#x5168;&#x5C40;&#x53D8;&#x91CF;&#x548C;&#x9876;&#x7EA7;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x6241;&#x5E73;&#x5316;&#x4F5C;&#x7528;&#x57DF;"><span class="toc-number">3.6.</span> <span class="toc-text">3.6 &#x6241;&#x5E73;&#x5316;&#x4F5C;&#x7528;&#x57DF;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4E0A;&#x4E0B;&#x6587;&#x63A2;&#x9488;-objectinstant_eval"><span class="toc-number">3.7.</span> <span class="toc-text">3.7 &#x4E0A;&#x4E0B;&#x6587;&#x63A2;&#x9488; Object#instant_eval()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x53EF;&#x8C03;&#x7528;&#x5BF9;&#x8C61;"><span class="toc-number">3.8.</span> <span class="toc-text">3.8 &#x53EF;&#x8C03;&#x7528;&#x5BF9;&#x8C61;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#proc-&#x548C;-lambda-&#x7684;&#x533A;&#x522B;"><span class="toc-number">3.8.1.</span> <span class="toc-text">3.8.1 proc &#x548C; lambda &#x7684;&#x533A;&#x522B;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x65B9;&#x6CD5;-1"><span class="toc-number">3.8.2.</span> <span class="toc-text">3.8.2 &#x65B9;&#x6CD5;</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#redflag"><span class="toc-number">3.9.</span> <span class="toc-text">3.9 RedFlag</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x7C7B;&#x5B9A;&#x4E49;"><span class="toc-number">4.</span> <span class="toc-text">4. &#x7C7B;&#x5B9A;&#x4E49;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#moduleclass_eval-&#x65B9;&#x6CD5;"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 Module#class_eval() &#x65B9;&#x6CD5;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x548C;&#x7C7B;&#x53D8;&#x91CF;"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 &#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x548C;&#x7C7B;&#x53D8;&#x91CF;</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;"><span class="toc-number">4.2.1.</span> <span class="toc-text">4.2.1 &#x7C7B;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#&#x7C7B;&#x53D8;&#x91CF;"><span class="toc-number">4.2.2.</span> <span class="toc-text">4.2.2 &#x7C7B;&#x53D8;&#x91CF;</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#class.new"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 Class.new</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x7C7B;&#x65B9;&#x6CD5;&#x7684;&#x5199;&#x6CD5;"><span class="toc-number">4.4.</span> <span class="toc-text">4.4 &#x7C7B;&#x65B9;&#x6CD5;&#x7684;&#x5199;&#x6CD5;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x7C7B;&#x65B9;&#x6CD5;&#x548C;moduleinclude-&#x4EE5;&#x53CA;-objectextend"><span class="toc-number">4.5.</span> <span class="toc-text">4.5 &#x7C7B;&#x65B9;&#x6CD5;&#x548C; Module#include() &#x4EE5;&#x53CA; Object#extend()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x73AF;&#x7ED5;&#x522B;&#x540D;"><span class="toc-number">4.6.</span> <span class="toc-text">4.6 &#x73AF;&#x7ED5;&#x522B;&#x540D;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#&#x7F16;&#x5199;&#x4EE3;&#x7801;&#x7684;&#x4EE3;&#x7801;"><span class="toc-number">5.</span> <span class="toc-text">5. &#x7F16;&#x5199;&#x4EE3;&#x7801;&#x7684;&#x4EE3;&#x7801;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#binding-&#x5BF9;&#x8C61;"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 Binding &#x5BF9;&#x8C61;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x4EE3;&#x7801;&#x5B57;&#x7B26;&#x4E32;"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 &#x4EE3;&#x7801;&#x5B57;&#x7B26;&#x4E32;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#kerneleval-&#x4E0E;-ruby-&#x5B89;&#x5168;&#x7EA7;&#x522B;"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 Kernel#eval &#x4E0E; Ruby &#x5B89;&#x5168;&#x7EA7;&#x522B;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#&#x7C7B;&#x6269;&#x5C55;&#x6DF7;&#x5165;class-extension-mixins"><span class="toc-number">5.4.</span> <span class="toc-text">5.4 &#x7C7B;&#x6269;&#x5C55;&#x6DF7;&#x5165;&#xFF08;Class Extension Mixins&#xFF09;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#checkedattributes"><span class="toc-number">5.5.</span> <span class="toc-text">5.5 CheckedAttributes</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
