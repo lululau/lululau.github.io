@@ -5,12 +5,9 @@
  * MIT License
  */
 
-console.log("debug1");
 (function (global, factory) {
-console.log("debug2");
   global.Chartkick = factory();
 })(this, (function () { 'use strict';
-console.log("debug3");
 
   function isArray(variable) {
     return Object.prototype.toString.call(variable) === "[object Array]";
